@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://api.github.com https://*.supabase.co wss://*.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0f1a">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237aa7ff'/%3E%3Cstop offset='1' stop-color='%23b48cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%230b0f1a'/%3E%3C/svg%3E">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237aa7ff'/%3E%3Cstop offset='1' stop-color='%23b48cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Crect x='20' y='29' width='24' height='19' rx='4' fill='%230b0f1a'/%3E%3Cpath d='M25 29v-5a7 7 0 0 1 14 0v5' stroke='%230b0f1a' stroke-width='4' fill='none'/%3E%3C/svg%3E">
 <title>سیستم عامل شخصی</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap">
@@ -157,6 +160,19 @@ ol.qs{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:
 .kb-tags{display:flex;gap:6px;flex-wrap:wrap}
 .ov p{margin:0;max-width:72ch}
 [hidden]{display:none!important}
+.lock{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:auto;background:radial-gradient(700px 500px at 80% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),radial-gradient(600px 500px at 0% 100%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 70%),var(--bg);
+  padding:calc(24px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-left,0px))}
+.lockcard{width:min(400px,100%);display:flex;flex-direction:column;gap:12px;padding:28px 24px;border-radius:22px;background:var(--glass);border:1px solid var(--stroke);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:center}
+.lockcard h1{margin:0;font-size:21px;font-family:var(--font-head)}
+.lockcard p{margin:0;font-size:13px;line-height:1.9}
+.lockcard .field{padding:11px 14px;font-size:15px}
+.lockcard .btn.pri{padding:11px;font-size:15px}
+.lockicon{width:58px;height:58px;margin:0 auto 4px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+.lockicon svg{width:28px;height:28px;stroke:var(--on-accent);fill:none;stroke-width:1.9;stroke-linecap:round}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+body.locked .app,body.locked .fab{visibility:hidden}
+.banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;border:1px solid color-mix(in srgb, var(--amber) 40%, transparent);background:color-mix(in srgb, var(--amber) 10%, transparent)}
+.banner span{flex:1;min-width:200px;font-size:13.5px}
 
 /* learning */
 .drop{border:1.5px dashed var(--stroke);border-radius:14px;padding:18px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .15s,background .15s}
@@ -284,11 +300,58 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
 .swatches{display:flex;gap:6px;flex-wrap:wrap}
 .swatches span{width:34px;height:34px;border-radius:9px;border:1px solid var(--stroke)}
 @media (max-width:860px){ aside{flex-direction:row;align-items:center} nav{flex:1;min-width:0} .nav-bottom{margin:0;padding:0 6px 0 0;border:none;border-right:1px solid var(--stroke);flex:none} }
+
+/* ================= PERSONAL OS · REFINED DESIGN SYSTEM ================= */
+:root{
+  --bg:#0b0e13;--glass:rgba(255,255,255,.035);--glass-2:rgba(255,255,255,.065);--stroke:rgba(255,255,255,.085);
+  --ink:#f1f2f4;--muted:#9ba3ae;--faint:#68717d;--panel:#141922;--accent:#c8a96b;--accent-2:#8ea9b5;
+  --amber:#d8b46f;--good:#77b99a;--bad:#d77e82;--teal:#79b9b4;--on-accent:#17140e;
+}
+body{letter-spacing:-.012em;line-height:1.8;background:var(--bg)}
+body::after{background:radial-gradient(720px 460px at 88% -8%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 68%),radial-gradient(620px 460px at 0% 100%,color-mix(in srgb,var(--accent-2) 7%,transparent),transparent 70%)}
+.app{gap:22px;padding:20px clamp(12px,2vw,26px)}
+aside{background:rgba(17,21,28,.88);border-color:rgba(255,255,255,.075);border-radius:18px;padding:18px 12px;box-shadow:0 18px 55px rgba(0,0,0,.14);backdrop-filter:blur(12px)}
+.brand{padding:5px 10px 18px}.logo{border-radius:11px;background:linear-gradient(145deg,#d8bd83,#9d8050);box-shadow:0 5px 18px rgba(200,169,107,.16)}
+.brand b{font-size:14px;letter-spacing:.01em}.brand small{letter-spacing:.04em}
+nav{gap:4px}nav a{padding:10px 12px;border-radius:10px;font-size:13.5px;transition:all .18s ease}nav a.on{background:color-mix(in srgb,var(--accent) 11%,transparent);box-shadow:inset -2px 0 0 var(--accent);color:var(--ink)}nav a.on svg{stroke:var(--accent)}
+main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-size:clamp(25px,3.1vw,34px);letter-spacing:-.04em}.head p{font-size:13px;color:var(--muted)}
+.grid{gap:14px;margin-top:12px}.card{background:rgba(19,24,32,.82);border:1px solid rgba(255,255,255,.075);border-radius:16px;padding:18px;gap:13px;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.09)}
+.card.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,#171b22),#151a23);border-color:color-mix(in srgb,var(--accent) 23%,transparent)}
+.card h2{font-size:14px;letter-spacing:-.01em}.card h2 .count{font-size:11.5px}.item{border-radius:10px;background:rgba(255,255,255,.027);padding:8px 10px}.stat{border-radius:11px;background:rgba(255,255,255,.035)}
+.btn{border-radius:10px;padding:8px 13px;background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.10);transition:transform .15s,border-color .15s,background .15s}.btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--accent) 55%,transparent)}.btn.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent);box-shadow:0 4px 16px color-mix(in srgb,var(--accent) 16%,transparent)}
+.add input,.field,.form select,.form input,.form textarea{border-radius:10px;background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.10);transition:border-color .15s,background .15s}.add input:focus,.field:focus,.form select:focus,.form input:focus,.form textarea:focus{border-color:color-mix(in srgb,var(--accent) 65%,transparent);background:rgba(255,255,255,.055);outline:none}
+.pill{border-radius:7px}.bar{height:6px;border-radius:99px}.bar i{border-radius:99px}.tabs button{border-radius:9px}.overlay{background:rgba(4,6,9,.78)}.reader,.drawer{border-radius:17px;box-shadow:0 24px 80px rgba(0,0,0,.38)}
+.clock{border:1px solid var(--stroke);border-radius:13px;padding:8px 13px;background:rgba(255,255,255,.025)}
+.fab{background:var(--accent);color:var(--on-accent);box-shadow:0 10px 28px color-mix(in srgb,var(--accent) 18%,transparent)}
+.cloud-panel{display:flex;flex-direction:column;gap:12px;margin-top:8px;padding:17px;border:1px solid color-mix(in srgb,var(--accent) 20%,var(--stroke));border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015))}
+.cloud-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.cloud-heading h2{margin:2px 0 0}.eyebrow{font-size:10px;letter-spacing:.16em;color:var(--accent);font-weight:700}
+.cloud-indicator{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--stroke);border-radius:999px;color:var(--muted);font-size:11px}.cloud-indicator i{width:7px;height:7px;border-radius:50%;background:var(--faint)}.cloud-indicator.is-live i{background:var(--good);box-shadow:0 0 0 4px color-mix(in srgb,var(--good) 12%,transparent)}.cloud-indicator.is-error i{background:var(--bad)}
+.cloud-note{font-size:11.5px;line-height:1.9;color:var(--muted);padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.025)}.cloud-note b{color:var(--ink)}.cloud-form{margin-top:2px}
+@media(max-width:860px){.app{gap:12px;padding:10px 10px 20px}aside{padding:8px;border-radius:13px;background:rgba(17,21,28,.96)}nav a{padding:8px 10px;font-size:12.5px}.nav-bottom{padding-inline-start:5px}.nav-bottom a{padding-inline:8px}main{gap:16px}.head{padding-top:6px}}
+@media(max-width:560px){.grid{gap:10px}.card{padding:14px;border-radius:13px}.cloud-panel{padding:13px}.cloud-form{grid-template-columns:1fr}.cloud-form label{grid-column:1/-1}.cloud-heading{align-items:flex-start}.head h1{font-size:25px}.fab{bottom:calc(12px + env(safe-area-inset-bottom,0px));left:12px;padding:10px 14px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
 
 <div id="wall" hidden></div>
+<div class="lock" id="lock" hidden>
+  <form class="lockcard" id="lockForm" autocomplete="off">
+    <div class="lockicon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg></div>
+    <h1 id="lkTitle"></h1>
+    <p id="lkSub" class="muted"></p>
+    <div id="lkConnect" hidden style="display:flex;flex-direction:column;gap:10px">
+      <input class="field" id="lkRepo" dir="ltr" placeholder="username/personal-os-data" aria-label="مخزن خصوصی">
+      <input class="field" id="lkToken" type="password" dir="ltr" placeholder="github_pat_…" aria-label="توکن">
+    </div>
+    <input class="field" id="lkPw" type="password" placeholder="رمز عبور" aria-label="رمز عبور">
+    <input class="field" id="lkPw2" type="password" placeholder="تکرار رمز عبور" aria-label="تکرار رمز عبور" autocomplete="new-password" hidden>
+    <button class="btn pri" id="lkGo"></button>
+    <div class="status err" id="lkErr" role="status"></div>
+    <div class="row" style="justify-content:center"><button type="button" class="btn ghost sm" id="lkAlt"></button><button type="button" class="btn ghost sm" id="lkForgot" hidden>رمز را فراموش کرده‌ام</button></div>
+  </form>
+</div>
 <div class="app">
   <aside>
     <div class="brand"><div class="logo" id="logoL">م</div><div><b id="brandName">سیستم من</b><small id="sideClock">Personal OS</small></div></div>
@@ -304,6 +367,7 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
       <a href="#body" data-v="body"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>بدن و انرژی</a>
     </nav>
     <nav class="nav-bottom" aria-label="تنظیمات">
+      <a href="#" id="lockBtn" hidden><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>قفل</a>
       <a href="#settings" data-v="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>تنظیمات</a>
     </nav>
     <div class="side-foot" id="syncNote">در حال بارگذاری داده‌ها…</div>
@@ -314,6 +378,7 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
     <section class="view" id="v-today">
       <div class="head"><div><h1 id="greet">صبح بخیر</h1><p id="faDate"></p></div><div class="clock" aria-live="off"><b id="clockT"></b><span id="clockS"></span></div></div>
       <div class="grid">
+        <div class="c12 banner" id="bkBanner" hidden><span>بیش از یک هفته است از اطلاعاتت پشتیبان نگرفته‌ای و همگام‌سازی هم روشن نیست. اگر حافظه مرورگر پاک شود، اطلاعات از بین می‌رود.</span><a class="btn sm" href="#settings" id="bkGo" style="text-decoration:none">پشتیبان‌گیری</a></div>
         <div class="card c12"><h2>نمای امروز</h2><div class="rings" id="todayRings"></div></div>
         <div class="card c12 hero">
           <h2>یادگیری امروز <span class="count" id="learnTodayCount"></span></h2>
@@ -577,6 +642,35 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
           <div class="toggle"><span>انیمیشن‌ها<small>حرکت‌های کوچک رابط</small></span><span class="switch"><input type="checkbox" id="tMotion"><i></i></span></div>
         </div>
 
+        <div class="card c12" id="set-security"><h2>امنیت و همگام‌سازی</h2>
+          <div class="form">
+            <label>قفل خودکار<select id="secLock"><option value="5">بعد از ۵ دقیقه بی‌کاری</option><option value="10">بعد از ۱۰ دقیقه</option><option value="30">بعد از ۳۰ دقیقه</option><option value="0">هرگز</option></select></label>
+            <label>&nbsp;<button class="btn" id="secLockNow" type="button">همین الان قفل کن</button></label>
+          </div>
+          <h2 style="margin-top:6px">تغییر رمز عبور</h2>
+          <form class="form" id="pwForm"><label>رمز فعلی<input type="password" id="pwOld" autocomplete="current-password"></label><label>رمز جدید<input type="password" id="pwNew" autocomplete="new-password"></label><label>تکرار رمز جدید<input type="password" id="pwNew2" autocomplete="new-password"></label><label>&nbsp;<button class="btn pri">تغییر رمز</button></label></form>
+          <div class="status" id="pwStatus" role="status"></div>
+          <section class="cloud-panel" aria-labelledby="cloudTitle">
+            <div class="cloud-heading"><div><span class="eyebrow">CLOUD SYNC</span><h2 id="cloudTitle">همگام‌سازی زنده بین دستگاه‌ها</h2></div><span class="cloud-indicator" id="cloudIndicator"><i></i><span>هنوز متصل نشده</span></span></div>
+            <p class="small muted">اطلاعات پس از رمزگذاری روی دستگاه، در فضای ابری حساب شخصی تو ذخیره می‌شود. با ورود به همین حساب و استفاده از رمز اصلی یکسان، اطلاعات روی دستگاه‌های دیگر نیز به‌روز می‌شود.</p>
+            <form id="cloudForm" class="form cloud-form">
+              <label class="wide">آدرس پروژه Supabase<input id="cloudUrl" type="url" dir="ltr" placeholder="https://xxxxxxxx.supabase.co" autocomplete="url" required></label>
+              <label class="wide">کلید عمومی پروژه (anon / publishable)<input id="cloudAnon" type="password" dir="ltr" placeholder="sb_publishable_… یا anon key" autocomplete="off" required></label>
+              <label>ایمیل حساب<input id="cloudEmail" type="email" dir="ltr" placeholder="you@example.com" autocomplete="email" required></label>
+              <label>رمز حساب ابری<input id="cloudPass" type="password" dir="ltr" autocomplete="current-password" required></label>
+              <label>نوع اتصال<select id="cloudMode"><option value="login">ورود به حساب موجود</option><option value="signup">ساخت حساب جدید</option></select></label>
+              <label>رمز اصلی اطلاعات<input id="cloudMaster" type="password" autocomplete="current-password" placeholder="همان رمز قفل برنامه" required></label>
+              <div class="wide row"><button class="btn pri" id="cloudConnect" type="submit">اتصال و همگام‌سازی</button><button class="btn" id="cloudSyncNow" type="button" disabled>همگام‌سازی الان</button><button class="btn ghost" id="cloudDisconnect" type="button" disabled>قطع اتصال این دستگاه</button></div>
+            </form>
+            <div class="status" id="cloudStatus" role="status" aria-live="polite">برای شروع، ابتدا پروژه ابری را طبق راهنمای همراه فایل آماده کن.</div>
+            <div class="cloud-note"><b>نکته امنیتی:</b> کلید عمومی پروژه برای استفاده در مرورگر طراحی شده است؛ رمز حساب و رمز اصلی تو در فایل HTML ذخیره نمی‌شوند. داده‌های شخصی قبل از ارسال با رمز اصلی برنامه رمزگذاری می‌شوند.</div>
+          </section>
+          <div hidden aria-hidden="true">
+            <form class="form" id="syncForm"><input id="syRepo"><input id="syToken"><input id="syPw"><button id="syConnect"></button><button id="syNow" type="button"></button><button id="syOff" type="button"></button></form>
+            <div id="syStatus"></div>
+          </div>
+        </div>
+
         <div class="card c6" id="set-ai"><h2>دستیار هوش مصنوعی</h2>
           <div class="form">
             <label class="wide">نام دستیار<input id="aName" placeholder="دستیار"></label>
@@ -631,6 +725,8 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
   </div>
 </div>
 
+<script>window.POS_STANDALONE=true;</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
 const $ = s => document.querySelector(s);
@@ -648,19 +744,202 @@ const addDays = (s,n) => { const d=new Date(s+"T12:00:00"); d.setDate(d.getDate(
 const faDate = (s,opt) => { try{ return new Intl.DateTimeFormat("fa-IR-u-ca-persian",opt||{day:"numeric",month:"long"}).format(new Date(s+"T12:00:00")); }catch(e){ return s; } };
 const relDay = s => s===TODAY?"امروز":s===addDays(TODAY,1)?"فردا":s===addDays(TODAY,-1)?"دیروز":faDate(s);
 
-/* ================= STORAGE (db per-user, localStorage fallback) ================= */
-const S = { cache:{}, col:null, timers:{}, busy:{}, again:{},
+/* ================= STORAGE ================= */
+const STANDALONE = !!window.POS_STANDALONE;
+const S = { cache:{}, meta:{}, col:null, timers:{}, busy:{}, again:{},
   get(k,d){ return Object.prototype.hasOwnProperty.call(this.cache,k) ? this.cache[k] : (typeof d==="function"?d():d); },
-  set(k,v){ this.cache[k]=v; if(typeof scheduleCharts==="function") scheduleCharts(); try{ localStorage.setItem("pos3-"+k, JSON.stringify(v)); }catch(e){}
+  set(k,v){ this.cache[k]=v; if(typeof scheduleCharts==="function") scheduleCharts(); if(STANDALONE){ V.touch(k); return; }
+    try{ localStorage.setItem("pos3-"+k, JSON.stringify(v)); }catch(e){}
     if(this.col){ clearTimeout(this.timers[k]); this.timers[k]=setTimeout(()=>this.flush(k),700); } },
   async flush(k){ if(this.busy[k]){ this.again[k]=true; return; } this.busy[k]=true;
     try{ await this.col.doc(k).set({v:this.cache[k]}); setSync("ذخیره در حساب شما"); }catch(e){ setSync("ذخیره ابری انجام نشد؛ روی این مرورگر نگه داشته شد"); }
     this.busy[k]=false; if(this.again[k]){ this.again[k]=false; this.flush(k); } },
-  del(k){ delete this.cache[k]; try{ localStorage.removeItem("pos3-"+k); }catch(e){} if(this.col) this.col.doc(k).delete().catch(()=>{}); }
+  del(k){ delete this.cache[k]; if(STANDALONE){ V.touch(k); return; } try{ localStorage.removeItem("pos3-"+k); }catch(e){} if(this.col) this.col.doc(k).delete().catch(()=>{}); }
 };
 function setSync(t){ $("#syncNote").textContent=t; }
-try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith("pos3-")) S.cache[k.slice(5)]=JSON.parse(localStorage.getItem(k)); } }catch(e){}
-setSync("داده‌ها روی این مرورگر");
+function legacyKeys(){ const o={}; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith("pos3-")) o[k.slice(5)]=JSON.parse(localStorage.getItem(k)); } }catch(e){} return o; }
+if(!STANDALONE){ S.cache=legacyKeys(); setSync("داده‌ها روی این مرورگر"); }
+
+/* ---------- encryption vault (standalone only) ---------- */
+const te=new TextEncoder(), td=new TextDecoder();
+const b64e=u8=>{ let s=""; for(let i=0;i<u8.length;i+=0x8000) s+=String.fromCharCode.apply(null,u8.subarray(i,i+0x8000)); return btoa(s); };
+const b64d=s=>{ const b=atob(s), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; };
+async function deriveKey(pw,saltB64,iter){ const base=await crypto.subtle.importKey("raw",te.encode(pw),"PBKDF2",false,["deriveKey"]); return crypto.subtle.deriveKey({name:"PBKDF2",salt:b64d(saltB64),iterations:iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]); }
+async function encryptObj(o,key,salt,iter){ const iv=crypto.getRandomValues(new Uint8Array(12)); const ct=new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv},key||V.key,te.encode(JSON.stringify(o)))); return {app:"personal-os",v:1,salt:salt||V.salt,iter:iter||V.iter,iv:b64e(iv),ct:b64e(ct),t:Date.now()}; }
+async function decryptObj(b,key){ const pt=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64d(b.iv)},key,b64d(b.ct)); return JSON.parse(td.decode(pt)); }
+const newSalt=()=>b64e(crypto.getRandomValues(new Uint8Array(16)));
+const VKEY="posv-vault";
+const V = { key:null, salt:null, iter:600000, unlocked:false, saveT:null, LOCAL_ONLY:new Set(["_sync"]),
+  touch(k){ if(!this.unlocked) return; S.meta[k]=Date.now(); clearTimeout(this.saveT); this.saveT=setTimeout(()=>this.saveLocal(),400); if(!this.LOCAL_ONLY.has(k)){ Sync.schedule(); if(typeof CloudSync!=="undefined") CloudSync.schedule(); } },
+  async saveLocal(){ if(!this.unlocked) return; clearTimeout(this.saveT); const blob=await encryptObj({data:S.cache,meta:S.meta,base:Sync.base}); try{ localStorage.setItem(VKEY,JSON.stringify(blob)); }catch(e){ setSync("ذخیره روی این دستگاه انجام نشد؛ حافظه مرورگر پر است"); } },
+  stored(){ try{ return JSON.parse(localStorage.getItem(VKEY)||"null"); }catch(e){ return null; } },
+  stamp(){ const t=Date.now(); Object.keys(S.cache).forEach(k=>{ if(!S.meta[k]) S.meta[k]=t; }); }
+};
+
+/* ---------- GitHub private-repo sync ---------- */
+function threeWay(base,loc,rem){ const J=x=>JSON.stringify(x), b=new Set(base.map(J)), r=new Set(rem.map(J)), l=new Set(loc.map(J));
+  const out=loc.filter(x=>!(b.has(J(x))&&!r.has(J(x)))); rem.forEach(x=>{ const j=J(x); if(!b.has(j)&&!l.has(j)) out.push(x); }); return out; }
+function httpErr(r){ const e=new Error("http "+r.status); e.status=r.status; return e; }
+function syncErrText(e){ if(!e) return ""; if(e.code==="pw") return "رمز همگام‌سازی روی دستگاه دیگری عوض شده؛ در تنظیمات، رمز جدید را وارد کن و «اتصال» را بزن.";
+  if(e.status===401) return "توکن نامعتبر یا منقضی شده است؛ توکن جدید بساز و در تنظیمات وارد کن.";
+  if(e.status===403) return "توکن اجازه نوشتن ندارد (Contents: Read and write) یا محدودیت موقت GitHub است.";
+  if(e.status===404) return "مخزن پیدا نشد یا توکن به آن دسترسی ندارد.";
+  if(e.status) return "خطای GitHub ("+fa(e.status)+")."; return "اتصال به اینترنت برقرار نیست؛ بعداً خودکار دوباره تلاش می‌شود."; }
+const Sync={base:null,sha:null,busy:false,dirty:false,t:null,state:"off",last:0,err:null,
+  on(){ const c=S.cache._sync; return !!(STANDALONE&&V.unlocked&&c&&c.repo&&c.token&&!(typeof CloudSync!=="undefined"&&CloudSync.configured())); },
+  schedule(ms){ if(!this.on()) return; this.dirty=true; clearTimeout(this.t); this.t=setTimeout(()=>this.push(),ms||2500); },
+  set(st,e){ this.state=st; this.err=e||null; const tm=this.last?fa(new Date(this.last).toTimeString().slice(0,5)):"";
+    const txt=st==="ok"?`همگام با GitHub · ${tm}`:st==="busy"?"در حال همگام‌سازی…":st==="err"?syncErrText(e):"فقط روی این دستگاه · رمزگذاری‌شده";
+    setSync(st==="err"?"همگام‌سازی: خطا":txt); const s=document.getElementById("syStatus"); if(s){ s.textContent=txt; s.classList.toggle("err",st==="err"); } },
+  async api(opt,cfg,path){ cfg=cfg||S.cache._sync; opt=opt||{}; return fetch(`https://api.github.com/repos/${cfg.repo}${path===undefined?"/contents/vault.json":path}`,{method:opt.method||"GET",cache:"no-store",headers:{Authorization:"Bearer "+cfg.token,Accept:opt.accept||"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:opt.body}); },
+  async checkRepo(cfg){ const r=await this.api(null,cfg,""); if(!r.ok) throw httpErr(r); const j=await r.json(); if(!j.private){ const e=new Error("public"); e.code="public"; throw e; } if(j.permissions&&!j.permissions.push){ const e=httpErr({status:403}); throw e; } },
+  async fetchRemote(cfg){ const r=await this.api(null,cfg); if(r.status===404) return {missing:true}; if(!r.ok) throw httpErr(r); const j=await r.json(); let txt;
+    if(j.content&&j.encoding==="base64") txt=td.decode(b64d(j.content.replace(/\s/g,""))); else { const r2=await this.api({accept:"application/vnd.github.raw+json"},cfg); if(!r2.ok) throw httpErr(r2); txt=await r2.text(); }
+    return {sha:j.sha,blob:JSON.parse(txt)}; },
+  merge(d){ let changed=false, localNewer=false; const rm=d.meta||{}, rd=d.data||{}, base=this.base, J=x=>JSON.stringify(x);
+    new Set([...Object.keys(rm),...Object.keys(S.meta)]).forEach(k=>{ if(V.LOCAL_ONLY.has(k)) return; const lt=S.meta[k]||0, rt=rm[k]||0;
+      const lv=S.cache[k], rv=rd[k], bv=base?base[k]:undefined;
+      if(base&&lt!==rt&&Array.isArray(lv)&&Array.isArray(rv)&&J(lv)!==J(rv)&&J(lv)!==J(bv)&&J(rv)!==J(bv)){
+        S.cache[k]=threeWay(Array.isArray(bv)?bv:[],lv,rv); S.meta[k]=Math.max(lt,rt,Date.now()); changed=true; localNewer=true; return; }
+      if(rt>lt){ if(Object.prototype.hasOwnProperty.call(rd,k)) S.cache[k]=rd[k]; else delete S.cache[k]; S.meta[k]=rt; changed=true; } else if(lt>rt) localNewer=true; });
+    this.base=JSON.parse(J(rd));
+    if(changed){ V.saveLocal(); applySettings(); renderAll(true); }
+    if(localNewer&&!this.busy) this.schedule(800); return changed; },
+  async pull(){ if(!this.on()) return false; const rem=await this.fetchRemote(); if(rem.missing){ this.sha=null; if(Object.keys(S.meta).length) this.schedule(300); return false; }
+    this.sha=rem.sha; if(rem.blob.salt!==V.salt){ const e=new Error("pw"); e.code="pw"; throw e; }
+    const d=await decryptObj(rem.blob,V.key); const ch=this.merge(d); this.last=Date.now(); if(!this.busy) this.set("ok"); return ch; },
+  payload(){ const data={}, meta={}; Object.keys(S.meta).forEach(k=>{ if(V.LOCAL_ONLY.has(k)) return; meta[k]=S.meta[k]; if(Object.prototype.hasOwnProperty.call(S.cache,k)) data[k]=S.cache[k]; }); return {data,meta}; },
+  async push(){ if(!this.on()) return; if(this.busy){ this.dirty=true; return; } this.busy=true; this.set("busy");
+    try{ for(let a=0;a<4;a++){ this.dirty=false; const pl=this.payload(); const blob=await encryptObj(pl);
+        const body=JSON.stringify({message:"sync "+new Date().toISOString(),content:b64e(te.encode(JSON.stringify(blob))),...(this.sha?{sha:this.sha}:{})});
+        const r=await this.api({method:"PUT",body}); if(r.ok){ const j=await r.json(); this.sha=j.content&&j.content.sha; this.base=JSON.parse(JSON.stringify(pl.data)); V.saveLocal(); this.last=Date.now(); this.set("ok"); break; }
+        if([409,412,422].includes(r.status)){ await this.pull(); continue; } throw httpErr(r); } }
+    catch(e){ this.dirty=true; this.set("err",e); }
+    this.busy=false; if(this.dirty&&this.state!=="err") this.schedule(1500); },
+  async tick(){ if(!this.on()||this.busy||document.hidden) return; try{ await this.pull(); if(this.dirty) this.schedule(500); }catch(e){ this.set("err",e); } }
+};
+setInterval(()=>Sync.tick(),45000);
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden) Sync.tick(); });
+window.addEventListener("online",()=>{ if(Sync.on()){ Sync.tick(); if(Sync.dirty) Sync.schedule(500); } });
+
+/* ---------- Supabase encrypted cloud sync ---------- */
+const CLOUD_CFG_KEY="posv-cloud-config", CLOUD_TABLE="personal_os_vaults";
+const CloudSync={client:null,userId:null,channel:null,ready:false,busy:false,dirty:false,timer:null,revision:null,last:0,config:null,
+  configured(){ return !!(this.config||this.readConfig()); },
+  readConfig(){ try{ this.config=JSON.parse(localStorage.getItem(CLOUD_CFG_KEY)||"null"); }catch(_){ this.config=null; } return this.config; },
+  saveConfig(c){ this.config={url:c.url,anon:c.anon,email:c.email}; try{localStorage.setItem(CLOUD_CFG_KEY,JSON.stringify(this.config));}catch(_){} },
+  set(message,state){ const el=document.getElementById("cloudStatus"); if(el) el.textContent=message; const badge=document.getElementById("cloudIndicator"); if(badge){ badge.classList.toggle("is-live",state==="live"); badge.classList.toggle("is-error",state==="error"); badge.querySelector("span").textContent=state==="live"?"متصل و همگام":state==="busy"?"در حال همگام‌سازی":state==="error"?"نیازمند بررسی":"قطع از ابر"; }
+    const n=document.getElementById("syncNote"); if(n) n.textContent=message; const b=document.getElementById("cloudSyncNow"); if(b) b.disabled=!this.ready||this.busy; const d=document.getElementById("cloudDisconnect"); if(d) d.disabled=!this.configured(); },
+  makeClient(url,anon){ if(!window.supabase||!window.supabase.createClient) throw new Error("کتابخانه اتصال ابری بارگذاری نشد. اتصال اینترنت و مسدود نبودن cdn.jsdelivr.net را بررسی کن."); return window.supabase.createClient(url,anon,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}); },
+  async attach(userId){ this.userId=userId; this.ready=true; if(this.channel){try{await this.client.removeChannel(this.channel);}catch(_){}}
+    this.channel=this.client.channel("personal-os-"+userId).on("postgres_changes",{event:"*",schema:"public",table:CLOUD_TABLE,filter:"user_id=eq."+userId},payload=>{ const row=payload.new; if(row&&Number(row.revision||0)>Number(this.revision||0)) this.pull(true).catch(e=>this.set("دریافت تغییرات دستگاه دیگر انجام نشد: "+(e.message||"خطا"),"error")); }).subscribe();
+    this.set("اتصال ابری برقرار شد؛ تغییرات دستگاه‌های دیگر به‌صورت زنده دریافت می‌شوند.","live"); },
+  async row(){ const {data,error}=await this.client.from(CLOUD_TABLE).select("user_id,encrypted_blob,revision,updated_at").eq("user_id",this.userId).maybeSingle(); if(error) throw error; return data; },
+  async decode(blob){ if(typeof blob==="string") blob=JSON.parse(blob); if(!blob||!blob.salt||!blob.ct) throw new Error("ساختار اطلاعات ابری معتبر نیست."); if(blob.salt!==V.salt) throw new Error("رمزگذاری این نسخه با کلید محلی متفاوت است. از بخش اتصال، رمز اصلی برنامه را دوباره وارد کن تا کلید ابری بازیابی شود."); return decryptObj(blob,V.key); },
+  async pull(fromRealtime){ if(!this.ready||!V.unlocked) return false; const row=await this.row(); if(!row){ this.revision=null; this.schedule(250); return false; }
+    if(Number(row.revision||0)<=Number(this.revision||0)) return false;
+    const d=await this.decode(row.encrypted_blob); const changed=Sync.merge(d); this.revision=Number(row.revision||0); this.last=Date.now(); await V.saveLocal();
+    const localAhead=Object.keys(S.meta).some(k=>!V.LOCAL_ONLY.has(k)&&(S.meta[k]||0)>((d.meta||{})[k]||0)); if(localAhead) this.schedule(500);
+    if(changed) this.set("تغییرات ابری دریافت و با اطلاعات این دستگاه ادغام شد.","live"); else this.set("اطلاعات این دستگاه به‌روز است.","live");
+    if(Sync.base) this.dirty=false; return changed; },
+  schedule(ms){ if(!this.ready||!V.unlocked) return; this.dirty=true; clearTimeout(this.timer); this.timer=setTimeout(()=>this.push(),ms||900); },
+  async push(){ if(!this.ready||!V.unlocked) return; if(this.busy){this.dirty=true;return;} this.busy=true; this.set("در حال ذخیره تغییرات رمزگذاری‌شده در فضای ابری…","busy");
+    try{ let saved=false; for(let attempt=0;attempt<4;attempt++){
+      this.dirty=false; const current=await this.row();
+      if(current&&Number(current.revision||0)!==Number(this.revision||0)){
+        const remote=await this.decode(current.encrypted_blob); Sync.merge(remote); this.revision=Number(current.revision||0);
+      }
+      const pl=Sync.payload(); delete pl.data._sync; delete pl.meta._sync;
+      const blob=await encryptObj(pl,V.key,V.salt,V.iter); const now=new Date().toISOString();
+      if(!current){
+        const ins=await this.client.from(CLOUD_TABLE).insert({user_id:this.userId,encrypted_blob:blob,revision:1,updated_at:now}).select("revision,updated_at").maybeSingle();
+        if(ins.error){ if(ins.error.code==="23505"){ this.revision=null; continue; } throw ins.error; }
+        this.revision=Number(ins.data.revision||1); saved=true;
+      }else{
+        const upd=await this.client.from(CLOUD_TABLE).update({encrypted_blob:blob,revision:Number(current.revision||0)+1,updated_at:now}).eq("user_id",this.userId).eq("revision",Number(current.revision||0)).select("revision,updated_at").maybeSingle();
+        if(upd.error) throw upd.error; if(!upd.data){ this.revision=null; continue; } this.revision=Number(upd.data.revision||0); saved=true;
+      }
+      if(!saved) throw new Error("تعارض هم‌زمان داده‌ها؛ دوباره تلاش کن.");
+      this.last=Date.now(); Sync.base=JSON.parse(JSON.stringify(pl.data)); await V.saveLocal(); this.set("همگام‌سازی زنده فعال است · آخرین ذخیره: "+fa(new Date(this.last).toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"})),"live"); break;
+    }}catch(e){ this.dirty=true; this.set("ذخیره ابری انجام نشد: "+(e.message||"خطای ارتباط یا دسترسی جدول"),"error"); }
+    this.busy=false; const b=document.getElementById("cloudSyncNow"); if(b) b.disabled=!this.ready; if(this.dirty&&this.ready) this.schedule(1800);
+  },
+  async resume(){ const cfg=this.readConfig(); if(!cfg) return; try{ this.client=this.makeClient(cfg.url,cfg.anon); const {data,error}=await this.client.auth.getSession(); if(error) throw error; const user=data.session&&data.session.user; if(!user){this.set("تنظیمات ابر روی این دستگاه ذخیره شده؛ برای اتصال دوباره، در همین صفحه وارد حساب شو.","off");return;}
+      await this.attach(user.id); await this.pull();
+    }catch(e){this.ready=false;this.set("اتصال خودکار ابری برقرار نشد: "+(e.message||"خطا")+" · تنظیمات اتصال را بررسی کن.","error");}},
+  async connect({url,anon,email,password,master,mode}){
+    this.set("در حال برقراری ارتباط با سرویس ابری…","busy"); this.client=this.makeClient(url,anon);
+    const auth=mode==="signup"?await this.client.auth.signUp({email,password,options:{emailRedirectTo:window.location.href.split("#")[0]}}):await this.client.auth.signInWithPassword({email,password});
+    if(auth.error) throw auth.error; if(!auth.data.session){ this.saveConfig({url,anon,email}); throw new Error("حساب ساخته شد. ایمیلت را تأیید کن، سپس نوع اتصال را روی «ورود به حساب موجود» بگذار و دوباره وارد شو."); }
+    const user=auth.data.user; this.userId=user.id; const {data:row,error}=await this.client.from(CLOUD_TABLE).select("user_id,encrypted_blob,revision,updated_at").eq("user_id",user.id).maybeSingle(); if(error) throw error;
+    if(row){ let blob=row.encrypted_blob; if(typeof blob==="string") blob=JSON.parse(blob); const key=await deriveKey(master,blob.salt,blob.iter||600000); const remote=await decryptObj(blob,key);
+      V.key=key; V.salt=blob.salt; V.iter=blob.iter||600000; Sync.base=null; Sync.merge(remote); this.revision=Number(row.revision||0); await V.saveLocal();
+    }else{ this.revision=null; V.stamp(); }
+    delete S.cache._sync; delete S.meta._sync; await V.saveLocal(); this.saveConfig({url,anon,email}); await this.attach(user.id);
+    if(row) await this.push(); else await this.push();
+    this.set("اتصال موفق بود. اطلاعات رمزگذاری‌شده در فضای ابری ذخیره شد و تغییرات دستگاه‌های دیگر به‌صورت زنده دریافت می‌شود.","live"); return true;
+  },
+  async disconnect(){ clearTimeout(this.timer); if(this.channel&&this.client){try{await this.client.removeChannel(this.channel);}catch(_){}} this.channel=null; this.ready=false; this.userId=null; this.revision=null; this.config=null; try{localStorage.removeItem(CLOUD_CFG_KEY);}catch(_){} if(this.client){try{await this.client.auth.signOut({scope:"local"});}catch(_){}} this.client=null; this.set("اتصال ابری این دستگاه قطع شد؛ نسخه محلی اطلاعات همچنان باقی است.","off"); }
+};
+
+const cloudForm=document.getElementById("cloudForm");
+cloudForm.addEventListener("submit",async e=>{ e.preventDefault(); const btn=document.getElementById("cloudConnect"); if(btn.disabled)return; btn.disabled=true;
+  const url=document.getElementById("cloudUrl").value.trim().replace(/\/$/,""), anon=document.getElementById("cloudAnon").value.trim(), email=document.getElementById("cloudEmail").value.trim(), password=document.getElementById("cloudPass").value, master=document.getElementById("cloudMaster").value, mode=document.getElementById("cloudMode").value;
+  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){CloudSync.set("آدرس پروژه باید به شکل https://شناسه.supabase.co باشد.","error");btn.disabled=false;return;}
+  if(!anon||!email||!password||master.length<8){CloudSync.set("همه فیلدها را کامل کن. رمز اصلی برنامه باید حداقل ۸ کاراکتر باشد.","error");btn.disabled=false;return;}
+  try{ await CloudSync.connect({url,anon,email,password,master,mode}); document.getElementById("cloudPass").value=""; document.getElementById("cloudMaster").value=""; document.getElementById("cloudSyncNow").disabled=false; document.getElementById("cloudDisconnect").disabled=false; drawDataInfo(); drawBanner(); }
+  catch(err){CloudSync.set(err.message||"اتصال ناموفق بود.","error");} finally{btn.disabled=false;}
+});
+document.getElementById("cloudSyncNow").addEventListener("click",async()=>{ if(!CloudSync.ready)return; try{await CloudSync.pull(); await CloudSync.push();}catch(e){CloudSync.set(e.message||"همگام‌سازی ناموفق بود.","error");} });
+document.getElementById("cloudDisconnect").addEventListener("click",async()=>{if(!confirm("اتصال ابری فقط از این دستگاه قطع شود؟ داده‌های ابری حذف نمی‌شوند."))return;await CloudSync.disconnect();drawDataInfo();drawBanner();});
+window.addEventListener("online",()=>{if(CloudSync.ready) CloudSync.pull().catch(e=>CloudSync.set(e.message||"دریافت داده‌ها ناموفق بود.","error"));});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&CloudSync.ready) CloudSync.pull().catch(e=>CloudSync.set(e.message||"دریافت داده‌ها ناموفق بود.","error"));});
+(function initCloudForm(){const c=CloudSync.readConfig();if(c){document.getElementById("cloudUrl").value=c.url||"";document.getElementById("cloudAnon").value=c.anon||"";document.getElementById("cloudEmail").value=c.email||"";document.getElementById("cloudDisconnect").disabled=false;}})();
+
+
+/* ---------- lock screen ---------- */
+const LK={mode:"unlock",fails:0,armed:false};
+function lkMode(m){ LK.mode=m; const legacy=Object.keys(legacyKeys()).length>0;
+  const T={setup:["یک رمز عبور بساز",legacy?"اطلاعات فعلی‌ات با این رمز رمزگذاری می‌شود و دیگر بدون رمز قابل خواندن نیست.":"همه اطلاعاتت روی این دستگاه با این رمز رمزگذاری می‌شود. حداقل ۸ کاراکتر؛ اگر رمز را فراموش کنی، اطلاعات قابل بازیابی نیست.","ساختن رمز و ورود",""],
+    unlock:["سیستم قفل است","رمز عبورت را وارد کن.","باز کردن",""],
+    connect:["دریافت اطلاعات از دستگاه دیگر","نام مخزن خصوصی، توکن و همان رمزی را که روی دستگاه اصلی ساختی وارد کن.","اتصال و دریافت اطلاعات","برگشت"],
+    forgot:["فراموشی رمز","رمز قابل بازیابی نیست؛ هیچ‌کس، حتی سازنده سیستم، نمی‌تواند اطلاعات را بدون رمز باز کند. اگر رمز را روی دستگاه دیگری به یاد داری، از آنجا وارد شو. در غیر این صورت فقط می‌توانی اطلاعات این دستگاه را پاک کنی و از نو شروع کنی.","پاک کردن اطلاعات این دستگاه","برگشت"]}[m];
+  $("#lkTitle").textContent=T[0]; $("#lkSub").textContent=T[1]; $("#lkGo").textContent=T[2]; $("#lkAlt").textContent=T[3]; $("#lkAlt").hidden=!T[3];
+  $("#lkForgot").hidden=m!=="unlock"; $("#lkConnect").hidden=m!=="connect"; $("#lkPw").hidden=m==="forgot"; $("#lkPw2").hidden=m!=="setup";
+  $("#lkGo").classList.toggle("danger",m==="forgot"); $("#lkErr").textContent=""; $("#lkPw").value=""; $("#lkPw2").value="";
+  $("#lkPw").setAttribute("autocomplete",m==="unlock"||m==="connect"?"current-password":"new-password"); LK.armed=false;
+  setTimeout(()=>{ const f=m==="connect"?$("#lkRepo"):$("#lkPw"); if(!f.hidden) f.focus(); },30); }
+$("#lkAlt").addEventListener("click",()=>lkMode(LK.mode==="setup"?"connect":(V.stored()?"unlock":"setup")));
+$("#lkForgot").addEventListener("click",()=>lkMode("forgot"));
+function lkErr(t){ $("#lkErr").textContent=t; }
+$("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw=$("#lkPw").value, btn=$("#lkGo"); if(btn.disabled) return;
+  try{ btn.disabled=true;
+  if(LK.mode==="setup"){ if(pw.length<8) return lkErr("رمز باید حداقل ۸ کاراکتر باشد."); if(pw!==$("#lkPw2").value) return lkErr("تکرار رمز یکسان نیست.");
+    lkErr("در حال ساختن کلید رمزگذاری…"); V.salt=newSalt(); V.key=await deriveKey(pw,V.salt,V.iter); S.cache={...legacyKeys(),...S.cache}; S.meta={}; V.stamp(); V.unlocked=true; await V.saveLocal();
+    Object.keys(legacyKeys()).forEach(k=>{ try{ localStorage.removeItem("pos3-"+k); }catch(_){} }); enterApp(); }
+  else if(LK.mode==="unlock"){ const b=V.stored(); if(!b) return lkMode("setup"); lkErr("در حال بررسی…");
+    try{ const key=await deriveKey(pw,b.salt,b.iter||600000); const d=await decryptObj(b,key); V.key=key; V.salt=b.salt; V.iter=b.iter||600000; S.cache=d.data||{}; S.meta=d.meta||{}; Sync.base=d.base||null; V.unlocked=true; LK.fails=0; enterApp(); }
+    catch(_){ LK.fails++; await new Promise(r=>setTimeout(r,Math.min(8000,700*LK.fails))); $("#lkPw").value=""; lkErr("رمز اشتباه است."); } }
+  else if(LK.mode==="connect"){ const repo=$("#lkRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\/$/,""), token=$("#lkToken").value.trim();
+    if(!/^[\w.-]+\/[\w.-]+$/.test(repo)) return lkErr("نام مخزن را به شکل نام‌کاربری/نام‌مخزن وارد کن."); if(!token) return lkErr("توکن را وارد کن."); if(!pw) return lkErr("رمز را وارد کن.");
+    const cfg={repo,token}; lkErr("در حال اتصال به GitHub…");
+    try{ await Sync.checkRepo(cfg); }catch(er){ return lkErr(er.code==="public"?"این مخزن عمومی است؛ برای امنیت فقط مخزن خصوصی (Private) قبول می‌شود.":syncErrText(er)); }
+    let rem; try{ rem=await Sync.fetchRemote(cfg); }catch(er){ return lkErr(syncErrText(er)); }
+    if(rem.missing) return lkErr("هنوز اطلاعاتی در این مخزن نیست. اول روی دستگاه اصلی، در تنظیمات همگام‌سازی را روشن کن.");
+    lkErr("در حال باز کردن اطلاعات…");
+    try{ const key=await deriveKey(pw,rem.blob.salt,rem.blob.iter||600000); const d=await decryptObj(rem.blob,key); V.key=key; V.salt=rem.blob.salt; V.iter=rem.blob.iter||600000; S.cache=d.data||{}; S.meta=d.meta||{}; Sync.base=JSON.parse(JSON.stringify(d.data||{})); }
+    catch(_){ return lkErr("این رمز با رمز اطلاعات همگام‌سازی‌شده یکی نیست."); }
+    S.cache._sync=cfg; S.meta._sync=Date.now(); Sync.sha=rem.sha; V.unlocked=true; await V.saveLocal(); Sync.last=Date.now(); enterApp(true); }
+  else if(LK.mode==="forgot"){ if(!LK.armed){ LK.armed=true; btn.textContent="مطمئنی؟ همه اطلاعات این دستگاه پاک می‌شود"; return; }
+    try{ localStorage.removeItem(VKEY); Object.keys(legacyKeys()).forEach(k=>localStorage.removeItem("pos3-"+k)); }catch(_){} S.cache={}; S.meta={}; lkMode("setup"); }
+  } finally { btn.disabled=false; }
+});
+function enterApp(justPulled){ $("#lock").hidden=true; document.body.classList.remove("locked"); $("#lockBtn").hidden=false;
+  applySettings(); renderAll(); fillSettings(); route(); armIdle();
+  if(Sync.on()){ if(justPulled) Sync.set("ok"); else { Sync.set("busy"); Sync.pull().then(()=>{ if(Sync.dirty) Sync.schedule(300); }).catch(e=>Sync.set("err",e)); } } else if(!CloudSync.configured()) Sync.set("off"); CloudSync.resume(); }
+let idleT=null; function armIdle(){ clearTimeout(idleT); const m=+SET_().lockMin; if(!STANDALONE||!V.unlocked||!m) return; idleT=setTimeout(lockNow,m*60000); }
+["pointerdown","keydown","touchstart","wheel","mousemove"].forEach(ev=>document.addEventListener(ev,()=>{ if(V.unlocked) armIdle(); },{passive:true}));
+async function lockNow(){ clearTimeout(idleT); try{ await V.saveLocal(); if(Sync.on()&&(Sync.dirty||Sync.busy)){ clearTimeout(Sync.t); if(!Sync.busy) await Sync.push(); } }catch(_){} V.unlocked=false; S.cache={}; location.reload(); }
 
 let assetsApi=null, sampleApi=null, sampleCaps=null;
 async function bootCaps(){
@@ -891,13 +1170,14 @@ function pickFile(f){ pickedFile=f; $("#fileName").textContent="انتخاب ش�
 function status(t,err){ const s=$("#learnStatus"); s.textContent=t; s.classList.toggle("err",!!err); }
 
 function loadScript(src){ return new Promise((ok,no)=>{ const s=document.createElement("script"); s.src=src; s.onload=ok; s.onerror=()=>no(new Error("load")); document.head.appendChild(s); }); }
+async function loadLib(name,cdn){ if(STANDALONE){ try{ return await loadScript("lib/"+name); }catch(e){} } return loadScript(cdn); }
 async function pdfText(file){
-  if(!window.pdfjsLib){ await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"); await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"); }
+  if(!window.pdfjsLib){ await loadLib("pdf.min.js","https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"); await loadLib("pdf.worker.min.js","https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"); }
   const pdf=await window.pdfjsLib.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise; let out=[];
   for(let p=1;p<=pdf.numPages;p++){ status(`در حال خواندن PDF: صفحه ${fa(p)} از ${fa(pdf.numPages)}`); const c=await (await pdf.getPage(p)).getTextContent(); out.push(c.items.map(i=>i.str+(i.hasEOL?"\n":" ")).join("")); }
   return out.join("\n\n");
 }
-async function docxText(file){ if(!window.mammoth) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"); const r=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()}); return r.value; }
+async function docxText(file){ if(!window.mammoth) await loadLib("mammoth.browser.min.js","https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"); const r=await window.mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()}); return r.value; }
 function chunkText(t,size){ t=t.replace(/[ \t]+/g," ").replace(/\n{3,}/g,"\n\n").trim(); const parts=[]; let i=0;
   while(i<t.length){ let end=Math.min(t.length,i+size); if(end<t.length){ const nl=t.lastIndexOf("\n",end); const dot=t.lastIndexOf(".",end); const cut=Math.max(nl,dot); if(cut>i+size*0.6) end=cut+1; } parts.push(t.slice(i,end).trim()); i=end; }
   return parts.filter(Boolean); }
@@ -1223,7 +1503,7 @@ const THEMES={
   sand:{name:"روشن گرم",bg:"#f5f1ea",ink:"#2a241c",accent:"#b4532a",accent2:"#2d6a6a",good:"#3d7a4a",bad:"#c0392b"}
 };
 const FONTS=[["Vazirmatn","وزیرمتن","wght@300;400;500;700;800"],["Noto Sans Arabic","نوتو سنس","wght@400;500;700;800"],["IBM Plex Sans Arabic","آی‌بی‌ام پلکس","wght@300;400;500;700"],["Rubik","روبیک","wght@300;400;500;700;800"],["Readex Pro","ریدکس","wght@300;400;500;700"],["Tajawal","تجوال","wght@300;400;500;700;800"],["Cairo","قاهره","wght@300;400;500;700;800"],["Noto Naskh Arabic","نسخ","wght@400;500;700"],["Markazi Text","مرکزی","wght@400;500;700"],["Harmattan","هارمتان","wght@400;500;700"],["Amiri","امیری","wght@400;700"],["Lalezar","لاله‌زار (فقط تیتر)","wght@400"]];
-const SDEF={theme:"nili",custom:[],font:"Vazirmatn",headFont:"Vazirmatn",fs:14.5,compact:false,blur:true,motion:true,showSample:false,aiName:"دستیار",tone:"friendly",aiTier:"complex",aiRules:"",lDays:14,lMin:25,lHour:"۲۲:۰۰",lTier:"default",lLevel:"simple",start:"today",brand:"سیستم من",sleepGoal:7,exGoal:150};
+const SDEF={lockMin:10,theme:"nili",custom:[],font:"Vazirmatn",headFont:"Vazirmatn",fs:14.5,compact:false,blur:true,motion:true,showSample:false,aiName:"دستیار",tone:"friendly",aiTier:"complex",aiRules:"",lDays:14,lMin:25,lHour:"۲۲:۰۰",lTier:"default",lLevel:"simple",start:"today",brand:"سیستم من",sleepGoal:7,exGoal:150};
 const PDEF={name:"",call:"",role:"",company:"",city:"",birth:"",wake:"",sleep:"",interests:[],skills:[],about:""};
 function SET_(){ return {...SDEF,...S.get("settings",{})}; }
 function PROF(){ return {...PDEF,...S.get("profile",{})}; }
@@ -1279,7 +1559,7 @@ ${p.about?"درباره کاربر: "+p.about:""}
 لحن: ${tone}. فارسی صحبت کن.${st.aiRules?"\nدستورالعمل همیشگی کاربر: "+st.aiRules:""}`; }
 
 /* settings UI */
-const SETSEC=[["set-profile","پروفایل"],["set-theme","پوسته"],["set-font","فونت و نمایش"],["set-ai","دستیار"],["set-learn","یادگیری"],["set-general","عمومی"],["set-data","داده‌ها"]];
+const SETSEC=[["set-profile","پروفایل"],...(STANDALONE?[["set-security","امنیت و همگام‌سازی"]]:[]),["set-theme","پوسته"],["set-font","فونت و نمایش"],["set-ai","دستیار"],["set-learn","یادگیری"],["set-general","عمومی"],["set-data","داده‌ها"]];
 $("#setNav").innerHTML=SETSEC.map(([id,t])=>`<button class="btn sm" type="button" data-go="${id}">${t}</button>`).join("");
 $("#setNav").addEventListener("click",e=>{ const b=e.target.closest("[data-go]"); if(b) document.getElementById(b.dataset.go).scrollIntoView({behavior:SET_().motion?"smooth":"auto",block:"start"}); });
 function drawThemes(){ const st=SET_(), all=allThemes();
@@ -1313,15 +1593,54 @@ $$("[data-tags]").forEach(box=>{ const k=box.dataset.tags;
 function fillSettings(){ const st=SET_(), p=PROF();
   SETF.forEach(([s,k,num])=>{ $(s).value=num?st[k]:st[k]; }); PROFF.forEach(([s,k])=>$(s).value=p[k]||"");
   $("#tCompact").checked=!!st.compact; $("#tBlur").checked=!!st.blur; $("#tMotion").checked=!!st.motion; $("#tWall").checked=!!st.wall; $("#wallDim").value=st.wallDim||.65;
-  drawThemes(); drawFonts(); drawTags(); drawDataInfo(); }
-function drawDataInfo(){ $("#dataInfo").textContent=`${fa(Object.keys(S.cache).length)} مجموعه داده · ${S.col?"ذخیره در حساب شما (روی همه دستگاه‌ها)":"ذخیره روی همین مرورگر"}`; }
+  drawThemes(); drawFonts(); drawTags(); drawDataInfo(); drawSyncForm(); }
+function drawDataInfo(){ $("#dataInfo").textContent=`${fa(Object.keys(S.cache).length)} مجموعه داده · ${STANDALONE?("رمزگذاری‌شده روی این دستگاه"+((typeof CloudSync!=="undefined"&&CloudSync.ready)?" · همگام‌سازی ابری زنده":Sync.on()?" · همگام با GitHub":"")):S.col?"ذخیره در حساب شما (روی همه دستگاه‌ها)":"ذخیره روی همین مرورگر"}`; }
+function drawBanner(){ const b=$("#bkBanner"); b.hidden=!(STANDALONE&&V.unlocked&&!Sync.on()&&!(typeof CloudSync!=="undefined"&&CloudSync.ready)&&Object.keys(S.cache).length>4&&Date.now()-(+S.get("lastBackup",0)||0)>7*864e5); }
+$("#bkGo").addEventListener("click",()=>setTimeout(()=>document.getElementById("set-data").scrollIntoView({block:"start"}),60));
+
+/* security settings */
+if(!STANDALONE) $("#set-security").hidden=true;
+$("#lockBtn").addEventListener("click",e=>{ e.preventDefault(); lockNow(); });
+$("#secLockNow").addEventListener("click",()=>lockNow());
+$("#secLock").addEventListener("change",e=>{ saveSet({lockMin:+e.target.value}); armIdle(); });
+function pwStatus(t,err){ const el=$("#pwStatus"); el.textContent=t; el.classList.toggle("err",!!err); }
+$("#pwForm").addEventListener("submit",async e=>{ e.preventDefault(); const o=$("#pwOld").value,n=$("#pwNew").value,n2=$("#pwNew2").value;
+  if(n.length<8) return pwStatus("رمز جدید باید حداقل ۸ کاراکتر باشد.",true); if(n!==n2) return pwStatus("تکرار رمز جدید یکسان نیست.",true);
+  pwStatus("در حال بررسی…"); const b=V.stored(); try{ await decryptObj(b,await deriveKey(o,b.salt,b.iter||600000)); }catch(_){ return pwStatus("رمز فعلی اشتباه است.",true); }
+  V.salt=newSalt(); V.key=await deriveKey(n,V.salt,V.iter); await V.saveLocal(); if(Sync.on()) Sync.schedule(200); if(CloudSync.ready) CloudSync.schedule(200);
+  $("#pwOld").value=$("#pwNew").value=$("#pwNew2").value=""; pwStatus(Sync.on()?"رمز عوض شد. روی دستگاه‌های دیگر، در تنظیمات همگام‌سازی رمز جدید را وارد کن و «اتصال» را بزن.":"رمز عوض شد."); });
+function syStatus(t,err){ const el=$("#syStatus"); el.textContent=t; el.classList.toggle("err",!!err); }
+$("#syncForm").addEventListener("submit",async e=>{ e.preventDefault(); const btn=$("#syConnect"); if(btn.disabled) return;
+  const repo=$("#syRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\/$/,""), token=$("#syToken").value.trim()||(S.cache._sync||{}).token||"", pw=$("#syPw").value;
+  if(!/^[\w.-]+\/[\w.-]+$/.test(repo)) return syStatus("نام مخزن را به شکل نام‌کاربری/نام‌مخزن وارد کن.",true); if(!token) return syStatus("توکن را وارد کن.",true); if(!pw) return syStatus("رمز عبور فعلی را برای تأیید وارد کن.",true);
+  btn.disabled=true; const cfg={repo,token};
+  try{ syStatus("در حال بررسی رمز…"); const b=V.stored(); let pwOk=true; try{ await decryptObj(b,await deriveKey(pw,b.salt,b.iter||600000)); }catch(_){ pwOk=false; }
+    syStatus("در حال اتصال به GitHub…");
+    try{ await Sync.checkRepo(cfg); }catch(er){ return syStatus(er.code==="public"?"این مخزن عمومی است؛ برای امنیت فقط مخزن خصوصی (Private) قبول می‌شود.":syncErrText(er),true); }
+    let rem; try{ rem=await Sync.fetchRemote(cfg); }catch(er){ return syStatus(syncErrText(er),true); }
+    if(!rem.missing&&rem.blob.salt!==V.salt){ let key; try{ key=await deriveKey(pw,rem.blob.salt,rem.blob.iter||600000); var d=await decryptObj(rem.blob,key); }catch(_){ return syStatus(pwOk?"اطلاعات این مخزن با رمز دیگری رمزگذاری شده؛ همان رمزی را که روی دستگاه دیگر داری وارد کن.":"رمز اشتباه است.",true); }
+      V.key=key; V.salt=rem.blob.salt; V.iter=rem.blob.iter||600000; S.cache._sync=cfg; S.meta._sync=Date.now(); V.stamp(); Sync.sha=rem.sha; Sync.merge(d); await V.saveLocal(); Sync.schedule(300);
+      syStatus(pwOk?"متصل شد و اطلاعات دو طرف ادغام شد.":"متصل شد. رمز این دستگاه هم همان رمز همگام‌سازی شد."); }
+    else { if(!pwOk) return syStatus("رمز اشتباه است.",true); S.cache._sync=cfg; S.meta._sync=Date.now(); V.stamp(); await V.saveLocal();
+      if(rem.missing){ Sync.sha=null; await Sync.push(); } else { Sync.sha=rem.sha; Sync.merge(await decryptObj(rem.blob,V.key)); await Sync.push(); }
+      if(Sync.state!=="err") syStatus("همگام‌سازی روشن شد. از این به بعد هر تغییر خودکار ذخیره و روی دستگاه‌های دیگر دریافت می‌شود."); }
+    $("#syPw").value=""; $("#syToken").value=""; drawSyncForm(); drawDataInfo(); drawBanner();
+  } finally { btn.disabled=false; } });
+$("#syNow").addEventListener("click",async()=>{ if(!Sync.on()) return syStatus("همگام‌سازی روشن نیست.",true); try{ await Sync.pull(); await Sync.push(); }catch(e){ Sync.set("err",e); } });
+let syOffArm=false; $("#syOff").addEventListener("click",e=>{ if(!Sync.on()) return syStatus("همگام‌سازی روشن نیست."); if(!syOffArm){ syOffArm=true; e.target.textContent="مطمئنی؟ دوباره بزن"; setTimeout(()=>{ syOffArm=false; e.target.textContent="قطع همگام‌سازی"; },3500); return; }
+  syOffArm=false; e.target.textContent="قطع همگام‌سازی"; delete S.cache._sync; S.meta._sync=Date.now(); V.saveLocal(); Sync.sha=null; Sync.set("off"); drawSyncForm(); drawDataInfo(); drawBanner(); syStatus("همگام‌سازی روی این دستگاه قطع شد. اطلاعات این دستگاه سر جایش است."); });
+function drawSyncForm(){ if(!STANDALONE) return; const c=S.cache._sync; $("#syRepo").value=c?c.repo:""; $("#syToken").placeholder=c?"ذخیره شده؛ برای تغییر، توکن جدید وارد کن":"github_pat_…"; $("#syOff").hidden=!c; $("#syNow").hidden=!c; $("#secLock").value=String(SET_().lockMin); if(Sync.state) Sync.set(Sync.on()?Sync.state:"off",Sync.err); }
 function dStatus(t,err){ const s=$("#dataStatus"); s.textContent=t; s.classList.toggle("err",!!err); }
-$("#dExport").addEventListener("click",async()=>{ const json=JSON.stringify({app:"personal-os",version:1,exported:new Date().toISOString(),data:S.cache},null,1);
+$("#dExport").addEventListener("click",async()=>{ let json;
+  if(STANDALONE){ const data={...S.cache}; delete data._sync; json=JSON.stringify(await encryptObj({data,meta:S.meta})); S.set("lastBackup",Date.now()); }
+  else json=JSON.stringify({app:"personal-os",version:1,exported:new Date().toISOString(),data:S.cache},null,1);
   const dl=window.claude&&window.claude.use?await window.claude.use("downloads").catch(()=>null):null;
   if(dl){ try{ await dl.save({filename:`personal-os-backup-${TODAY}.json`,data:json}); dStatus("فایل پشتیبان آماده دانلود شد."); return; }catch(e){ if(e&&/declin|cancel/i.test(e.code||"")){ dStatus("دانلود لغو شد."); return; } } }
-  if(!dl){ try{ const u=URL.createObjectURL(new Blob([json],{type:"application/json"})); const l=document.createElement("a"); l.href=u; l.download=`personal-os-backup-${TODAY}.json`; document.body.appendChild(l); l.click(); l.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000); dStatus("فایل پشتیبان دانلود شد."); return; }catch(e){} }
+  if(!dl){ try{ const u=URL.createObjectURL(new Blob([json],{type:"application/json"})); const l=document.createElement("a"); l.href=u; l.download=`personal-os-backup-${TODAY}.json`; document.body.appendChild(l); l.click(); l.remove(); setTimeout(()=>URL.revokeObjectURL(u),4000); dStatus(STANDALONE?"فایل پشتیبان رمزگذاری‌شده دانلود شد؛ فقط با رمز خودت باز می‌شود.":"فایل پشتیبان دانلود شد."); drawBanner(); return; }catch(e){} }
   try{ await navigator.clipboard.writeText(json); dStatus("دانلود در این نما ممکن نبود؛ متن پشتیبان در کلیپ‌بورد کپی شد."); }catch(e){ dStatus("خروجی گرفتن ممکن نشد.",true); } });
-$("#dImport").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return; try{ const j=JSON.parse(await f.text()); if(!j||!j.data||typeof j.data!=="object") throw 0; Object.entries(j.data).forEach(([k,v])=>S.set(k,v)); applySettings(); renderAll(); fillSettings(); dStatus("پشتیبان بازیابی شد: "+fa(Object.keys(j.data).length)+" مجموعه."); }catch(_){ dStatus("این فایل پشتیبان معتبر نیست.",true); } e.target.value=""; });
+$("#dImport").addEventListener("change",async e=>{ const f=e.target.files[0]; if(!f) return; try{ let j=JSON.parse(await f.text());
+    if(j&&j.ct){ if(!STANDALONE||!V.key) throw 0; let d; try{ d=await decryptObj(j,j.salt===V.salt?V.key:await deriveKey($("#syPw").value||"",j.salt,j.iter||600000)); }catch(_){ dStatus("این پشتیبان با رمز دیگری ساخته شده؛ آن رمز را در خانه «رمز عبور فعلی» بخش همگام‌سازی بنویس و دوباره امتحان کن.",true); e.target.value=""; return; } j={data:d.data}; delete j.data._sync; }
+    if(!j||!j.data||typeof j.data!=="object") throw 0; Object.entries(j.data).forEach(([k,v])=>S.set(k,v)); applySettings(); renderAll(); fillSettings(); dStatus("پشتیبان بازیابی شد: "+fa(Object.keys(j.data).length)+" مجموعه."); }catch(_){ dStatus("این فایل پشتیبان معتبر نیست.",true); } e.target.value=""; });
 $("#dChat").addEventListener("click",()=>{ S.set("chat",[]); drawChat(); dStatus("گفتگوی دستیار پاک شد."); });
 let resetArm=false; $("#dReset").addEventListener("click",e=>{ if(!resetArm){ resetArm=true; e.target.textContent="مطمئنی؟ دوباره بزن"; setTimeout(()=>{ resetArm=false; e.target.textContent="بازنشانی کامل"; },3500); return; }
   Object.keys(S.cache).forEach(k=>S.del(k)); resetArm=false; e.target.textContent="بازنشانی کامل"; applySettings(); renderAll(); fillSettings(); dStatus("همه داده‌ها و تنظیمات به حالت اول برگشت."); });
@@ -1436,7 +1755,7 @@ function applyWall(){ const st=SET_(), w=S.get("wallpaper",null), el=$("#wall");
 
 /* ================= RENDER & ROUTER ================= */
 function renderAll(keepInputs){
-  drawRems(); drawTimeline(); drawHabits(); drawEnergy(); drawTasks(); drawMoney(); drawRev(); drawEntries(); drawLearn(); drawLearnToday(); drawKb(); drawBody(); drawGoalsMini(); drawLinkOpts(); drawAlign(); drawBalance(); drawWeek(); drawAllEd(); drawSpark(); drawCharts();
+  drawRems(); drawTimeline(); drawHabits(); drawEnergy(); drawTasks(); drawMoney(); drawRev(); drawEntries(); drawLearn(); drawLearnToday(); drawKb(); drawBody(); drawGoalsMini(); drawLinkOpts(); drawAlign(); drawBalance(); drawWeek(); drawAllEd(); drawSpark(); drawCharts(); if(STANDALONE) drawBanner();
   if(document.activeElement!==$("#visionText")) $("#visionText").value=S.get("vision","");
   if(!keepInputs||document.activeElement!==$("#dayNote")) $("#dayNote").value=S.get("daynote-"+TODAY,"");
 }
@@ -1446,7 +1765,9 @@ function route(){ const v=views.includes(location.hash.slice(1))?location.hash.s
   $$("aside nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v)); window.scrollTo(0,0); }
 window.addEventListener("hashchange",route);
 applySettings(); renderAll(); fillSettings(); route();
-bootCaps();
+if(STANDALONE){ document.body.classList.add("locked"); $("#lock").hidden=false; lkMode(V.stored()?"unlock":"setup");
+  if(!(window.crypto&&crypto.subtle)){ $("#lkGo").disabled=true; lkErr("رمزگذاری فقط روی آدرس امن کار می‌کند. سایت را با آدرس https (مثل https://نام‌کاربری.github.io/...) باز کن."); } }
+else bootCaps();
 })();
 </script>
 
