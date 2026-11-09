@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src https://api.github.com https://*.supabase.co wss://*.supabase.co; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://js.puter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://*.puter.com https://puter.com; connect-src https://znasigemhiuyutyrcdjj.supabase.co https://api.github.com https://api.open-meteo.com https://geocoding-api.open-meteo.com https://puter.com https://*.puter.com wss://*.puter.com https://*.puter.site; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src https://puter.com https://*.puter.com">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0f1a">
 <meta name="robots" content="noindex,nofollow">
@@ -160,6 +160,65 @@ ol.qs{margin:0;padding-inline-start:20px;display:flex;flex-direction:column;gap:
 .kb-tags{display:flex;gap:6px;flex-wrap:wrap}
 .ov p{margin:0;max-width:72ch}
 [hidden]{display:none!important}
+#fxCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#aurora i{position:absolute;width:56vmax;height:56vmax;border-radius:50%;filter:blur(70px);opacity:.32;will-change:transform}
+#aurora i:nth-child(1){background:var(--accent);top:-22vmax;right:-12vmax;animation:au1 26s ease-in-out infinite alternate}
+#aurora i:nth-child(2){background:var(--accent-2);bottom:-26vmax;left:-14vmax;animation:au2 32s ease-in-out infinite alternate}
+#aurora i:nth-child(3){background:var(--teal);top:30%;left:35%;width:36vmax;height:36vmax;opacity:.16;animation:au3 38s ease-in-out infinite alternate}
+@keyframes au1{to{transform:translate(-18vmax,14vmax) scale(1.15)}}
+@keyframes au2{to{transform:translate(16vmax,-12vmax) scale(.9)}}
+@keyframes au3{to{transform:translate(-14vmax,10vmax) scale(1.3)}}
+html.fx-depth body::after,html.fx-scene body::after{opacity:.5}
+html.fx-depth .card,html.fx-scene .card{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;transform-style:preserve-3d;position:relative}
+.card.tilting{transition:transform .08s linear,box-shadow .3s;box-shadow:0 18px 40px -18px color-mix(in srgb, var(--accent) 45%, transparent)}
+.card.tilting::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(420px circle at var(--sx,50%) var(--sy,50%), color-mix(in srgb, var(--ink) 9%, transparent), transparent 60%)}
+html.fx-scene .card{background:color-mix(in srgb, var(--bg) 40%, transparent);backdrop-filter:blur(2px) saturate(1.2);-webkit-backdrop-filter:blur(2px) saturate(1.2)}
+html.fx-scene aside{background:color-mix(in srgb, var(--bg) 55%, transparent)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.28s}
+.iconpick{display:flex;flex-wrap:wrap;gap:8px}
+.ipick{padding:3px;border-radius:13px;border:1.5px solid transparent;background:none;cursor:pointer;display:inline-flex}
+.ipick .logo{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--accent),var(--accent-2));font-weight:800;color:var(--on-accent)}
+.ipick.on{border-color:var(--accent)}
+.fxpick{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.fxpick button{border:1.5px solid var(--stroke);border-radius:14px;padding:12px;background:none;cursor:pointer;text-align:right;display:flex;flex-direction:column;gap:4px}
+.fxpick button.on{border-color:var(--accent);background:color-mix(in srgb, var(--accent) 8%, transparent)}
+.fxpick small{color:var(--muted);font-size:12px;line-height:1.7}
+.logo svg{display:block}
+.wxmini{display:flex;align-items:center;gap:5px;font-size:12.5px;color:var(--muted);margin-top:2px}
+.wxmini:empty{display:none}
+.wxi{width:20px;height:20px;fill:none;stroke:var(--amber);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.wxbig{width:52px;height:52px;fill:none;stroke:var(--amber);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.wxnow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.wxmeta{display:flex;flex-direction:column;gap:2px;margin-inline-start:auto}
+.wxdays{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.wxday{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:12px;background:color-mix(in srgb, var(--ink) 3.5%, transparent);text-align:center}
+.arts{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.art{display:flex;flex-direction:column;gap:6px;padding:12px;border-radius:14px;background:color-mix(in srgb, var(--ink) 3.5%, transparent);border:1px solid var(--stroke);min-width:0}
+.art.read{opacity:.62}
+.art-h{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.art-t{color:var(--ink);font-weight:700;text-decoration:none;line-height:1.7;overflow-wrap:anywhere}
+.art-t:hover{color:var(--accent)}
+.art-s{line-height:1.8;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.art-a{margin-top:auto}
+.ltabs button{padding:9px 16px;font-size:14px}
+.catrow{display:flex;gap:6px;flex-wrap:wrap}
+.catchip{border:1px solid var(--stroke);background:none;border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer;color:var(--muted)}
+.catchip.on{border-color:var(--accent);color:var(--ink);background:color-mix(in srgb, var(--accent) 12%, transparent)}
+.catchip .num{opacity:.7;font-size:11.5px}
+.libgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.libcard{display:flex;text-align:right;padding:0;border-radius:14px;border:1px solid var(--stroke);background:color-mix(in srgb, var(--ink) 3.5%, transparent);cursor:pointer;overflow:hidden;min-width:0;transition:border-color .15s}
+.libcard:hover{border-color:var(--accent)}
+.libspine{width:7px;flex:none;background:var(--muted)}
+.k-book .libspine{background:var(--accent-2)}.k-article .libspine{background:var(--accent)}.k-course .libspine{background:var(--amber)}.k-note .libspine{background:var(--teal)}
+.libc{display:flex;flex-direction:column;gap:7px;padding:12px 14px;flex:1;min-width:0}
+.libt{font-size:15px;line-height:1.6;overflow-wrap:anywhere}
+.libr{width:min(820px,100%)}
+.lr-tools{position:sticky;top:-22px;z-index:2;padding:8px 0;background:var(--panel)}
+.lr-body{font-size:17px;line-height:2.15;max-width:68ch;margin:0 auto;width:100%}
+.lr-body p{margin:0 0 1em}
+.lr-notes{border-top:1px solid var(--stroke);padding-top:14px}
+#libReader{z-index:45}
 .lock{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:auto;background:radial-gradient(700px 500px at 80% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),radial-gradient(600px 500px at 0% 100%, color-mix(in srgb, var(--accent-2) 18%, transparent), transparent 70%),var(--bg);
   padding:calc(24px + env(safe-area-inset-top,0px)) max(16px, env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(16px, env(safe-area-inset-left,0px))}
 .lockcard{width:min(400px,100%);display:flex;flex-direction:column;gap:12px;padding:28px 24px;border-radius:22px;background:var(--glass);border:1px solid var(--stroke);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);text-align:center}
@@ -300,53 +359,28 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
 .swatches{display:flex;gap:6px;flex-wrap:wrap}
 .swatches span{width:34px;height:34px;border-radius:9px;border:1px solid var(--stroke)}
 @media (max-width:860px){ aside{flex-direction:row;align-items:center} nav{flex:1;min-width:0} .nav-bottom{margin:0;padding:0 6px 0 0;border:none;border-right:1px solid var(--stroke);flex:none} }
-
-/* ================= PERSONAL OS · REFINED DESIGN SYSTEM ================= */
-:root{
-  --bg:#0b0e13;--glass:rgba(255,255,255,.035);--glass-2:rgba(255,255,255,.065);--stroke:rgba(255,255,255,.085);
-  --ink:#f1f2f4;--muted:#9ba3ae;--faint:#68717d;--panel:#141922;--accent:#c8a96b;--accent-2:#8ea9b5;
-  --amber:#d8b46f;--good:#77b99a;--bad:#d77e82;--teal:#79b9b4;--on-accent:#17140e;
-}
-body{letter-spacing:-.012em;line-height:1.8;background:var(--bg)}
-body::after{background:radial-gradient(720px 460px at 88% -8%,color-mix(in srgb,var(--accent) 9%,transparent),transparent 68%),radial-gradient(620px 460px at 0% 100%,color-mix(in srgb,var(--accent-2) 7%,transparent),transparent 70%)}
-.app{gap:22px;padding:20px clamp(12px,2vw,26px)}
-aside{background:rgba(17,21,28,.88);border-color:rgba(255,255,255,.075);border-radius:18px;padding:18px 12px;box-shadow:0 18px 55px rgba(0,0,0,.14);backdrop-filter:blur(12px)}
-.brand{padding:5px 10px 18px}.logo{border-radius:11px;background:linear-gradient(145deg,#d8bd83,#9d8050);box-shadow:0 5px 18px rgba(200,169,107,.16)}
-.brand b{font-size:14px;letter-spacing:.01em}.brand small{letter-spacing:.04em}
-nav{gap:4px}nav a{padding:10px 12px;border-radius:10px;font-size:13.5px;transition:all .18s ease}nav a.on{background:color-mix(in srgb,var(--accent) 11%,transparent);box-shadow:inset -2px 0 0 var(--accent);color:var(--ink)}nav a.on svg{stroke:var(--accent)}
-main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-size:clamp(25px,3.1vw,34px);letter-spacing:-.04em}.head p{font-size:13px;color:var(--muted)}
-.grid{gap:14px;margin-top:12px}.card{background:rgba(19,24,32,.82);border:1px solid rgba(255,255,255,.075);border-radius:16px;padding:18px;gap:13px;backdrop-filter:blur(8px);box-shadow:0 8px 28px rgba(0,0,0,.09)}
-.card.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 9%,#171b22),#151a23);border-color:color-mix(in srgb,var(--accent) 23%,transparent)}
-.card h2{font-size:14px;letter-spacing:-.01em}.card h2 .count{font-size:11.5px}.item{border-radius:10px;background:rgba(255,255,255,.027);padding:8px 10px}.stat{border-radius:11px;background:rgba(255,255,255,.035)}
-.btn{border-radius:10px;padding:8px 13px;background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.10);transition:transform .15s,border-color .15s,background .15s}.btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--accent) 55%,transparent)}.btn.pri{background:var(--accent);color:var(--on-accent);border-color:var(--accent);box-shadow:0 4px 16px color-mix(in srgb,var(--accent) 16%,transparent)}
-.add input,.field,.form select,.form input,.form textarea{border-radius:10px;background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.10);transition:border-color .15s,background .15s}.add input:focus,.field:focus,.form select:focus,.form input:focus,.form textarea:focus{border-color:color-mix(in srgb,var(--accent) 65%,transparent);background:rgba(255,255,255,.055);outline:none}
-.pill{border-radius:7px}.bar{height:6px;border-radius:99px}.bar i{border-radius:99px}.tabs button{border-radius:9px}.overlay{background:rgba(4,6,9,.78)}.reader,.drawer{border-radius:17px;box-shadow:0 24px 80px rgba(0,0,0,.38)}
-.clock{border:1px solid var(--stroke);border-radius:13px;padding:8px 13px;background:rgba(255,255,255,.025)}
-.fab{background:var(--accent);color:var(--on-accent);box-shadow:0 10px 28px color-mix(in srgb,var(--accent) 18%,transparent)}
-.cloud-panel{display:flex;flex-direction:column;gap:12px;margin-top:8px;padding:17px;border:1px solid color-mix(in srgb,var(--accent) 20%,var(--stroke));border-radius:15px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.015))}
-.cloud-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.cloud-heading h2{margin:2px 0 0}.eyebrow{font-size:10px;letter-spacing:.16em;color:var(--accent);font-weight:700}
-.cloud-indicator{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--stroke);border-radius:999px;color:var(--muted);font-size:11px}.cloud-indicator i{width:7px;height:7px;border-radius:50%;background:var(--faint)}.cloud-indicator.is-live i{background:var(--good);box-shadow:0 0 0 4px color-mix(in srgb,var(--good) 12%,transparent)}.cloud-indicator.is-error i{background:var(--bad)}
-.cloud-note{font-size:11.5px;line-height:1.9;color:var(--muted);padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.025)}.cloud-note b{color:var(--ink)}.cloud-form{margin-top:2px}
-@media(max-width:860px){.app{gap:12px;padding:10px 10px 20px}aside{padding:8px;border-radius:13px;background:rgba(17,21,28,.96)}nav a{padding:8px 10px;font-size:12.5px}.nav-bottom{padding-inline-start:5px}.nav-bottom a{padding-inline:8px}main{gap:16px}.head{padding-top:6px}}
-@media(max-width:560px){.grid{gap:10px}.card{padding:14px;border-radius:13px}.cloud-panel{padding:13px}.cloud-form{grid-template-columns:1fr}.cloud-form label{grid-column:1/-1}.cloud-heading{align-items:flex-start}.head h1{font-size:25px}.fab{bottom:calc(12px + env(safe-area-inset-bottom,0px));left:12px;padding:10px 14px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
-
 </style>
 </head>
 <body>
 
 <div id="wall" hidden></div>
+<div id="aurora" hidden aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="fxCanvas" hidden aria-hidden="true"></canvas>
 <div class="lock" id="lock" hidden>
   <form class="lockcard" id="lockForm" autocomplete="off">
     <div class="lockicon"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg></div>
     <h1 id="lkTitle"></h1>
     <p id="lkSub" class="muted"></p>
+    <div id="lkLogin" hidden style="display:flex;flex-direction:column;gap:10px">
+      <input class="field" id="lkEmail" type="email" dir="ltr" autocomplete="username" placeholder="ایمیل" aria-label="ایمیل">
+      <input class="field" id="lkLpw" type="password" autocomplete="current-password" placeholder="رمز حساب ابری" aria-label="رمز حساب ابری">
+    </div>
     <div id="lkConnect" hidden style="display:flex;flex-direction:column;gap:10px">
       <input class="field" id="lkRepo" dir="ltr" placeholder="username/personal-os-data" aria-label="مخزن خصوصی">
       <input class="field" id="lkToken" type="password" dir="ltr" placeholder="github_pat_…" aria-label="توکن">
     </div>
-    <input class="field" id="lkPw" type="password" placeholder="رمز عبور" aria-label="رمز عبور">
-    <input class="field" id="lkPw2" type="password" placeholder="تکرار رمز عبور" aria-label="تکرار رمز عبور" autocomplete="new-password" hidden>
+    <input class="field" id="lkPw" type="password" placeholder="رمز قفل" aria-label="رمز قفل">
+    <input class="field" id="lkPw2" type="password" placeholder="تکرار رمز قفل" aria-label="تکرار رمز قفل" autocomplete="new-password" hidden>
     <button class="btn pri" id="lkGo"></button>
     <div class="status err" id="lkErr" role="status"></div>
     <div class="row" style="justify-content:center"><button type="button" class="btn ghost sm" id="lkAlt"></button><button type="button" class="btn ghost sm" id="lkForgot" hidden>رمز را فراموش کرده‌ام</button></div>
@@ -354,7 +388,7 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
 </div>
 <div class="app">
   <aside>
-    <div class="brand"><div class="logo" id="logoL">م</div><div><b id="brandName">سیستم من</b><small id="sideClock">Personal OS</small></div></div>
+    <div class="brand"><div class="logo" id="logoL">م</div><div><b id="brandName">قطب‌نما</b><small id="sideClock">Personal OS</small></div></div>
     <nav id="nav">
       <a href="#today" data-v="today"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4 12H2M22 12h-2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg>امروز</a>
       <a href="#about" data-v="about"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>نمای کلی سیستم</a>
@@ -363,7 +397,7 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
       <a href="#plan" data-v="plan"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>برنامه‌ریزی و اجرا</a>
       <a href="#money" data-v="money"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="13" rx="3"/><path d="M2 10h20M6 15h3"/></svg>مالی شخصی</a>
       <a href="#review" data-v="review"><svg viewBox="0 0 24 24"><path d="M4 4h12l4 4v12H4z"/><path d="M8 12h8M8 16h5"/></svg>خودآگاهی و بازنگری</a>
-      <a href="#learn" data-v="learn"><svg viewBox="0 0 24 24"><path d="M2 6c3-1.5 7-1.5 10 0 3-1.5 7-1.5 10 0v13c-3-1.5-7-1.5-10 0-3-1.5-7-1.5-10 0z"/><path d="M12 6v13"/></svg>دانش و یادگیری</a>
+      <a href="#learn" data-v="learn"><svg viewBox="0 0 24 24"><path d="M2 6c3-1.5 7-1.5 10 0 3-1.5 7-1.5 10 0v13c-3-1.5-7-1.5-10 0-3-1.5-7-1.5-10 0z"/><path d="M12 6v13"/></svg>مهارت و یادگیری</a>
       <a href="#body" data-v="body"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>بدن و انرژی</a>
     </nav>
     <nav class="nav-bottom" aria-label="تنظیمات">
@@ -376,14 +410,20 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
   <main>
     <!-- TODAY -->
     <section class="view" id="v-today">
-      <div class="head"><div><h1 id="greet">صبح بخیر</h1><p id="faDate"></p></div><div class="clock" aria-live="off"><b id="clockT"></b><span id="clockS"></span></div></div>
+      <div class="head"><div><h1 id="greet">صبح بخیر</h1><p id="faDate"></p></div><div class="clock" aria-live="off"><b id="clockT"></b><span id="clockS"></span><span class="wxmini" id="wxMini"></span></div></div>
       <div class="grid">
         <div class="c12 banner" id="bkBanner" hidden><span>بیش از یک هفته است از اطلاعاتت پشتیبان نگرفته‌ای و همگام‌سازی هم روشن نیست. اگر حافظه مرورگر پاک شود، اطلاعات از بین می‌رود.</span><a class="btn sm" href="#settings" id="bkGo" style="text-decoration:none">پشتیبان‌گیری</a></div>
         <div class="card c12"><h2>نمای امروز</h2><div class="rings" id="todayRings"></div></div>
-        <div class="card c12 hero">
-          <h2>یادگیری امروز <span class="count" id="learnTodayCount"></span></h2>
+        <div class="card c7 hero">
+          <h2>درس امروز <span class="count" id="learnTodayCount"></span></h2>
           <div id="learnToday" style="display:flex;flex-direction:column;gap:10px"></div>
         </div>
+        <div class="card c5">
+          <h2>در حال خواندن</h2>
+          <div id="libNow" style="display:flex;flex-direction:column;gap:10px"></div>
+        </div>
+        <div class="card c5"><h2>آب‌وهوا</h2><div id="wxBody"></div></div>
+        <div class="card c7" id="rdMiniCard" hidden><h2>خواندنی‌های تازه <a class="count" href="#learn" style="color:var(--accent)">همه مطالب</a></h2><div class="edlist" id="rdMini"></div></div>
         <div class="card c7">
           <h2>ریمایندرهای امروز <span class="count" id="remCount"></span></h2>
           <ul class="clean" id="remList"></ul>
@@ -423,7 +463,7 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
           <li class="item"><span class="pill hi">حیاتی</span><span class="t">ریمایندر و برنامه‌ریز</span></li>
           <li class="item"><span class="pill mid">بالا</span><span class="t">حسابداری شخصی کامل</span></li>
           <li class="item"><span class="pill mid">بالا</span><span class="t">تعیین و پیگیری هدف در بازه‌های روزانه، میان‌مدت و بلندمدت</span></li>
-          <li class="item"><span class="pill mid">بالا</span><span class="t">یادگیری هدفمند از منابع شخصی با برنامه روزانه</span></li>
+          <li class="item"><span class="pill mid">بالا</span><span class="t">یادگیری هدفمند: کتابخانه شخصی و برنامه آموزشی روزانه</span></li>
           <li class="item"><span class="pill">الزام</span><span class="t">حرفه‌ای، کاربردی و قابل نگهداری</span></li></ul></div>
         <div class="card c6"><h2>فلسفه طراحی</h2><ul class="clean">
           <li class="item"><span class="t">از کلی‌ترین لایه‌ها شروع شود و به تدریج جزئی‌تر شود</span></li>
@@ -437,7 +477,7 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
           <tr><td>ستون ۲: برنامه‌ریزی و اجرا</td><td>عملیاتی</td><td><span class="pill mid">عناوین اصلی</span></td></tr>
           <tr><td>ستون ۳: مالی شخصی</td><td>حسابداری کامل</td><td><span class="pill mid">عناوین اصلی</span></td></tr>
           <tr><td>ستون ۴: خودآگاهی و بازنگری</td><td>فراشناخت</td><td><span class="pill mid">عناوین اصلی</span></td></tr>
-          <tr><td>ستون ۵: دانش و یادگیری</td><td>یادگیری هدفمند با هوش مصنوعی</td><td><span class="pill ac">فعال</span></td></tr>
+          <tr><td>ستون ۵: مهارت و یادگیری</td><td>برنامه آموزشی، کتابخانه شخصی و پایگاه دانش</td><td><span class="pill ac">فعال</span></td></tr>
           <tr><td>ستون ۶: بدن و انرژی فیزیکی</td><td>جسمی</td><td><span class="pill ac">فعال</span></td></tr>
         </table></div></div>
       </div>
@@ -524,33 +564,68 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
 
     <!-- LEARN -->
     <section class="view" id="v-learn" hidden>
-      <div class="head"><div><h1>دانش و یادگیری</h1><p>منبع بده، هدفت را بگو؛ برنامه روزانه و درس‌ها ساخته می‌شود</p></div></div>
+      <div class="head"><div><h1>مهارت و یادگیری</h1><p>برنامه‌های آموزشی، کتابخانه شخصی، مقاله‌ها و پایگاه دانش</p></div></div>
       <div class="grid">
-        <div class="card c12">
-          <h2>افزودن منبع یادگیری</h2>
-          <div class="tabs" id="srcTabs"><button data-s="file" class="on">فایل (PDF، Word، متن)</button><button data-s="link">لینک</button><button data-s="topic">موضوع</button></div>
-          <div id="srcFile"><label class="drop" id="drop" for="fileIn"><b>فایل را اینجا بکش یا کلیک کن</b><br><span class="small">PDF، Word (docx)، TXT، Markdown · تا ۲۰ مگابایت</span></label><input type="file" id="fileIn" accept=".pdf,.docx,.txt,.md,.markdown,.csv" hidden><div class="small muted" id="fileName" style="margin-top:6px"></div></div>
-          <div id="srcLink" hidden><div class="form"><label class="wide">لینک منبع<input id="linkUrl" placeholder="https://…" dir="ltr"></label><label class="wide">متن صفحه یا توضیح (اختیاری؛ متن مقاله را اینجا بچسبان تا درس‌ها دقیقاً از آن ساخته شود)<textarea id="linkText" rows="3"></textarea></label></div></div>
-          <div id="srcTopic" hidden><div class="form"><label class="wide">چه چیزی را می‌خواهی یاد بگیری؟<input id="topicIn" placeholder="مثلاً: مذاکره فروش B2B با پخش‌کننده‌ها"></label></div></div>
+        <div class="c12"><div class="tabs ltabs" id="learnTabs"><button type="button" data-ltab="courses" class="on">برنامه‌های آموزشی</button><button type="button" data-ltab="library">کتابخانه شخصی</button><button type="button" data-ltab="articles">مقاله‌ها و خبرها</button><button type="button" data-ltab="kb">پایگاه دانش</button></div></div>
+        <div class="c12 lsec" data-lsec="courses"><div class="grid" style="margin-top:0">
+        <div class="card c12 hero" id="courseBuilder"><h2>ساخت برنامه آموزشی</h2>
+          <div class="tabs" id="srcTabs"><button type="button" data-s="lib" class="on">از کتابخانه</button><button type="button" data-s="file">فایل جدید</button><button type="button" data-s="topic">فقط موضوع</button></div>
+          <div id="srcLib"><select id="srcLibSel" class="field" aria-label="منبع از کتابخانه" style="width:100%"></select></div>
+          <div id="srcFile" hidden><label class="drop" id="drop" for="fileIn"><b>فایل را اینجا بکش یا کلیک کن</b><br><span class="small">PDF، Word، متن · خودش به کتابخانه هم اضافه می‌شود</span></label><input type="file" id="fileIn" accept=".pdf,.docx,.txt,.md,.markdown,.html,.htm" hidden><div class="small muted" id="fileName" style="margin-top:6px"></div></div>
+          <div id="srcTopic" hidden><input class="field" id="topicIn" placeholder="مثلاً: اصول مذاکره فروش B2B، یا آشنایی با دستگاه‌های موسیقی ایرانی" style="width:100%" aria-label="موضوع"></div>
           <div class="form">
-            <label class="wide">عنوان<input id="srcTitle" placeholder="خودکار از نام فایل"></label>
-            <label class="wide">هدف من از یادگیری این منبع<textarea id="srcGoal" rows="2" placeholder="مثلاً: بتوانم در جلسه با پخش‌کننده‌ها بدون تخفیف اضافه قرارداد ببندم"></textarea></label>
+            <label class="wide">عنوان برنامه<input id="srcTitle" placeholder="خودکار از عنوان منبع"></label>
+            <label>دسته<select id="srcCat"></select></label>
+            <label>مرتبط با هدف<select id="srcLink2"></select></label>
+            <label class="wide">هدف من از این یادگیری<textarea id="srcGoal" rows="2" placeholder="مثلاً: بتوانم در جلسه با پخش‌کننده‌ها بدون تخفیف اضافه قرارداد ببندم"></textarea></label>
             <label>طول دوره (روز)<input id="srcDays" type="number" min="1" max="120" value="14"></label>
             <label>زمان روزانه (دقیقه)<input id="srcMin" type="number" min="5" max="240" value="25"></label>
             <label>ساعت درس روزانه<input id="srcHour" placeholder="۲۲:۰۰" value="۲۲:۰۰"></label>
-            <label>مرتبط با هدف<select id="srcLink2"></select></label>
-            <button class="btn pri wide" id="buildBtn" type="button">ساخت برنامه یادگیری</button>
+            <button class="btn pri wide" id="buildBtn" type="button">ساخت برنامه آموزشی</button>
           </div>
-          <div class="status" id="learnStatus" role="status"></div>
-        </div>
-        <div class="card c12"><h2>چرخه یادگیری <span class="count">ورودی ← پردازش ← خروجی</span></h2><div class="cols" id="pipeline"></div></div>
-        <div class="card c6"><h2>پیشرفت منابع</h2><div class="rings" id="learnRings"></div></div>
+          <div class="status" id="learnStatus" role="status"></div></div>
+        <div class="card c12"><h2>برنامه‌های آموزشی من</h2><div class="catrow" id="courseCats"></div><div id="resList" style="display:flex;flex-direction:column;gap:12px"></div></div>
+        <div class="card c6"><h2>پیشرفت برنامه‌ها</h2><div class="rings" id="learnRings"></div></div>
         <div class="card c6"><h2>درس‌های کامل‌شده <span class="count">۱۴ روز اخیر</span></h2><div id="learnBars"></div></div>
-        <div class="card c12"><h2>منابع و برنامه‌ها</h2><div id="resList" style="display:flex;flex-direction:column;gap:12px"></div></div>
+        </div></div>
+        <div class="c12 lsec" data-lsec="library" hidden><div class="grid" style="margin-top:0">
+        <div class="card c12 hero"><h2>افزودن به کتابخانه</h2>
+          <label class="drop" id="libDrop" for="libFiles"><b>فایل‌ها را اینجا بکش یا کلیک کن</b><br><span class="small">بعد از افزودن، از صفحه هر مورد می‌توانی برایش برنامه آموزشی بسازی · متن (txt)، Markdown، PDF، Word و صفحه وب ذخیره‌شده (html) · چند فایل با هم</span></label>
+          <input type="file" id="libFiles" multiple accept=".txt,.md,.markdown,.pdf,.docx,.html,.htm,.csv" hidden>
+          <details class="edadd"><summary>یا متن را بچسبان</summary><form class="form" id="libPaste">
+            <label class="wide">عنوان<input id="lpTitle" placeholder="خالی بگذاری، خط اول متن عنوان می‌شود"></label>
+            <label>دسته<select id="lpCat"></select></label>
+            <label>نوع<select id="lpKind"><option value="article">مقاله</option><option value="book">کتاب</option><option value="course">جزوه و دوره</option><option value="note">یادداشت</option><option value="other">سایر</option></select></label>
+            <label class="wide">لینک منبع (اختیاری)<input id="lpUrl" dir="ltr" placeholder="https://…"></label>
+            <label class="wide">متن<textarea id="lpText" rows="7"></textarea></label>
+            <button class="btn pri wide">افزودن به کتابخانه</button></form></details>
+          <div class="status" id="libStatus" role="status"></div></div>
+        <div class="card c12"><h2>کتابخانه <span class="count" id="libCount"></span></h2>
+          <div class="row"><input class="field" id="libQ" placeholder="جستجو در عنوان، نویسنده، برچسب و یادداشت‌ها…" aria-label="جستجو در کتابخانه" style="min-width:200px">
+            <div class="tabs" id="libTabs"><button type="button" data-lt="all" class="on">همه</button><button type="button" data-lt="todo">برای خواندن</button><button type="button" data-lt="reading">در حال خواندن</button><button type="button" data-lt="done">خوانده‌شده</button></div></div>
+          <div class="catrow" id="libCats"></div>
+          <div class="chips" id="libKinds"></div>
+          <details class="edadd"><summary>مدیریت دسته‌بندی‌ها</summary><div class="row" id="catEdit" style="margin-top:8px"></div><form class="add" id="catForm" style="margin-top:8px"><input id="catIn" placeholder="دسته جدید، مثلاً فلسفه" aria-label="دسته جدید"><button class="btn pri">افزودن دسته</button></form></details>
+          <div class="libgrid" id="libGrid"></div></div>
+        <div class="card c6"><h2>وضعیت کتابخانه</h2><div id="libDonut"></div></div>
+        <div class="card c6"><h2>زمان مطالعه <span class="count">دقیقه · ۱۴ روز اخیر</span></h2><div id="libBars"></div></div>
+        <div class="card c12"><h2>چرخه مطالعه <span class="count">برای خواندن ← در حال خواندن ← خوانده‌شده</span></h2><div class="cols" id="pipeline"></div></div>
+        </div></div>
+        <div class="c12 lsec" data-lsec="articles" hidden><div class="grid" style="margin-top:0">
+        <div class="card c12"><h2>مقاله‌ها و خبرها</h2>
+          <div class="row" style="justify-content:space-between"><div class="tabs" id="rdTabs"><button type="button" data-tab="all" class="on">همه</button><button type="button" data-tab="learn">آموزشی</button><button type="button" data-tab="news">خبر</button><button type="button" data-tab="saved">ذخیره‌شده</button></div>
+          <div class="row"><button class="btn sm" type="button" id="rdRefresh">به‌روزرسانی الان</button></div></div>
+          <div class="small muted" id="rdMeta"></div><div class="status" id="rdStatus" role="status"></div>
+          <div class="arts" id="rdList"></div></div>
+        <div class="card c12"><h2>سایت‌های خبرخوان</h2><div id="feedEd"></div>
+          <div class="row"><button class="btn sm" type="button" id="rdInstall">نصب ربات خبرخوان</button><span class="small muted">ربات در مخزن خصوصی GitHub روزی چهار بار سایت‌ها را چک می‌کند.</span></div></div>
+        </div></div>
+        <div class="c12 lsec" data-lsec="kb" hidden><div class="grid" style="margin-top:0">
         <div class="card c12"><h2>پایگاه دانش شخصی <span class="count" id="kbCount"></span></h2>
           <input class="field" id="kbQ" placeholder="جستجو در نکات و برچسب‌ها…" aria-label="جستجو">
           <ul class="clean" id="kb"></ul>
           <form class="add" id="kbForm"><input id="kbIn" placeholder="نکته جدید…" aria-label="نکته جدید"><input id="kbTag" placeholder="برچسب‌ها (با کاما)" aria-label="برچسب" style="max-width:200px"><button class="btn pri">افزودن</button></form></div>
+        </div></div>
       </div>
     </section>
 
@@ -632,6 +707,12 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
         </div>
 
         <div class="card c12" id="set-font"><h2>فونت و نمایش</h2>
+          <div class="small muted">جلوه‌های بصری</div>
+          <div class="fxpick" id="fxPick">
+            <button type="button" data-fx="off"><b>بدون جلوه</b><small>ساده و سریع؛ مناسب گوشی و سیستم ضعیف</small></button>
+            <button type="button" data-fx="depth"><b>عمق ظریف</b><small>کارت‌ها با حرکت موس کمی سه‌بعدی می‌شوند و پس‌زمینه آرام موج می‌زند</small></button>
+            <button type="button" data-fx="scene"><b>صحنه سه‌بعدی</b><small>کره قطب‌نمای سه‌بعدی از ذرات نور که می‌چرخد و به موس واکنش نشان می‌دهد</small></button>
+          </div><div class="small muted" id="fxNote"></div>
           <div class="small muted">فونت متن</div><div class="fontpick" id="fontBody"></div>
           <div class="small muted">فونت تیترها</div><div class="fontpick" id="fontHead"></div>
           <div class="form">
@@ -650,28 +731,28 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
           <h2 style="margin-top:6px">تغییر رمز عبور</h2>
           <form class="form" id="pwForm"><label>رمز فعلی<input type="password" id="pwOld" autocomplete="current-password"></label><label>رمز جدید<input type="password" id="pwNew" autocomplete="new-password"></label><label>تکرار رمز جدید<input type="password" id="pwNew2" autocomplete="new-password"></label><label>&nbsp;<button class="btn pri">تغییر رمز</button></label></form>
           <div class="status" id="pwStatus" role="status"></div>
-          <section class="cloud-panel" aria-labelledby="cloudTitle">
-            <div class="cloud-heading"><div><span class="eyebrow">CLOUD SYNC</span><h2 id="cloudTitle">همگام‌سازی زنده بین دستگاه‌ها</h2></div><span class="cloud-indicator" id="cloudIndicator"><i></i><span>هنوز متصل نشده</span></span></div>
-            <p class="small muted">اطلاعات پس از رمزگذاری روی دستگاه، در فضای ابری حساب شخصی تو ذخیره می‌شود. با ورود به همین حساب و استفاده از رمز اصلی یکسان، اطلاعات روی دستگاه‌های دیگر نیز به‌روز می‌شود.</p>
-            <form id="cloudForm" class="form cloud-form">
-              <label class="wide">آدرس پروژه Supabase<input id="cloudUrl" type="url" dir="ltr" placeholder="https://xxxxxxxx.supabase.co" autocomplete="url" required></label>
-              <label class="wide">کلید عمومی پروژه (anon / publishable)<input id="cloudAnon" type="password" dir="ltr" placeholder="sb_publishable_… یا anon key" autocomplete="off" required></label>
-              <label>ایمیل حساب<input id="cloudEmail" type="email" dir="ltr" placeholder="you@example.com" autocomplete="email" required></label>
-              <label>رمز حساب ابری<input id="cloudPass" type="password" dir="ltr" autocomplete="current-password" required></label>
-              <label>نوع اتصال<select id="cloudMode"><option value="login">ورود به حساب موجود</option><option value="signup">ساخت حساب جدید</option></select></label>
-              <label>رمز اصلی اطلاعات<input id="cloudMaster" type="password" autocomplete="current-password" placeholder="همان رمز قفل برنامه" required></label>
-              <div class="wide row"><button class="btn pri" id="cloudConnect" type="submit">اتصال و همگام‌سازی</button><button class="btn" id="cloudSyncNow" type="button" disabled>همگام‌سازی الان</button><button class="btn ghost" id="cloudDisconnect" type="button" disabled>قطع اتصال این دستگاه</button></div>
-            </form>
-            <div class="status" id="cloudStatus" role="status" aria-live="polite">برای شروع، ابتدا پروژه ابری را طبق راهنمای همراه فایل آماده کن.</div>
-            <div class="cloud-note"><b>نکته امنیتی:</b> کلید عمومی پروژه برای استفاده در مرورگر طراحی شده است؛ رمز حساب و رمز اصلی تو در فایل HTML ذخیره نمی‌شوند. داده‌های شخصی قبل از ارسال با رمز اصلی برنامه رمزگذاری می‌شوند.</div>
-          </section>
-          <div hidden aria-hidden="true">
-            <form class="form" id="syncForm"><input id="syRepo"><input id="syToken"><input id="syPw"><button id="syConnect"></button><button id="syNow" type="button"></button><button id="syOff" type="button"></button></form>
-            <div id="syStatus"></div>
-          </div>
+          <h2 style="margin-top:6px">حساب ابری و همگام‌سازی</h2>
+          <div class="small muted">اطلاعاتت قبل از ارسال، روی همین دستگاه با رمز قفل رمزگذاری می‌شود و در دیتابیس ابری (Supabase) ذخیره می‌شود؛ خود Supabase هم نمی‌تواند آن را بخواند. روی هر دستگاه دیگر کافی است یک بار با ایمیل و رمز حساب ابری وارد شوی.</div>
+          <div class="kv" style="align-items:center"><span id="acctInfo"></span><span class="row"><button class="btn sm" type="button" id="acctLogin">ورود به حساب ابری</button><button class="btn sm" type="button" id="acctLogout">خروج از حساب</button><button class="btn sm" type="button" id="acctSync">همگام‌سازی الان</button></span></div>
+          <form class="add" id="reKeyForm" hidden><input type="password" id="reKeyPw" placeholder="رمز قفل جدید که روی دستگاه دیگر ساختی" aria-label="رمز قفل جدید"><button class="btn pri">تأیید رمز جدید</button></form>
+          <h2 style="margin-top:10px">خبرخوان: اتصال GitHub (اختیاری)</h2>
+          <div class="small muted">فقط برای ربات خبرخوان لازم است؛ بقیه سیستم بدون آن کار می‌کند.</div>
+          <form class="form" id="syncForm">
+            <label class="wide">مخزن خصوصی<input id="syRepo" dir="ltr" placeholder="username/personal-os-data"></label>
+            <label class="wide">توکن دسترسی (Fine-grained)<input id="syToken" type="password" dir="ltr" placeholder="github_pat_…" autocomplete="off"></label>
+            <label class="wide" id="syPwRow">رمز قفل فعلی (برای تأیید)<input id="syPw" type="password" autocomplete="current-password"></label>
+            <div class="wide row"><button class="btn pri" id="syConnect">اتصال GitHub</button><button class="btn" type="button" id="syNow">همگام‌سازی الان</button><button class="btn" type="button" id="syOff">قطع همگام‌سازی</button></div>
+          </form>
+          <div class="status" id="syStatus" role="status"></div>
         </div>
 
         <div class="card c6" id="set-ai"><h2>دستیار هوش مصنوعی</h2>
+          <div id="puterBox" hidden style="display:flex;flex-direction:column;gap:8px">
+            <div class="toggle"><span>هوش مصنوعی Puter (رایگان)<small>برای ساخت برنامه آموزشی، درس روزانه و دستیار روی سایت. حساب رایگان Puter لازم است. با روشن کردنش، کد Puter داخل سایت اجرا می‌شود و متن درس‌ها و سؤال‌هایت برای پاسخ به آن فرستاده می‌شود.</small></span><span class="switch"><input type="checkbox" id="tPuter"><i></i></span></div>
+            <div class="form"><label class="wide">مدل<select id="puterModel"></select></label></div>
+            <div class="row"><button class="btn sm" type="button" id="puterLogin">ورود یا ثبت‌نام در Puter</button></div>
+            <div class="small muted" id="puterStatus"></div>
+          </div>
           <div class="form">
             <label class="wide">نام دستیار<input id="aName" placeholder="دستیار"></label>
             <label class="wide">لحن<select id="aTone"><option value="friendly">صمیمی و انگیزه‌بخش</option><option value="formal">رسمی و محترمانه</option><option value="direct">کوتاه و مستقیم</option><option value="coach">مربی سخت‌گیر</option></select></label>
@@ -679,19 +760,23 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
             <label class="wide">دستورالعمل همیشگی برای دستیار<textarea id="aRules" rows="3" placeholder="مثلاً: همیشه کارهای فروش را اولویت بده؛ مبالغ را به میلیون تومان بگو"></textarea></label>
           </div></div>
 
-        <div class="card c6" id="set-learn"><h2>یادگیری</h2>
+        <div class="card c6" id="set-learn"><h2>مهارت و یادگیری</h2>
           <div class="form">
+            <label class="wide">هدف مطالعه روزانه و زمان پیش‌فرض درس (دقیقه)<input id="lMin" type="number" min="5" max="240"></label>
             <label>طول پیش‌فرض دوره (روز)<input id="lDays" type="number" min="1" max="120"></label>
-            <label>زمان روزانه (دقیقه)<input id="lMin" type="number" min="5" max="240"></label>
             <label>ساعت درس روزانه<input id="lHour"></label>
+            <div hidden>
             <label>کیفیت تدریس<select id="lTier"><option value="complex">عمیق (کندتر)</option><option value="default">متعادل</option><option value="quick">سریع</option></select></label>
+          </div>
             <label class="wide">سطح توضیح<select id="lLevel"><option value="simple">ساده و گام‌به‌گام</option><option value="mid">متوسط</option><option value="pro">حرفه‌ای و فشرده</option></select></label>
           </div></div>
 
         <div class="card c6" id="set-general"><h2>عمومی</h2>
           <div class="form">
             <label class="wide">صفحه شروع<select id="gStart"><option value="today">امروز</option><option value="about">نمای کلی</option><option value="vision">چشم‌انداز و هدف‌ها</option><option value="plan">برنامه‌ریزی</option><option value="money">مالی</option><option value="learn">یادگیری</option><option value="body">بدن و انرژی</option></select></label>
-            <label class="wide">نام سیستم در منو<input id="gBrand" placeholder="سیستم من"></label>
+            <label class="wide">نام سیستم<input id="gBrand" placeholder="قطب‌نما"></label>
+            <div class="wide"><div class="small muted" style="margin-bottom:6px">نماد سیستم (در منو و تب مرورگر)</div><div class="iconpick" id="iconPick"></div><input type="file" id="iconUp" accept="image/png,image/jpeg,image/webp" hidden></div>
+            <div class="wide"><div class="small muted" style="margin-bottom:6px">شهر برای آب‌وهوا</div><div class="add"><input id="wxQ" placeholder="نام شهر را بنویس، مثلاً تهران" aria-label="جستجوی شهر"><button class="btn" type="button" id="wxHere">موقعیت فعلی من</button></div><div class="row" id="wxRes" style="margin-top:6px"></div><div class="small muted" id="wxNow"></div></div>
             <label>هدف خواب (ساعت)<input id="gSleepGoal" type="number" step="0.5" min="4" max="10"></label>
             <label>هدف حرکت هفتگی (دقیقه)<input id="gExGoal" type="number" min="0" max="1000"></label>
           </div></div>
@@ -715,6 +800,30 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
   <form class="composer" id="chatForm"><textarea id="chatIn" placeholder="هر کاری داری بگو: برنامه بچین، ریمایندر بذار، هزینه ثبت کن…" aria-label="پیام"></textarea><button class="btn pri" id="chatSend">ارسال</button></form>
 </div>
 
+<div class="overlay" id="libReader" hidden>
+  <div class="reader libr">
+    <div class="reader-h"><div style="flex:1;min-width:0"><div class="small muted" id="lrMeta"></div><h2 id="lrTitle"></h2></div></div>
+    <div class="row lr-tools">
+      <select id="lrStatus" class="field" style="flex:0 0 auto" aria-label="وضعیت"><option value="todo">برای خواندن</option><option value="reading">در حال خواندن</option><option value="done">خوانده‌شده</option></select>
+      <button class="btn sm" type="button" id="lrSmaller" aria-label="کوچک‌کردن متن">ا−</button><button class="btn sm" type="button" id="lrBigger" aria-label="بزرگ‌کردن متن">ا+</button>
+      <button class="btn sm" type="button" id="lrClip">افزودن متن انتخاب‌شده به نکته‌ها</button>
+      <button class="btn sm" type="button" id="lrCourse">ساخت برنامه آموزشی از این</button>
+      <button class="btn sm" type="button" id="lrInfo">ویرایش اطلاعات</button>
+      <a class="btn sm" id="lrUrl" target="_blank" rel="noopener noreferrer" style="text-decoration:none" hidden>منبع اصلی</a>
+      <span class="lr-pct small muted" id="lrPct"></span>
+      <button class="btn sm" id="lrClose" type="button" style="margin-inline-start:auto">بستن</button>
+    </div>
+    <form class="form" id="lrForm" hidden>
+      <label class="wide">عنوان<input id="lfTitle"></label><label>نویسنده<input id="lfAuthor"></label>
+      <label>دسته<select id="lfCat"></select></label><label>نوع<select id="lfKind"><option value="article">مقاله</option><option value="book">کتاب</option><option value="course">جزوه و دوره</option><option value="note">یادداشت</option><option value="other">سایر</option></select></label>
+      <label class="wide">برچسب‌ها (با کاما)<input id="lfTags"></label><label class="wide">مرتبط با هدف<select id="lfGoal"></select></label>
+      <label class="wide">لینک منبع<input id="lfUrl" dir="ltr"></label>
+      <div class="wide row"><button class="btn pri">ذخیره</button><button class="btn" type="button" id="lfDel">حذف از کتابخانه</button></div>
+    </form>
+    <article class="md lr-body" id="lrBody"></article>
+    <div class="lr-notes"><h3 style="margin:0 0 6px;font-size:15px">یادداشت و خلاصه من</h3><textarea class="field" id="lrNotes" rows="5" placeholder="نکته‌های مهم، خلاصه با زبان خودم، کاری که می‌خواهم انجام دهم…"></textarea></div>
+  </div>
+</div>
 <div class="overlay" id="reader" hidden>
   <div class="reader">
     <div class="reader-h"><div style="flex:1"><div class="small muted" id="rdMeta"></div><h2 id="rdTitle"></h2></div><button class="x" id="rdClose" type="button" aria-label="بستن">✕</button></div>
@@ -726,7 +835,6 @@ main{gap:22px;padding:4px 2px 100px}.head{padding:10px 4px 2px}.head h1{font-siz
 </div>
 
 <script>window.POS_STANDALONE=true;</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
 const $ = s => document.querySelector(s);
@@ -770,30 +878,49 @@ async function decryptObj(b,key){ const pt=await crypto.subtle.decrypt({name:"AE
 const newSalt=()=>b64e(crypto.getRandomValues(new Uint8Array(16)));
 const VKEY="posv-vault";
 const V = { key:null, salt:null, iter:600000, unlocked:false, saveT:null, LOCAL_ONLY:new Set(["_sync"]),
-  touch(k){ if(!this.unlocked) return; S.meta[k]=Date.now(); clearTimeout(this.saveT); this.saveT=setTimeout(()=>this.saveLocal(),400); if(!this.LOCAL_ONLY.has(k)){ Sync.schedule(); if(typeof CloudSync!=="undefined") CloudSync.schedule(); } },
+  touch(k){ if(!this.unlocked) return; S.meta[k]=Date.now(); clearTimeout(this.saveT); this.saveT=setTimeout(()=>this.saveLocal(),400); if(!this.LOCAL_ONLY.has(k)) Sync.schedule(); },
   async saveLocal(){ if(!this.unlocked) return; clearTimeout(this.saveT); const blob=await encryptObj({data:S.cache,meta:S.meta,base:Sync.base}); try{ localStorage.setItem(VKEY,JSON.stringify(blob)); }catch(e){ setSync("ذخیره روی این دستگاه انجام نشد؛ حافظه مرورگر پر است"); } },
   stored(){ try{ return JSON.parse(localStorage.getItem(VKEY)||"null"); }catch(e){ return null; } },
   stamp(){ const t=Date.now(); Object.keys(S.cache).forEach(k=>{ if(!S.meta[k]) S.meta[k]=t; }); }
 };
 
+/* ---------- Supabase (own minimal client, no third-party script) ---------- */
+const SUPA={url:"https://znasigemhiuyutyrcdjj.supabase.co",key:"sb_publishable_7Kpc-zyW-mRJwg175t15uQ_5VgLF6gR"};
+const SS={ get(){ try{ return JSON.parse(localStorage.getItem("posv-supa")||"null"); }catch(e){ return null; } }, set(v){ try{ v?localStorage.setItem("posv-supa",JSON.stringify(v)):localStorage.removeItem("posv-supa"); }catch(e){} } };
+async function supaAuth(body,grant){ const r=await fetch(`${SUPA.url}/auth/v1/token?grant_type=${grant}`,{method:"POST",headers:{apikey:SUPA.key,"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({})); if(!r.ok){ const e=new Error(j.error_description||j.msg||j.message||"auth"); e.status=r.status; e.code=j.error_code||j.error||""; e.supa=true; throw e; }
+  const s={access:j.access_token,refresh:j.refresh_token,exp:Date.now()+((j.expires_in||3600)-90)*1000,uid:j.user&&j.user.id,email:j.user&&j.user.email}; SS.set(s); return s; }
+let supaRefreshing=null;
+async function supaSession(){ let s=SS.get(); if(!s) return null; if(Date.now()<s.exp) return s;
+  if(!supaRefreshing) supaRefreshing=supaAuth({refresh_token:s.refresh},"refresh_token").catch(e=>{ if(e.status===400||e.status===401){ SS.set(null); return null; } throw e; }).finally(()=>{ supaRefreshing=null; });
+  return supaRefreshing; }
+async function supaRest(path,opt={}){ for(let a=0;a<2;a++){ const s=await supaSession(); if(!s){ const e=new Error("noauth"); e.status=401; e.supa=true; throw e; }
+    const r=await fetch(`${SUPA.url}/rest/v1/${path}`,{method:opt.method||"GET",cache:"no-store",headers:{apikey:SUPA.key,Authorization:"Bearer "+s.access,"Content-Type":"application/json",Accept:"application/json",...(opt.prefer?{Prefer:opt.prefer}:{})},body:opt.body});
+    if(r.status===401&&a===0){ const cur=SS.get(); if(cur){ cur.exp=0; SS.set(cur); } continue; } if(!r.ok){ const e=httpErr(r); e.supa=true; throw e; } return r; } }
+async function supaLogout(){ const s=SS.get(); if(s) fetch(`${SUPA.url}/auth/v1/logout`,{method:"POST",headers:{apikey:SUPA.key,Authorization:"Bearer "+s.access}}).catch(()=>{}); SS.set(null); }
+const ghOn=()=>{ const c=S.cache._sync; return !!(STANDALONE&&V.unlocked&&c&&c.repo&&c.token); };
+
 /* ---------- GitHub private-repo sync ---------- */
 function threeWay(base,loc,rem){ const J=x=>JSON.stringify(x), b=new Set(base.map(J)), r=new Set(rem.map(J)), l=new Set(loc.map(J));
   const out=loc.filter(x=>!(b.has(J(x))&&!r.has(J(x)))); rem.forEach(x=>{ const j=J(x); if(!b.has(j)&&!l.has(j)) out.push(x); }); return out; }
 function httpErr(r){ const e=new Error("http "+r.status); e.status=r.status; return e; }
-function syncErrText(e){ if(!e) return ""; if(e.code==="pw") return "رمز همگام‌سازی روی دستگاه دیگری عوض شده؛ در تنظیمات، رمز جدید را وارد کن و «اتصال» را بزن.";
+function syncErrText(e){ if(!e) return ""; if(e.code==="pw") return "رمز قفل روی دستگاه دیگری عوض شده؛ در تنظیمات ← امنیت، رمز جدید را وارد کن.";
+  if(e.supa){ if(e.status===401) return "ورود به حساب ابری منقضی شده؛ قفل کن و دوباره وارد شو."; if(e.status===404) return "جدول‌های دیتابیس پیدا نشد؛ کد SQL را در Supabase اجرا کن."; if(e.status) return "خطای دیتابیس ابری ("+fa(e.status)+")."; return "اتصال به دیتابیس ابری برقرار نیست؛ بعداً خودکار دوباره تلاش می‌شود."; }
   if(e.status===401) return "توکن نامعتبر یا منقضی شده است؛ توکن جدید بساز و در تنظیمات وارد کن.";
   if(e.status===403) return "توکن اجازه نوشتن ندارد (Contents: Read and write) یا محدودیت موقت GitHub است.";
   if(e.status===404) return "مخزن پیدا نشد یا توکن به آن دسترسی ندارد.";
   if(e.status) return "خطای GitHub ("+fa(e.status)+")."; return "اتصال به اینترنت برقرار نیست؛ بعداً خودکار دوباره تلاش می‌شود."; }
 const Sync={base:null,sha:null,busy:false,dirty:false,t:null,state:"off",last:0,err:null,
-  on(){ const c=S.cache._sync; return !!(STANDALONE&&V.unlocked&&c&&c.repo&&c.token&&!(typeof CloudSync!=="undefined"&&CloudSync.configured())); },
+  supa(){ return !!(STANDALONE&&SS.get()); },
+  on(){ return !!(STANDALONE&&V.unlocked&&(SS.get()||ghOn())); },
   schedule(ms){ if(!this.on()) return; this.dirty=true; clearTimeout(this.t); this.t=setTimeout(()=>this.push(),ms||2500); },
   set(st,e){ this.state=st; this.err=e||null; const tm=this.last?fa(new Date(this.last).toTimeString().slice(0,5)):"";
-    const txt=st==="ok"?`همگام با GitHub · ${tm}`:st==="busy"?"در حال همگام‌سازی…":st==="err"?syncErrText(e):"فقط روی این دستگاه · رمزگذاری‌شده";
-    setSync(st==="err"?"همگام‌سازی: خطا":txt); const s=document.getElementById("syStatus"); if(s){ s.textContent=txt; s.classList.toggle("err",st==="err"); } },
+    const txt=st==="ok"?`همگام با ${this.supa()?"ابر":"GitHub"} · ${tm}`:st==="busy"?"در حال همگام‌سازی…":st==="err"?syncErrText(e):"فقط روی این دستگاه · رمزگذاری‌شده";
+    setSync(st==="err"?"همگام‌سازی: خطا":txt); const rk=document.getElementById("reKeyForm"); if(rk) rk.hidden=!(st==="err"&&e&&e.code==="pw"); const s=document.getElementById("syStatus"); if(s){ s.textContent=txt; s.classList.toggle("err",st==="err"); } },
   async api(opt,cfg,path){ cfg=cfg||S.cache._sync; opt=opt||{}; return fetch(`https://api.github.com/repos/${cfg.repo}${path===undefined?"/contents/vault.json":path}`,{method:opt.method||"GET",cache:"no-store",headers:{Authorization:"Bearer "+cfg.token,Accept:opt.accept||"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"},body:opt.body}); },
   async checkRepo(cfg){ const r=await this.api(null,cfg,""); if(!r.ok) throw httpErr(r); const j=await r.json(); if(!j.private){ const e=new Error("public"); e.code="public"; throw e; } if(j.permissions&&!j.permissions.push){ const e=httpErr({status:403}); throw e; } },
-  async fetchRemote(cfg){ const r=await this.api(null,cfg); if(r.status===404) return {missing:true}; if(!r.ok) throw httpErr(r); const j=await r.json(); let txt;
+  async fetchRemote(cfg){ if(!cfg&&this.supa()){ const r=await supaRest("vault?select=blob,version"); const a=await r.json(); return a.length?{sha:a[0].version,blob:a[0].blob}:{missing:true}; }
+    const r=await this.api(null,cfg); if(r.status===404) return {missing:true}; if(!r.ok) throw httpErr(r); const j=await r.json(); let txt;
     if(j.content&&j.encoding==="base64") txt=td.decode(b64d(j.content.replace(/\s/g,""))); else { const r2=await this.api({accept:"application/vnd.github.raw+json"},cfg); if(!r2.ok) throw httpErr(r2); txt=await r2.text(); }
     return {sha:j.sha,blob:JSON.parse(txt)}; },
   merge(d){ let changed=false, localNewer=false; const rm=d.meta||{}, rd=d.data||{}, base=this.base, J=x=>JSON.stringify(x);
@@ -811,105 +938,46 @@ const Sync={base:null,sha:null,busy:false,dirty:false,t:null,state:"off",last:0,
   payload(){ const data={}, meta={}; Object.keys(S.meta).forEach(k=>{ if(V.LOCAL_ONLY.has(k)) return; meta[k]=S.meta[k]; if(Object.prototype.hasOwnProperty.call(S.cache,k)) data[k]=S.cache[k]; }); return {data,meta}; },
   async push(){ if(!this.on()) return; if(this.busy){ this.dirty=true; return; } this.busy=true; this.set("busy");
     try{ for(let a=0;a<4;a++){ this.dirty=false; const pl=this.payload(); const blob=await encryptObj(pl);
-        const body=JSON.stringify({message:"sync "+new Date().toISOString(),content:b64e(te.encode(JSON.stringify(blob))),...(this.sha?{sha:this.sha}:{})});
-        const r=await this.api({method:"PUT",body}); if(r.ok){ const j=await r.json(); this.sha=j.content&&j.content.sha; this.base=JSON.parse(JSON.stringify(pl.data)); V.saveLocal(); this.last=Date.now(); this.set("ok"); break; }
-        if([409,412,422].includes(r.status)){ await this.pull(); continue; } throw httpErr(r); } }
+        const res=await this.putRemote(blob);
+        if(res.ok){ this.sha=res.sha; this.base=JSON.parse(JSON.stringify(pl.data)); V.saveLocal(); this.last=Date.now(); this.set("ok"); break; }
+        await this.pull(); } }
     catch(e){ this.dirty=true; this.set("err",e); }
     this.busy=false; if(this.dirty&&this.state!=="err") this.schedule(1500); },
-  async tick(){ if(!this.on()||this.busy||document.hidden) return; try{ await this.pull(); if(this.dirty) this.schedule(500); }catch(e){ this.set("err",e); } }
+  async putRemote(blob){
+    if(this.supa()){ if(this.sha==null){ try{ await supaRest("vault",{method:"POST",body:JSON.stringify({blob,version:1}),prefer:"return=minimal"}); return {ok:true,sha:1}; }catch(e){ if(e.status===409) return {conflict:true}; throw e; } }
+      const r=await supaRest(`vault?version=eq.${this.sha}`,{method:"PATCH",body:JSON.stringify({blob,version:this.sha+1,updated_at:new Date().toISOString()}),prefer:"return=representation"}); const a=await r.json(); return a.length?{ok:true,sha:a[0].version}:{conflict:true}; }
+    const body=JSON.stringify({message:"sync "+new Date().toISOString(),content:b64e(te.encode(JSON.stringify(blob))),...(this.sha?{sha:this.sha}:{})});
+    const r=await this.api({method:"PUT",body}); if(r.ok){ const j=await r.json(); return {ok:true,sha:j.content&&j.content.sha}; } if([409,412,422].includes(r.status)) return {conflict:true}; throw httpErr(r); },
+  async tick(){ if(!this.on()||this.busy||document.hidden) return; try{ if(this.supa()&&this.sha!=null){ const r=await supaRest("vault?select=version"); const a=await r.json(); if(a.length&&a[0].version===this.sha&&this.state!=="err"){ if(this.dirty) this.schedule(500); return; } }
+    await this.pull(); if(this.dirty) this.schedule(500); }catch(e){ this.set("err",e); } }
 };
 setInterval(()=>Sync.tick(),45000);
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden) Sync.tick(); });
 window.addEventListener("online",()=>{ if(Sync.on()){ Sync.tick(); if(Sync.dirty) Sync.schedule(500); } });
 
-/* ---------- Supabase encrypted cloud sync ---------- */
-const CLOUD_CFG_KEY="posv-cloud-config", CLOUD_TABLE="personal_os_vaults";
-const CloudSync={client:null,userId:null,channel:null,ready:false,busy:false,dirty:false,timer:null,revision:null,last:0,config:null,
-  configured(){ return !!(this.config||this.readConfig()); },
-  readConfig(){ try{ this.config=JSON.parse(localStorage.getItem(CLOUD_CFG_KEY)||"null"); }catch(_){ this.config=null; } return this.config; },
-  saveConfig(c){ this.config={url:c.url,anon:c.anon,email:c.email}; try{localStorage.setItem(CLOUD_CFG_KEY,JSON.stringify(this.config));}catch(_){} },
-  set(message,state){ const el=document.getElementById("cloudStatus"); if(el) el.textContent=message; const badge=document.getElementById("cloudIndicator"); if(badge){ badge.classList.toggle("is-live",state==="live"); badge.classList.toggle("is-error",state==="error"); badge.querySelector("span").textContent=state==="live"?"متصل و همگام":state==="busy"?"در حال همگام‌سازی":state==="error"?"نیازمند بررسی":"قطع از ابر"; }
-    const n=document.getElementById("syncNote"); if(n) n.textContent=message; const b=document.getElementById("cloudSyncNow"); if(b) b.disabled=!this.ready||this.busy; const d=document.getElementById("cloudDisconnect"); if(d) d.disabled=!this.configured(); },
-  makeClient(url,anon){ if(!window.supabase||!window.supabase.createClient) throw new Error("کتابخانه اتصال ابری بارگذاری نشد. اتصال اینترنت و مسدود نبودن cdn.jsdelivr.net را بررسی کن."); return window.supabase.createClient(url,anon,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}); },
-  async attach(userId){ this.userId=userId; this.ready=true; if(this.channel){try{await this.client.removeChannel(this.channel);}catch(_){}}
-    this.channel=this.client.channel("personal-os-"+userId).on("postgres_changes",{event:"*",schema:"public",table:CLOUD_TABLE,filter:"user_id=eq."+userId},payload=>{ const row=payload.new; if(row&&Number(row.revision||0)>Number(this.revision||0)) this.pull(true).catch(e=>this.set("دریافت تغییرات دستگاه دیگر انجام نشد: "+(e.message||"خطا"),"error")); }).subscribe();
-    this.set("اتصال ابری برقرار شد؛ تغییرات دستگاه‌های دیگر به‌صورت زنده دریافت می‌شوند.","live"); },
-  async row(){ const {data,error}=await this.client.from(CLOUD_TABLE).select("user_id,encrypted_blob,revision,updated_at").eq("user_id",this.userId).maybeSingle(); if(error) throw error; return data; },
-  async decode(blob){ if(typeof blob==="string") blob=JSON.parse(blob); if(!blob||!blob.salt||!blob.ct) throw new Error("ساختار اطلاعات ابری معتبر نیست."); if(blob.salt!==V.salt) throw new Error("رمزگذاری این نسخه با کلید محلی متفاوت است. از بخش اتصال، رمز اصلی برنامه را دوباره وارد کن تا کلید ابری بازیابی شود."); return decryptObj(blob,V.key); },
-  async pull(fromRealtime){ if(!this.ready||!V.unlocked) return false; const row=await this.row(); if(!row){ this.revision=null; this.schedule(250); return false; }
-    if(Number(row.revision||0)<=Number(this.revision||0)) return false;
-    const d=await this.decode(row.encrypted_blob); const changed=Sync.merge(d); this.revision=Number(row.revision||0); this.last=Date.now(); await V.saveLocal();
-    const localAhead=Object.keys(S.meta).some(k=>!V.LOCAL_ONLY.has(k)&&(S.meta[k]||0)>((d.meta||{})[k]||0)); if(localAhead) this.schedule(500);
-    if(changed) this.set("تغییرات ابری دریافت و با اطلاعات این دستگاه ادغام شد.","live"); else this.set("اطلاعات این دستگاه به‌روز است.","live");
-    if(Sync.base) this.dirty=false; return changed; },
-  schedule(ms){ if(!this.ready||!V.unlocked) return; this.dirty=true; clearTimeout(this.timer); this.timer=setTimeout(()=>this.push(),ms||900); },
-  async push(){ if(!this.ready||!V.unlocked) return; if(this.busy){this.dirty=true;return;} this.busy=true; this.set("در حال ذخیره تغییرات رمزگذاری‌شده در فضای ابری…","busy");
-    try{ let saved=false; for(let attempt=0;attempt<4;attempt++){
-      this.dirty=false; const current=await this.row();
-      if(current&&Number(current.revision||0)!==Number(this.revision||0)){
-        const remote=await this.decode(current.encrypted_blob); Sync.merge(remote); this.revision=Number(current.revision||0);
-      }
-      const pl=Sync.payload(); delete pl.data._sync; delete pl.meta._sync;
-      const blob=await encryptObj(pl,V.key,V.salt,V.iter); const now=new Date().toISOString();
-      if(!current){
-        const ins=await this.client.from(CLOUD_TABLE).insert({user_id:this.userId,encrypted_blob:blob,revision:1,updated_at:now}).select("revision,updated_at").maybeSingle();
-        if(ins.error){ if(ins.error.code==="23505"){ this.revision=null; continue; } throw ins.error; }
-        this.revision=Number(ins.data.revision||1); saved=true;
-      }else{
-        const upd=await this.client.from(CLOUD_TABLE).update({encrypted_blob:blob,revision:Number(current.revision||0)+1,updated_at:now}).eq("user_id",this.userId).eq("revision",Number(current.revision||0)).select("revision,updated_at").maybeSingle();
-        if(upd.error) throw upd.error; if(!upd.data){ this.revision=null; continue; } this.revision=Number(upd.data.revision||0); saved=true;
-      }
-      if(!saved) throw new Error("تعارض هم‌زمان داده‌ها؛ دوباره تلاش کن.");
-      this.last=Date.now(); Sync.base=JSON.parse(JSON.stringify(pl.data)); await V.saveLocal(); this.set("همگام‌سازی زنده فعال است · آخرین ذخیره: "+fa(new Date(this.last).toLocaleTimeString("fa-IR",{hour:"2-digit",minute:"2-digit"})),"live"); break;
-    }}catch(e){ this.dirty=true; this.set("ذخیره ابری انجام نشد: "+(e.message||"خطای ارتباط یا دسترسی جدول"),"error"); }
-    this.busy=false; const b=document.getElementById("cloudSyncNow"); if(b) b.disabled=!this.ready; if(this.dirty&&this.ready) this.schedule(1800);
-  },
-  async resume(){ const cfg=this.readConfig(); if(!cfg) return; try{ this.client=this.makeClient(cfg.url,cfg.anon); const {data,error}=await this.client.auth.getSession(); if(error) throw error; const user=data.session&&data.session.user; if(!user){this.set("تنظیمات ابر روی این دستگاه ذخیره شده؛ برای اتصال دوباره، در همین صفحه وارد حساب شو.","off");return;}
-      await this.attach(user.id); await this.pull();
-    }catch(e){this.ready=false;this.set("اتصال خودکار ابری برقرار نشد: "+(e.message||"خطا")+" · تنظیمات اتصال را بررسی کن.","error");}},
-  async connect({url,anon,email,password,master,mode}){
-    this.set("در حال برقراری ارتباط با سرویس ابری…","busy"); this.client=this.makeClient(url,anon);
-    const auth=mode==="signup"?await this.client.auth.signUp({email,password,options:{emailRedirectTo:window.location.href.split("#")[0]}}):await this.client.auth.signInWithPassword({email,password});
-    if(auth.error) throw auth.error; if(!auth.data.session){ this.saveConfig({url,anon,email}); throw new Error("حساب ساخته شد. ایمیلت را تأیید کن، سپس نوع اتصال را روی «ورود به حساب موجود» بگذار و دوباره وارد شو."); }
-    const user=auth.data.user; this.userId=user.id; const {data:row,error}=await this.client.from(CLOUD_TABLE).select("user_id,encrypted_blob,revision,updated_at").eq("user_id",user.id).maybeSingle(); if(error) throw error;
-    if(row){ let blob=row.encrypted_blob; if(typeof blob==="string") blob=JSON.parse(blob); const key=await deriveKey(master,blob.salt,blob.iter||600000); const remote=await decryptObj(blob,key);
-      V.key=key; V.salt=blob.salt; V.iter=blob.iter||600000; Sync.base=null; Sync.merge(remote); this.revision=Number(row.revision||0); await V.saveLocal();
-    }else{ this.revision=null; V.stamp(); }
-    delete S.cache._sync; delete S.meta._sync; await V.saveLocal(); this.saveConfig({url,anon,email}); await this.attach(user.id);
-    if(row) await this.push(); else await this.push();
-    this.set("اتصال موفق بود. اطلاعات رمزگذاری‌شده در فضای ابری ذخیره شد و تغییرات دستگاه‌های دیگر به‌صورت زنده دریافت می‌شود.","live"); return true;
-  },
-  async disconnect(){ clearTimeout(this.timer); if(this.channel&&this.client){try{await this.client.removeChannel(this.channel);}catch(_){}} this.channel=null; this.ready=false; this.userId=null; this.revision=null; this.config=null; try{localStorage.removeItem(CLOUD_CFG_KEY);}catch(_){} if(this.client){try{await this.client.auth.signOut({scope:"local"});}catch(_){}} this.client=null; this.set("اتصال ابری این دستگاه قطع شد؛ نسخه محلی اطلاعات همچنان باقی است.","off"); }
-};
-
-const cloudForm=document.getElementById("cloudForm");
-cloudForm.addEventListener("submit",async e=>{ e.preventDefault(); const btn=document.getElementById("cloudConnect"); if(btn.disabled)return; btn.disabled=true;
-  const url=document.getElementById("cloudUrl").value.trim().replace(/\/$/,""), anon=document.getElementById("cloudAnon").value.trim(), email=document.getElementById("cloudEmail").value.trim(), password=document.getElementById("cloudPass").value, master=document.getElementById("cloudMaster").value, mode=document.getElementById("cloudMode").value;
-  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){CloudSync.set("آدرس پروژه باید به شکل https://شناسه.supabase.co باشد.","error");btn.disabled=false;return;}
-  if(!anon||!email||!password||master.length<8){CloudSync.set("همه فیلدها را کامل کن. رمز اصلی برنامه باید حداقل ۸ کاراکتر باشد.","error");btn.disabled=false;return;}
-  try{ await CloudSync.connect({url,anon,email,password,master,mode}); document.getElementById("cloudPass").value=""; document.getElementById("cloudMaster").value=""; document.getElementById("cloudSyncNow").disabled=false; document.getElementById("cloudDisconnect").disabled=false; drawDataInfo(); drawBanner(); }
-  catch(err){CloudSync.set(err.message||"اتصال ناموفق بود.","error");} finally{btn.disabled=false;}
-});
-document.getElementById("cloudSyncNow").addEventListener("click",async()=>{ if(!CloudSync.ready)return; try{await CloudSync.pull(); await CloudSync.push();}catch(e){CloudSync.set(e.message||"همگام‌سازی ناموفق بود.","error");} });
-document.getElementById("cloudDisconnect").addEventListener("click",async()=>{if(!confirm("اتصال ابری فقط از این دستگاه قطع شود؟ داده‌های ابری حذف نمی‌شوند."))return;await CloudSync.disconnect();drawDataInfo();drawBanner();});
-window.addEventListener("online",()=>{if(CloudSync.ready) CloudSync.pull().catch(e=>CloudSync.set(e.message||"دریافت داده‌ها ناموفق بود.","error"));});
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&CloudSync.ready) CloudSync.pull().catch(e=>CloudSync.set(e.message||"دریافت داده‌ها ناموفق بود.","error"));});
-(function initCloudForm(){const c=CloudSync.readConfig();if(c){document.getElementById("cloudUrl").value=c.url||"";document.getElementById("cloudAnon").value=c.anon||"";document.getElementById("cloudEmail").value=c.email||"";document.getElementById("cloudDisconnect").disabled=false;}})();
-
-
 /* ---------- lock screen ---------- */
 const LK={mode:"unlock",fails:0,armed:false};
 function lkMode(m){ LK.mode=m; const legacy=Object.keys(legacyKeys()).length>0;
-  const T={setup:["یک رمز عبور بساز",legacy?"اطلاعات فعلی‌ات با این رمز رمزگذاری می‌شود و دیگر بدون رمز قابل خواندن نیست.":"همه اطلاعاتت روی این دستگاه با این رمز رمزگذاری می‌شود. حداقل ۸ کاراکتر؛ اگر رمز را فراموش کنی، اطلاعات قابل بازیابی نیست.","ساختن رمز و ورود",""],
-    unlock:["سیستم قفل است","رمز عبورت را وارد کن.","باز کردن",""],
+  const T={setup:["یک رمز عبور بساز",legacy?"اطلاعات فعلی‌ات با این رمز رمزگذاری می‌شود و دیگر بدون رمز قابل خواندن نیست.":"همه اطلاعاتت روی این دستگاه با این رمز رمزگذاری می‌شود. حداقل ۸ کاراکتر؛ اگر رمز را فراموش کنی، اطلاعات قابل بازیابی نیست.","ساختن رمز و ورود","اطلاعاتم روی دستگاه دیگری است"],
+    unlock:["سیستم قفل است","رمز قفلت را وارد کن.","باز کردن",""],
+    login:["ورود به حساب ابری","با ایمیل و رمز حساب Supabase وارد شو. روی هر دستگاه فقط یک بار لازم است؛ بعد از آن فقط رمز قفل را می‌زنی.","ورود","فعلاً بدون حساب، فقط روی همین دستگاه"],
+    remote:["باز کردن اطلاعات ابری","اطلاعاتت روی ابر پیدا شد. رمز قفلی را که روی دستگاه دیگرت ساختی وارد کن.","باز کردن",""],
+    checking:["در حال بررسی…","اطلاعات ابری در حال بررسی است.","…",""],
     connect:["دریافت اطلاعات از دستگاه دیگر","نام مخزن خصوصی، توکن و همان رمزی را که روی دستگاه اصلی ساختی وارد کن.","اتصال و دریافت اطلاعات","برگشت"],
     forgot:["فراموشی رمز","رمز قابل بازیابی نیست؛ هیچ‌کس، حتی سازنده سیستم، نمی‌تواند اطلاعات را بدون رمز باز کند. اگر رمز را روی دستگاه دیگری به یاد داری، از آنجا وارد شو. در غیر این صورت فقط می‌توانی اطلاعات این دستگاه را پاک کنی و از نو شروع کنی.","پاک کردن اطلاعات این دستگاه","برگشت"]}[m];
   $("#lkTitle").textContent=T[0]; $("#lkSub").textContent=T[1]; $("#lkGo").textContent=T[2]; $("#lkAlt").textContent=T[3]; $("#lkAlt").hidden=!T[3];
-  $("#lkForgot").hidden=m!=="unlock"; $("#lkConnect").hidden=m!=="connect"; $("#lkPw").hidden=m==="forgot"; $("#lkPw2").hidden=m!=="setup";
+  if(m==="setup"&&!SS.get()) { $("#lkAlt").textContent="ورود به حساب ابری"; $("#lkAlt").hidden=false; } else if(m==="setup") $("#lkAlt").hidden=true;
+  $("#lkForgot").hidden=m!=="unlock"; $("#lkConnect").hidden=m!=="connect"; $("#lkLogin").hidden=m!=="login"; $("#lkPw").hidden=["forgot","login","checking"].includes(m); $("#lkPw2").hidden=m!=="setup"; $("#lkGo").hidden=m==="checking";
   $("#lkGo").classList.toggle("danger",m==="forgot"); $("#lkErr").textContent=""; $("#lkPw").value=""; $("#lkPw2").value="";
-  $("#lkPw").setAttribute("autocomplete",m==="unlock"||m==="connect"?"current-password":"new-password"); LK.armed=false;
-  setTimeout(()=>{ const f=m==="connect"?$("#lkRepo"):$("#lkPw"); if(!f.hidden) f.focus(); },30); }
-$("#lkAlt").addEventListener("click",()=>lkMode(LK.mode==="setup"?"connect":(V.stored()?"unlock":"setup")));
+  $("#lkPw").setAttribute("autocomplete",["unlock","connect","remote"].includes(m)?"current-password":"new-password"); LK.armed=false;
+  setTimeout(()=>{ const f=m==="connect"?$("#lkRepo"):m==="login"?$("#lkEmail"):$("#lkPw"); if(!f.hidden) f.focus(); },30); }
+async function lkStart(){ if(!SS.get()&&!localStorage.getItem("posv-localonly")) return lkMode("login");
+  if(V.stored()) return lkMode("unlock");
+  if(SS.get()){ lkMode("checking"); try{ const rem=await Sync.fetchRemote(); if(!rem.missing){ LK.rem=rem; return lkMode("remote"); } }catch(e){ lkMode("setup"); return lkErr(syncErrText(e)+" می‌توانی فعلاً روی همین دستگاه شروع کنی."); } }
+  lkMode("setup"); }
+$("#lkAlt").addEventListener("click",()=>{ if(LK.mode==="login"){ try{ localStorage.setItem("posv-localonly","1"); }catch(_){} return lkStart(); }
+  if(LK.mode==="setup"&&!SS.get()){ try{ localStorage.removeItem("posv-localonly"); }catch(_){} return lkMode("login"); }
+  lkMode(V.stored()?"unlock":"setup"); });
 $("#lkForgot").addEventListener("click",()=>lkMode("forgot"));
 function lkErr(t){ $("#lkErr").textContent=t; }
 $("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw=$("#lkPw").value, btn=$("#lkGo"); if(btn.disabled) return;
@@ -917,6 +985,13 @@ $("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw
   if(LK.mode==="setup"){ if(pw.length<8) return lkErr("رمز باید حداقل ۸ کاراکتر باشد."); if(pw!==$("#lkPw2").value) return lkErr("تکرار رمز یکسان نیست.");
     lkErr("در حال ساختن کلید رمزگذاری…"); V.salt=newSalt(); V.key=await deriveKey(pw,V.salt,V.iter); S.cache={...legacyKeys(),...S.cache}; S.meta={}; V.stamp(); V.unlocked=true; await V.saveLocal();
     Object.keys(legacyKeys()).forEach(k=>{ try{ localStorage.removeItem("pos3-"+k); }catch(_){} }); enterApp(); }
+  else if(LK.mode==="login"){ const email=$("#lkEmail").value.trim(), lp=$("#lkLpw").value; if(!email||!lp) return lkErr("ایمیل و رمز حساب ابری را وارد کن.");
+    lkErr("در حال ورود…"); try{ await supaAuth({email,password:lp},"password"); }catch(er){ $("#lkLpw").value=""; return lkErr(er.status===400?"ایمیل یا رمز حساب ابری اشتباه است.":er.status?"ورود انجام نشد ("+fa(er.status)+").":"اتصال به سرور ابری برقرار نشد؛ اینترنت را بررسی کن."); }
+    $("#lkLpw").value=""; try{ localStorage.removeItem("posv-localonly"); }catch(_){} lkStart(); }
+  else if(LK.mode==="remote"){ const rem=LK.rem; if(!rem) return lkStart(); if(!pw) return lkErr("رمز قفل را وارد کن."); lkErr("در حال باز کردن اطلاعات…");
+    try{ const key=await deriveKey(pw,rem.blob.salt,rem.blob.iter||600000); const d=await decryptObj(rem.blob,key); V.key=key; V.salt=rem.blob.salt; V.iter=rem.blob.iter||600000; S.cache={...(S.cache._sync?{_sync:S.cache._sync}:{}),...(d.data||{})}; S.meta=d.meta||{}; Sync.base=JSON.parse(JSON.stringify(d.data||{})); }
+    catch(_){ LK.fails++; await new Promise(r=>setTimeout(r,Math.min(8000,700*LK.fails))); $("#lkPw").value=""; return lkErr("این رمز با رمز قفل اطلاعات ابری یکی نیست."); }
+    Sync.sha=rem.sha; V.unlocked=true; await V.saveLocal(); Sync.last=Date.now(); enterApp(true); }
   else if(LK.mode==="unlock"){ const b=V.stored(); if(!b) return lkMode("setup"); lkErr("در حال بررسی…");
     try{ const key=await deriveKey(pw,b.salt,b.iter||600000); const d=await decryptObj(b,key); V.key=key; V.salt=b.salt; V.iter=b.iter||600000; S.cache=d.data||{}; S.meta=d.meta||{}; Sync.base=d.base||null; V.unlocked=true; LK.fails=0; enterApp(); }
     catch(_){ LK.fails++; await new Promise(r=>setTimeout(r,Math.min(8000,700*LK.fails))); $("#lkPw").value=""; lkErr("رمز اشتباه است."); } }
@@ -934,9 +1009,9 @@ $("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw
     try{ localStorage.removeItem(VKEY); Object.keys(legacyKeys()).forEach(k=>localStorage.removeItem("pos3-"+k)); }catch(_){} S.cache={}; S.meta={}; lkMode("setup"); }
   } finally { btn.disabled=false; }
 });
-function enterApp(justPulled){ $("#lock").hidden=true; document.body.classList.remove("locked"); $("#lockBtn").hidden=false;
+function enterApp(justPulled){ setTimeout(()=>{ if(typeof LibStore!=="undefined") LibStore.flush(); },3000); $("#lock").hidden=true; document.body.classList.remove("locked"); $("#lockBtn").hidden=false;
   applySettings(); renderAll(); fillSettings(); route(); armIdle();
-  if(Sync.on()){ if(justPulled) Sync.set("ok"); else { Sync.set("busy"); Sync.pull().then(()=>{ if(Sync.dirty) Sync.schedule(300); }).catch(e=>Sync.set("err",e)); } } else if(!CloudSync.configured()) Sync.set("off"); CloudSync.resume(); }
+  if(Sync.on()){ if(justPulled) Sync.set("ok"); else { Sync.set("busy"); Sync.pull().then(()=>{ if(Sync.dirty) Sync.schedule(300); }).catch(e=>Sync.set("err",e)); } } else Sync.set("off"); }
 let idleT=null; function armIdle(){ clearTimeout(idleT); const m=+SET_().lockMin; if(!STANDALONE||!V.unlocked||!m) return; idleT=setTimeout(lockNow,m*60000); }
 ["pointerdown","keydown","touchstart","wheel","mousemove"].forEach(ev=>document.addEventListener(ev,()=>{ if(V.unlocked) armIdle(); },{passive:true}));
 async function lockNow(){ clearTimeout(idleT); try{ await V.saveLocal(); if(Sync.on()&&(Sync.dirty||Sync.busy)){ clearTimeout(Sync.t); if(!Sync.busy) await Sync.push(); } }catch(_){} V.unlocked=false; S.cache={}; location.reload(); }
@@ -986,7 +1061,7 @@ function drawEd(id,keepOpen){ const c=EDS[id], a=S.get(c.key,[]), el=document.ge
   el.innerHTML=`<div class="edlist">${a.length?a.map((o,i)=>`<div class="item">${c.item(o,i)}<button class="x" type="button" data-eddel="${i}" aria-label="حذف">✕</button></div>`).join(""):`<div class="empty">${c.opts.empty||"هنوز چیزی ثبت نشده."}</div>`}</div>${c.opts.foot?c.opts.foot(a):""}
   <details class="edadd"${(!a.length||wasOpen)?" open":""}><summary>${c.opts.add||"افزودن"}</summary><form class="form">${c.fields.map(fd=>`<label class="${fd.wide?"wide":""}">${fd.label}${fd.type==="select"?`<select name="${fd.k}">${opt(fd)}</select>`:`<input name="${fd.k}" ${fd.type==="number"?'inputmode="decimal"':""} placeholder="${esc(fd.ph||"")}">`}</label>`).join("")}<button class="btn pri wide">${c.opts.btn||"افزودن"}</button></form></details>`; }
 function drawAllEd(){ Object.keys(EDS).forEach(id=>drawEd(id)); }
-function afterEd(){ drawGoalsMini(); drawLinkOpts(); drawTimeline(); drawHabits(); drawMoney(); }
+function afterEd(){ if(typeof feedsChanged==="function") feedsChanged(); drawGoalsMini(); drawLinkOpts(); drawTimeline(); drawHabits(); drawMoney(); }
 
 /* ================= TODAY ================= */
 const now=new Date();
@@ -1159,15 +1234,15 @@ function md(src){
 }
 
 /* ================= LEARNING ================= */
-let srcMode="file", pickedFile=null;
-$("#srcTabs").addEventListener("click",e=>{ const b=e.target.closest("button"); if(!b) return; srcMode=b.dataset.s; $$("#srcTabs button").forEach(x=>x.classList.toggle("on",x===b)); $("#srcFile").hidden=srcMode!=="file"; $("#srcLink").hidden=srcMode!=="link"; $("#srcTopic").hidden=srcMode!=="topic"; });
+let srcMode="lib", pickedFile=null;
+$("#srcTabs").addEventListener("click",e=>{ const b=e.target.closest("button"); if(b) setSrcMode(b.dataset.s); });
 const drop=$("#drop");
 ["dragenter","dragover"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault(); drop.classList.add("over");}));
 ["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault(); drop.classList.remove("over");}));
 drop.addEventListener("drop",e=>{ const f=e.dataTransfer.files[0]; if(f) pickFile(f); });
 $("#fileIn").addEventListener("change",e=>{ const f=e.target.files[0]; if(f) pickFile(f); });
 function pickFile(f){ pickedFile=f; $("#fileName").textContent="انتخاب شد: "+f.name+" · "+fa((f.size/1048576).toFixed(1))+" مگابایت"; if(!$("#srcTitle").value) $("#srcTitle").value=f.name.replace(/\.[^.]+$/,""); }
-function status(t,err){ const s=$("#learnStatus"); s.textContent=t; s.classList.toggle("err",!!err); }
+function status(t,err){ const s=$("#learnStatus"); s.textContent=t; s.classList.toggle("err",!!err); if(typeof libStatus==="function"&&/PDF/.test(t)) libStatus(t,err); }
 
 function loadScript(src){ return new Promise((ok,no)=>{ const s=document.createElement("script"); s.src=src; s.onload=ok; s.onerror=()=>no(new Error("load")); document.head.appendChild(s); }); }
 async function loadLib(name,cdn){ if(STANDALONE){ try{ return await loadScript("lib/"+name); }catch(e){} } return loadScript(cdn); }
@@ -1187,6 +1262,7 @@ async function storeText(id,text){
   const cut=text.slice(0,180000); S.set("text-"+id,cut); return {textLocal:true, truncated:text.length>cut.length};
 }
 async function loadText(r){
+  if(r.libId){ const t=await LibStore.get(r.libId); return t?chunkText(t,3500).join("\n\u0000\n"):""; }
   if(r.textAsset){ try{ const res=await fetch("/_blob/"+r.textAsset); if(res.ok) return await res.text(); }catch(e){} }
   if(r.textLocal) return S.get("text-"+r.id,"");
   return r.inlineText||"";
@@ -1194,29 +1270,25 @@ async function loadText(r){
 
 $("#buildBtn").addEventListener("click", async ()=>{
   const btn=$("#buildBtn");
-  const title=$("#srcTitle").value.trim(), goal=$("#srcGoal").value.trim(), daysN=Math.max(1,Math.min(120,+en($("#srcDays").value)||14)), minutes=Math.max(5,+en($("#srcMin").value)||25), hour=$("#srcHour").value.trim()||"۲۲:۰۰", linked=$("#srcLink2").value;
+  const title=$("#srcTitle").value.trim(), goal=$("#srcGoal").value.trim(), daysN=Math.max(1,Math.min(120,+en($("#srcDays").value)||14)), minutes=Math.max(5,+en($("#srcMin").value)||25), hour=$("#srcHour").value.trim()||"۲۲:۰۰", linked=$("#srcLink2").value, cat=$("#srcCat").value;
   if(!goal){ status("هدفت از یادگیری را بنویس تا برنامه هدفمند ساخته شود.",true); $("#srcGoal").focus(); return; }
-  const r={id:uid(),title:title||"منبع یادگیری",goal,days:daysN,minutes,hour,linked,start:TODAY,created:TODAY,lessons:[],kind:srcMode,chunks:0};
+  if(!(await ensureAI())){ status(aiMissingText(),true); return; }
+  const r={id:uid(),title:title||"برنامه آموزشی",goal,days:daysN,minutes,hour,linked,cat,start:TODAY,created:TODAY,lessons:[],kind:srcMode,chunks:0};
   btn.disabled=true;
   try{
     let text="";
-    if(srcMode==="file"){
-      if(!pickedFile){ status("اول یک فایل انتخاب کن.",true); btn.disabled=false; return; }
-      const n=pickedFile.name.toLowerCase(); r.fileName=pickedFile.name;
-      if(n.endsWith(".pdf")){ r.kind="pdf"; text=await pdfText(pickedFile);
-        if(assetsApi && pickedFile.size<20*1048576){ try{ status("در حال ذخیره فایل اصلی…"); const up=await assetsApi.upload(pickedFile,{type:"application/pdf"}); r.fileAsset=up.id; }catch(e){} } }
-      else if(n.endsWith(".docx")){ r.kind="docx"; status("در حال خواندن فایل Word…"); text=await docxText(pickedFile); }
-      else if(n.endsWith(".doc")){ status("فرمت قدیمی .doc پشتیبانی نمی‌شود؛ فایل را در Word با فرمت docx ذخیره کن.",true); btn.disabled=false; return; }
-      else { r.kind="txt"; text=await pickedFile.text(); }
+    if(srcMode==="lib"){ const id=$("#srcLibSel").value; const it=S.get("lib",[]).find(x=>x.id===id); if(!it){ status("اول یک مورد از کتابخانه انتخاب کن (یا فایل جدید بده).",true); btn.disabled=false; return; }
+      status("در حال خواندن متن از کتابخانه…"); text=await LibStore.get(id); if(!text){ status("متن این مورد روی این دستگاه در دسترس نیست.",true); btn.disabled=false; return; }
+      r.libId=id; r.kind="lib"; if(!title) r.title=it.title; if(!cat&&it.cat) r.cat=it.cat; }
+    else if(srcMode==="file"){ if(!pickedFile){ status("اول یک فایل انتخاب کن.",true); btn.disabled=false; return; }
+      status("در حال خواندن فایل…"); const res=await fileToText(pickedFile); text=res.text;
       if(text.replace(/\s/g,"").length<200){ status("متن قابل خواندنی در فایل پیدا نشد. اگر PDF اسکن‌شده (عکس) است، نسخه متنی آن را بده.",true); btn.disabled=false; return; }
-    } else if(srcMode==="link"){ const u=$("#linkUrl").value.trim(); if(!u){ status("لینک را وارد کن.",true); btn.disabled=false; return; } r.url=u; r.kind="link"; text=$("#linkText").value.trim(); if(!title) r.title=u.replace(/^https?:\/\//,"").slice(0,60); }
+      const it=await addLibItem({title:r.title,kind:guessKind(pickedFile.name,text.length),fmt:res.fmt,cat},text); r.libId=it.id; r.kind="lib"; }
     else { const tp=$("#topicIn").value.trim(); if(!tp){ status("موضوع را بنویس.",true); btn.disabled=false; return; } r.topic=tp; r.kind="topic"; if(!title) r.title=tp; }
-
-    let chunks=[];
-    if(text){ chunks=chunkText(text,3500); r.chunks=chunks.length; r.chars=text.length; status("در حال ذخیره متن منبع…"); Object.assign(r, await storeText(r.id,chunks.join("\n\u0000\n"))); }
-    const learn=S.get("learn",[]).slice(); learn.unshift(r); S.set("learn",learn); drawLearn();
+    let chunks=[]; if(text){ chunks=chunkText(text,3500); r.chunks=chunks.length; r.chars=text.length; }
+    const learn=S.get("learn",[]).slice(); learn.unshift(r); S.set("learn",learn); drawLearn(); drawCats();
     await buildPlan(r.id, chunks);
-    $("#srcGoal").value=""; $("#srcTitle").value=""; $("#linkUrl").value=""; $("#linkText").value=""; $("#topicIn").value=""; pickedFile=null; $("#fileName").textContent=""; $("#fileIn").value="";
+    $("#srcGoal").value=""; $("#srcTitle").value=""; $("#topicIn").value=""; pickedFile=null; $("#fileName").textContent=""; $("#fileIn").value="";
   }catch(e){ status("خطا در پردازش منبع: "+(e&&e.message||"نامشخص"),true); }
   btn.disabled=false;
 });
@@ -1224,7 +1296,7 @@ $("#buildBtn").addEventListener("click", async ()=>{
 function updRes(id,fn){ const learn=S.get("learn",[]).map(x=>x.id===id?fn(JSON.parse(JSON.stringify(x))):x); S.set("learn",learn); }
 async function buildPlan(id, chunks){
   const r=S.get("learn",[]).find(x=>x.id===id); if(!r) return;
-  if(!sampleApi){ status("برای ساخت برنامه، دستیار هوش مصنوعی باید در دسترس باشد. منبع ذخیره شد؛ بعداً «ساخت دوباره برنامه» را بزن.",true); return; }
+  if(!(await ensureAI())){ status(aiMissingText(),true); return; }
   if(!chunks){ const t=await loadText(r); chunks=t?t.split("\n\u0000\n"):[]; }
   status("دستیار در حال طراحی برنامه یادگیری هدفمند است… (ممکن است یک دقیقه طول بکشد)");
   const N=r.days;
@@ -1262,23 +1334,24 @@ function dueLessons(){ const out=[]; S.get("learn",[]).forEach(r=>{ const i=r.le
 function drawLearnToday(){
   const due=dueLessons(), learn=S.get("learn",[]);
   $("#learnTodayCount").textContent= due.length? fa(due.length)+" درس" : "";
-  if(!learn.length){ $("#learnToday").innerHTML=`<div class="row"><span class="muted" style="flex:1">هنوز منبعی برای یادگیری اضافه نکرده‌ای. یک PDF، فایل Word، لینک یا موضوع بده تا برنامه روزانه ساخته شود.</span><a class="btn pri" href="#learn" style="text-decoration:none">افزودن منبع</a></div>`; return; }
+  if(!learn.length){ $("#learnToday").innerHTML=`<div class="row"><span class="muted" style="flex:1">هنوز برنامه آموزشی نداری. از یک کتاب یا مقاله کتابخانه یا یک موضوع، برنامه بساز تا هر روز درسش اینجا بیاید.</span><a class="btn pri" href="#learn" style="text-decoration:none">ساخت برنامه</a></div>`; return; }
   if(!due.length){ const nx=learn.map(r=>({r,l:r.lessons.find(l=>!l.done)})).filter(o=>o.l).sort((a,b)=>a.l.date.localeCompare(b.l.date))[0];
-    $("#learnToday").innerHTML=`<div class="muted">درس امروز تمام شده. ${nx?`درس بعدی: «${esc(nx.l.title)}» · ${relDay(nx.l.date)}`:"همه برنامه‌ها کامل شده‌اند."}</div>`; return; }
+    const planned=learn.some(r=>r.lessons.length);
+    $("#learnToday").innerHTML=`<div class="muted">${!planned?"منابعت ذخیره شده‌اند ولی هنوز برنامه درسی برایشان ساخته نشده.":nx?`درس امروز تمام شده. درس بعدی: «${esc(nx.l.title)}» · ${relDay(nx.l.date)}`:"همه برنامه‌ها کامل شده‌اند."}</div>`; return; }
   $("#learnToday").innerHTML=due.map(({r,l,i})=>`<div class="today-lesson"><div class="row"><span class="pill ac">${esc(r.title)}</span><span class="small muted">درس ${fa(i+1)} از ${fa(r.lessons.length)} · ${fa(r.minutes)} دقیقه</span>${l.date<TODAY?'<span class="pill hi">عقب‌افتاده</span>':""}</div><b style="font-size:16px">${esc(l.title)}</b><span class="small muted">${esc(l.objective)}</span><div class="row"><button class="btn pri" data-teach="${r.id}" data-i="${i}" type="button">شروع درس</button>${l.date<TODAY?`<button class="btn sm" data-resch="${r.id}" type="button">چیدن دوباره از امروز</button>`:""}</div></div>`).join("");
 }
 $("#learnToday").addEventListener("click",e=>{ const t=e.target.closest("[data-teach]"); if(t) openLesson(t.dataset.teach,+t.dataset.i); const rs=e.target.closest("[data-resch]"); if(rs) reschedule(rs.dataset.resch); });
 
 function drawLearn(){
-  const learn=S.get("learn",[]);
+  const learn=S.get("learn",[]).filter(r=>!courseCat||r.cat===courseCat);
   const kindL={pdf:"PDF",docx:"Word",txt:"متن",link:"لینک",topic:"موضوع",file:"فایل"};
   $("#resList").innerHTML= learn.length? learn.map(r=>{ const done=r.lessons.filter(l=>l.done).length, tot=r.lessons.length, p=tot?Math.round(done/tot*100):0;
-    return `<div class="res"><div class="res-h"><div style="flex:1;min-width:0"><b>${esc(r.title)}</b> <span class="pill">${kindL[r.kind]||"منبع"}</span>${r.chunks?` <span class="small muted">${fa(r.chunks)} بخش متن</span>`:""}<div class="small muted">هدف: ${esc(r.goal)}${r.linked?" · در خدمت: "+esc(r.linked):""}</div>${r.summary?`<div class="small" style="margin-top:4px">${esc(r.summary)}</div>`:""}</div>
+    return `<div class="res"><div class="res-h"><div style="flex:1;min-width:0"><b>${esc(r.title)}</b> ${r.cat?`<span class="pill ac">${esc(r.cat)}</span>`:""} <span class="pill">${r.libId?"از کتابخانه":kindL[r.kind]||"منبع"}</span>${r.chunks?` <span class="small muted">${fa(r.chunks)} بخش متن</span>`:""}<div class="small muted">هدف: ${esc(r.goal)}${r.linked?" · در خدمت: "+esc(r.linked):""}</div>${r.summary?`<div class="small" style="margin-top:4px">${esc(r.summary)}</div>`:""}</div>
       <div class="row">${r.url?`<a class="btn sm" href="${esc(r.url)}" target="_blank" rel="noopener" style="text-decoration:none">باز کردن لینک</a>`:""}${r.fileAsset?`<a class="btn sm" href="/_blob/${esc(r.fileAsset)}" target="_blank" rel="noopener" style="text-decoration:none">فایل اصلی</a>`:""}
       <button class="btn sm" data-resch="${r.id}" type="button">چیدن دوباره از امروز</button><button class="btn sm" data-rebuild="${r.id}" type="button">ساخت دوباره برنامه</button><button class="btn sm" data-rdel="${r.id}" type="button">حذف</button></div></div>
       ${tot?`<div class="prog"><div class="kv small"><span class="muted">${fa(done)} از ${fa(tot)} درس · روزی ${fa(r.minutes)} دقیقه</span><span class="num">${fa(p)}٪</span></div><div class="bar teal"><i style="width:${p}%"></i></div></div>
       <details><summary class="small" style="cursor:pointer;color:var(--accent)">برنامه درس‌ها</summary><div class="lessons" style="margin-top:8px">${r.lessons.map((l,i)=>`<div class="lesson-row ${l.done?"done":""}"><span class="n">${fa(i+1)}</span><span class="tt">${esc(l.title)}<br><span class="small muted">${esc(l.objective)}</span></span><span class="row" style="gap:6px"><span class="when">${relDay(l.date)}</span><button class="btn sm" data-teach="${r.id}" data-i="${i}" type="button">${l.done?"مرور":"باز کردن"}</button></span></div>`).join("")}</div></details>`:'<div class="small muted">برنامه هنوز ساخته نشده.</div>'}
-    </div>`; }).join("") : '<div class="empty">هنوز منبعی اضافه نشده.</div>';
+    </div>`; }).join("") : `<div class="empty">${courseCat?"در این دسته برنامه‌ای نیست.":"هنوز برنامه آموزشی نساخته‌ای. از یک کتاب یا مقاله کتابخانه، یک فایل، یا فقط یک موضوع شروع کن."}</div>`;
   const cols={"ورودی":[],"در حال پردازش":[],"خروجی":[]};
   learn.forEach(r=>{ const d=r.lessons.filter(l=>l.done).length; (d===0?cols["ورودی"]:d<r.lessons.length?cols["در حال پردازش"]:cols["خروجی"]).push(r.title); });
   $("#pipeline").innerHTML=Object.entries(cols).map(([h,a])=>`<div class="col"><h3>${h} · ${fa(a.length)}</h3>${a.map(t=>`<div class="item"><span class="t">${esc(t)}</span></div>`).join("")||'<div class="empty">خالی</div>'}</div>`).join("");
@@ -1305,7 +1378,7 @@ async function openLesson(id,i){
   $("#rdAnswer").innerHTML=""; $("#rdAsk").hidden=true;
   const cached=S.get("lesson-"+id+"-"+i,null);
   if(cached){ $("#rdBody").innerHTML=md(cached); lessonActions(r,i); return; }
-  if(!sampleApi){ $("#rdBody").innerHTML='<p class="muted">برای تدریس، دستیار هوش مصنوعی باید در دسترس باشد.</p>'; lessonActions(r,i); return; }
+  if(!(await ensureAI())){ $("#rdBody").innerHTML=`<p class="muted">${aiMissingText()}</p>`; lessonActions(r,i); return; }
   $("#rdBody").innerHTML='<p class="muted">در حال آماده‌کردن درس…</p>'; $("#rdActions").innerHTML="";
   let src="";
   if(l.from>=0){ const t=await loadText(r); const ch=t.split("\n\u0000\n"); src=ch.slice(l.from,(l.to>=l.from?l.to:l.from)+1).join("\n\n").slice(0,90000); }
@@ -1345,12 +1418,12 @@ function lessonActions(r,i,failed){
   const l=S.get("learn",[]).find(x=>x.id===r.id).lessons[i];
   $("#rdActions").innerHTML = failed? `<button class="btn pri" id="rdRetry" type="button">دوباره امتحان کن</button>` :
     `${l.done?'<span class="pill ok">این درس کامل شده</span>':'<button class="btn pri" id="rdDone" type="button">درس را تمام کردم</button>'}<button class="btn sm" id="rdRegen" type="button">تدریس دوباره</button>`;
-  $("#rdAsk").hidden=!!failed||!sampleApi;
+  $("#rdAsk").hidden=!!failed;
   const d=$("#rdDone"); if(d) d.onclick=()=>{ updRes(r.id,x=>{ x.lessons[i].done=true; x.lessons[i].doneOn=TODAY; return x; }); addEntry("win",`درس «${l.title}» از ${r.title} تمام شد`); renderLearnAll(); lessonActions(r,i); };
   const g=$("#rdRegen"); if(g) g.onclick=()=>{ S.del("lesson-"+r.id+"-"+i); openLesson(r.id,i); };
   const rt=$("#rdRetry"); if(rt) rt.onclick=()=>openLesson(r.id,i);
 }
-$("#rdAsk").addEventListener("submit",async e=>{ e.preventDefault(); const q=$("#rdQ").value.trim(); if(!q||!cur||!sampleApi) return;
+$("#rdAsk").addEventListener("submit",async e=>{ e.preventDefault(); const q=$("#rdQ").value.trim(); if(!q||!cur) return; if(!(await ensureAI())){ $("#rdAnswer").innerHTML=`<p class="muted">${aiMissingText()}</p>`; return; }
   const r=S.get("learn",[]).find(x=>x.id===cur.id), lesson=S.get("lesson-"+cur.id+"-"+cur.i,"");
   $("#rdAnswer").innerHTML='<p class="muted">در حال فکر کردن…</p>'; $("#rdQ").value="";
   try{ await sampleApi(`تو معلم این درس هستی. هدف یادگیرنده: ${r.goal}\nمتن درس:\n<<<\n${lesson.slice(0,40000)}\n>>>\nسؤال یادگیرنده: ${q}\nکوتاه، دقیق و کاربردی به فارسی جواب بده (Markdown ساده).`,{modelTier:"default",cache:false,onText:({text})=>{ $("#rdAnswer").innerHTML=`<blockquote>${esc(q)}</blockquote>`+md(text); }}); }
@@ -1414,6 +1487,7 @@ function snapshot(section){
     plan:{tasks:tasks.map((t,i)=>({index:i,text:t.t,column:t.c,priority:t.p,done:!!t.d})),habits:S.get("habits",[]).map(h=>({habit:h.n,done_last7:last7().map(d=>(h.done||[]).includes(d)?1:0).join("")})),day_template:S.get("dayplan",[]),projects:S.get("projects",[]),deep_work_log:S.get("deep",[]).slice(0,15),week_template:S.get("week",{})},
     money:{currency:"تومان",income_month:inc,expense_month:out,budget_by_category:cats,spent_by_category:Object.fromEntries(Object.keys(cats).map(c=>[c,tx.filter(x=>x.k==="out"&&x.c===c).reduce((a,x)=>a+x.a,0)])),assets_debts:S.get("assets",[]),financial_goals:S.get("finGoals",[]),recent:S.get("tx",[]).slice(-12).map(x=>({type:x.k,title:x.t,amount:x.a,category:x.c}))},
     review:{journal:S.get("journal",DEF.journal).slice(0,6),wins:S.get("wins",DEF.wins).slice(0,6),friction:S.get("friction",DEF.friction).slice(0,6),review_answers:Object.fromEntries(Object.keys(revs).map(k=>[k,S.get("rev-"+k,"")]))},
+    library:S.get("lib",[]).map(i=>({title:i.title,kind:KINDS[i.kind],status:LST[i.status],progress_pct:Math.round((i.pos||0)*100),tags:i.tags,my_notes:(i.notes||"").slice(0,400)})),
     learning:S.get("learn",[]).map(r=>({id:r.id,title:r.title,goal:r.goal,progress:`${r.lessons.filter(l=>l.done).length}/${r.lessons.length}`,next:(r.lessons.find(l=>!l.done)||{}).title||null,next_date:(r.lessons.find(l=>!l.done)||{}).date||null})),
     body:{last7:lastN(7),signals:burnoutSignals().map(s=>({signal:s.t,value:s.v,level:s.s}))}
   };
@@ -1459,7 +1533,7 @@ function drawChat(streamText){
 const toolLabel={add_reminder:"ریمایندر اضافه شد",add_goal:"هدف اضافه شد",update_goal_progress:"پیشرفت هدف به‌روز شد",add_habit:"عادت اضافه شد",add_day_block:"بلوک به قالب روزانه اضافه شد",log_deep_work:"جلسه کار عمیق ثبت شد",toggle_reminder:"ریمایندر به‌روز شد",add_task:"تسک اضافه شد",add_transaction:"تراکنش ثبت شد",add_entry:"در بازنگری ثبت شد",log_body:"وضعیت بدن ثبت شد",add_knowledge:"به پایگاه دانش اضافه شد",create_learning_topic:"برنامه یادگیری جدید در حال ساخت",reschedule_learning:"درس‌ها دوباره چیده شد"};
 async function sendChat(text){
   if(!text||chatCtl) return;
-  if(!sampleApi){ const h=chatHist().slice(); h.push({role:"user",content:text},{role:"assistant",content:"دستیار در این نما در دسترس نیست. صفحه را داخل Claude باز کن و اجازه استفاده از هوش مصنوعی را بده."}); S.set("chat",h.slice(-30)); drawChat(); return; }
+  if(!(await ensureAI())){ const h=chatHist().slice(); h.push({role:"user",content:text},{role:"assistant",content:aiMissingText()}); S.set("chat",h.slice(-30)); drawChat(); return; }
   const h=chatHist().slice(); h.push({role:"user",content:text}); S.set("chat",h); drawChat("");
   const turns=h.filter(m=>m.role!=="tool").slice(-16); const conv=[]; turns.forEach(m=>{ if(conv.length&&conv[conv.length-1].role===m.role) conv[conv.length-1].content+="\n\n"+m.content; else conv.push({role:m.role,content:m.content}); });
   while(conv.length&&conv[0].role!=="user") conv.shift();
@@ -1503,7 +1577,7 @@ const THEMES={
   sand:{name:"روشن گرم",bg:"#f5f1ea",ink:"#2a241c",accent:"#b4532a",accent2:"#2d6a6a",good:"#3d7a4a",bad:"#c0392b"}
 };
 const FONTS=[["Vazirmatn","وزیرمتن","wght@300;400;500;700;800"],["Noto Sans Arabic","نوتو سنس","wght@400;500;700;800"],["IBM Plex Sans Arabic","آی‌بی‌ام پلکس","wght@300;400;500;700"],["Rubik","روبیک","wght@300;400;500;700;800"],["Readex Pro","ریدکس","wght@300;400;500;700"],["Tajawal","تجوال","wght@300;400;500;700;800"],["Cairo","قاهره","wght@300;400;500;700;800"],["Noto Naskh Arabic","نسخ","wght@400;500;700"],["Markazi Text","مرکزی","wght@400;500;700"],["Harmattan","هارمتان","wght@400;500;700"],["Amiri","امیری","wght@400;700"],["Lalezar","لاله‌زار (فقط تیتر)","wght@400"]];
-const SDEF={lockMin:10,theme:"nili",custom:[],font:"Vazirmatn",headFont:"Vazirmatn",fs:14.5,compact:false,blur:true,motion:true,showSample:false,aiName:"دستیار",tone:"friendly",aiTier:"complex",aiRules:"",lDays:14,lMin:25,lHour:"۲۲:۰۰",lTier:"default",lLevel:"simple",start:"today",brand:"سیستم من",sleepGoal:7,exGoal:150};
+const SDEF={lockMin:10,puterOn:false,puterModel:"anthropic/claude-sonnet-5-5",libFs:17,theme:"nili",custom:[],font:"Vazirmatn",headFont:"Vazirmatn",fs:14.5,compact:false,blur:true,motion:true,showSample:false,aiName:"دستیار",tone:"friendly",aiTier:"complex",aiRules:"",lDays:14,lMin:25,lHour:"۲۲:۰۰",lTier:"default",lLevel:"simple",start:"today",brand:"قطب‌نما",icon:"compass",iconImg:"",fx:"depth",sleepGoal:7,exGoal:150};
 const PDEF={name:"",call:"",role:"",company:"",city:"",birth:"",wake:"",sleep:"",interests:[],skills:[],about:""};
 function SET_(){ return {...SDEF,...S.get("settings",{})}; }
 function PROF(){ return {...PDEF,...S.get("profile",{})}; }
@@ -1543,7 +1617,7 @@ function applySettings(){
   r.classList.toggle("compact",!!st.compact); r.classList.toggle("no-blur",!st.blur); r.classList.toggle("no-motion",!st.motion); r.classList.toggle("hide-sample",!st.showSample);
   const h=new Date().getHours(), who=pr.call||pr.name;
   $("#greet").textContent=(h<12?"صبح بخیر":h<17?"ظهر بخیر":"عصر بخیر")+(who?"، "+who:"");
-  $("#brandName").textContent=st.brand||"سیستم من"; $("#logoL").textContent=(st.brand||"م").trim().charAt(0)||"م";
+  $("#brandName").textContent=st.brand||"قطب‌نما"; if(typeof drawLogo==="function"){ drawLogo(); applyFx(); }
   $("#fab").lastChild.textContent=st.aiName||"دستیار"; $(".drawer-h b").textContent=st.aiName||"دستیار شخصی";
   applyWall();
   if(!$("#srcGoal").value){ $("#srcDays").value=st.lDays; $("#srcMin").value=st.lMin; $("#srcHour").value=st.lHour; }
@@ -1593,9 +1667,9 @@ $$("[data-tags]").forEach(box=>{ const k=box.dataset.tags;
 function fillSettings(){ const st=SET_(), p=PROF();
   SETF.forEach(([s,k,num])=>{ $(s).value=num?st[k]:st[k]; }); PROFF.forEach(([s,k])=>$(s).value=p[k]||"");
   $("#tCompact").checked=!!st.compact; $("#tBlur").checked=!!st.blur; $("#tMotion").checked=!!st.motion; $("#tWall").checked=!!st.wall; $("#wallDim").value=st.wallDim||.65;
-  drawThemes(); drawFonts(); drawTags(); drawDataInfo(); drawSyncForm(); }
-function drawDataInfo(){ $("#dataInfo").textContent=`${fa(Object.keys(S.cache).length)} مجموعه داده · ${STANDALONE?("رمزگذاری‌شده روی این دستگاه"+((typeof CloudSync!=="undefined"&&CloudSync.ready)?" · همگام‌سازی ابری زنده":Sync.on()?" · همگام با GitHub":"")):S.col?"ذخیره در حساب شما (روی همه دستگاه‌ها)":"ذخیره روی همین مرورگر"}`; }
-function drawBanner(){ const b=$("#bkBanner"); b.hidden=!(STANDALONE&&V.unlocked&&!Sync.on()&&!(typeof CloudSync!=="undefined"&&CloudSync.ready)&&Object.keys(S.cache).length>4&&Date.now()-(+S.get("lastBackup",0)||0)>7*864e5); }
+  drawThemes(); drawFonts(); drawTags(); drawDataInfo(); drawSyncForm(); drawIconPick(); drawFxPick(); drawWxSet(); drawAiSet(); }
+function drawDataInfo(){ $("#dataInfo").textContent=`${fa(Object.keys(S.cache).length)} مجموعه داده · ${STANDALONE?("رمزگذاری‌شده روی این دستگاه"+(Sync.on()?" · همگام با GitHub":"")):S.col?"ذخیره در حساب شما (روی همه دستگاه‌ها)":"ذخیره روی همین مرورگر"}`; }
+function drawBanner(){ const b=$("#bkBanner"); b.hidden=!(STANDALONE&&V.unlocked&&!Sync.on()&&Object.keys(S.cache).length>4&&Date.now()-(+S.get("lastBackup",0)||0)>7*864e5); }
 $("#bkGo").addEventListener("click",()=>setTimeout(()=>document.getElementById("set-data").scrollIntoView({block:"start"}),60));
 
 /* security settings */
@@ -1606,14 +1680,15 @@ $("#secLock").addEventListener("change",e=>{ saveSet({lockMin:+e.target.value});
 function pwStatus(t,err){ const el=$("#pwStatus"); el.textContent=t; el.classList.toggle("err",!!err); }
 $("#pwForm").addEventListener("submit",async e=>{ e.preventDefault(); const o=$("#pwOld").value,n=$("#pwNew").value,n2=$("#pwNew2").value;
   if(n.length<8) return pwStatus("رمز جدید باید حداقل ۸ کاراکتر باشد.",true); if(n!==n2) return pwStatus("تکرار رمز جدید یکسان نیست.",true);
-  pwStatus("در حال بررسی…"); const b=V.stored(); try{ await decryptObj(b,await deriveKey(o,b.salt,b.iter||600000)); }catch(_){ return pwStatus("رمز فعلی اشتباه است.",true); }
-  V.salt=newSalt(); V.key=await deriveKey(n,V.salt,V.iter); await V.saveLocal(); if(Sync.on()) Sync.schedule(200); if(CloudSync.ready) CloudSync.schedule(200);
-  $("#pwOld").value=$("#pwNew").value=$("#pwNew2").value=""; pwStatus(Sync.on()?"رمز عوض شد. روی دستگاه‌های دیگر، در تنظیمات همگام‌سازی رمز جدید را وارد کن و «اتصال» را بزن.":"رمز عوض شد."); });
+  pwStatus("در حال بررسی…"); const b=V.stored(); let oldKey; try{ oldKey=await deriveKey(o,b.salt,b.iter||600000); await decryptObj(b,oldKey); }catch(_){ return pwStatus("رمز فعلی اشتباه است.",true); }
+  pwStatus("در حال رمزگذاری دوباره اطلاعات…"); V.salt=newSalt(); V.key=await deriveKey(n,V.salt,V.iter); await V.saveLocal(); await LibStore.reencrypt(oldKey); if(Sync.on()) Sync.schedule(200);
+  $("#pwOld").value=$("#pwNew").value=$("#pwNew2").value=""; pwStatus(Sync.on()?"رمز عوض شد. روی دستگاه‌های دیگر، در تنظیمات ← امنیت، رمز جدید را وارد کن.":"رمز عوض شد."); });
 function syStatus(t,err){ const el=$("#syStatus"); el.textContent=t; el.classList.toggle("err",!!err); }
 $("#syncForm").addEventListener("submit",async e=>{ e.preventDefault(); const btn=$("#syConnect"); if(btn.disabled) return;
   const repo=$("#syRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\/$/,""), token=$("#syToken").value.trim()||(S.cache._sync||{}).token||"", pw=$("#syPw").value;
-  if(!/^[\w.-]+\/[\w.-]+$/.test(repo)) return syStatus("نام مخزن را به شکل نام‌کاربری/نام‌مخزن وارد کن.",true); if(!token) return syStatus("توکن را وارد کن.",true); if(!pw) return syStatus("رمز عبور فعلی را برای تأیید وارد کن.",true);
+  if(!/^[\w.-]+\/[\w.-]+$/.test(repo)) return syStatus("نام مخزن را به شکل نام‌کاربری/نام‌مخزن وارد کن.",true); if(!token) return syStatus("توکن را وارد کن.",true); if(!pw&&!Sync.supa()) return syStatus("رمز قفل فعلی را برای تأیید وارد کن.",true);
   btn.disabled=true; const cfg={repo,token};
+  if(Sync.supa()){ try{ syStatus("در حال اتصال به GitHub…"); await Sync.checkRepo(cfg); S.cache._sync=cfg; S.meta._sync=Date.now(); await V.saveLocal(); $("#syToken").value=""; drawSyncForm(); syStatus("GitHub برای خبرخوان وصل شد."); drawReader(); }catch(er){ syStatus(er.code==="public"?"این مخزن عمومی است؛ فقط مخزن خصوصی (Private) قبول می‌شود.":syncErrText(er),true); } btn.disabled=false; return; }
   try{ syStatus("در حال بررسی رمز…"); const b=V.stored(); let pwOk=true; try{ await decryptObj(b,await deriveKey(pw,b.salt,b.iter||600000)); }catch(_){ pwOk=false; }
     syStatus("در حال اتصال به GitHub…");
     try{ await Sync.checkRepo(cfg); }catch(er){ return syStatus(er.code==="public"?"این مخزن عمومی است؛ برای امنیت فقط مخزن خصوصی (Private) قبول می‌شود.":syncErrText(er),true); }
@@ -1623,13 +1698,23 @@ $("#syncForm").addEventListener("submit",async e=>{ e.preventDefault(); const bt
       syStatus(pwOk?"متصل شد و اطلاعات دو طرف ادغام شد.":"متصل شد. رمز این دستگاه هم همان رمز همگام‌سازی شد."); }
     else { if(!pwOk) return syStatus("رمز اشتباه است.",true); S.cache._sync=cfg; S.meta._sync=Date.now(); V.stamp(); await V.saveLocal();
       if(rem.missing){ Sync.sha=null; await Sync.push(); } else { Sync.sha=rem.sha; Sync.merge(await decryptObj(rem.blob,V.key)); await Sync.push(); }
-      if(Sync.state!=="err") syStatus("همگام‌سازی روشن شد. از این به بعد هر تغییر خودکار ذخیره و روی دستگاه‌های دیگر دریافت می‌شود."); }
+      LibStore.flush(); if(Sync.state!=="err") syStatus("همگام‌سازی روشن شد. از این به بعد هر تغییر خودکار ذخیره و روی دستگاه‌های دیگر دریافت می‌شود."); }
     $("#syPw").value=""; $("#syToken").value=""; drawSyncForm(); drawDataInfo(); drawBanner();
   } finally { btn.disabled=false; } });
 $("#syNow").addEventListener("click",async()=>{ if(!Sync.on()) return syStatus("همگام‌سازی روشن نیست.",true); try{ await Sync.pull(); await Sync.push(); }catch(e){ Sync.set("err",e); } });
 let syOffArm=false; $("#syOff").addEventListener("click",e=>{ if(!Sync.on()) return syStatus("همگام‌سازی روشن نیست."); if(!syOffArm){ syOffArm=true; e.target.textContent="مطمئنی؟ دوباره بزن"; setTimeout(()=>{ syOffArm=false; e.target.textContent="قطع همگام‌سازی"; },3500); return; }
   syOffArm=false; e.target.textContent="قطع همگام‌سازی"; delete S.cache._sync; S.meta._sync=Date.now(); V.saveLocal(); Sync.sha=null; Sync.set("off"); drawSyncForm(); drawDataInfo(); drawBanner(); syStatus("همگام‌سازی روی این دستگاه قطع شد. اطلاعات این دستگاه سر جایش است."); });
-function drawSyncForm(){ if(!STANDALONE) return; const c=S.cache._sync; $("#syRepo").value=c?c.repo:""; $("#syToken").placeholder=c?"ذخیره شده؛ برای تغییر، توکن جدید وارد کن":"github_pat_…"; $("#syOff").hidden=!c; $("#syNow").hidden=!c; $("#secLock").value=String(SET_().lockMin); if(Sync.state) Sync.set(Sync.on()?Sync.state:"off",Sync.err); }
+function drawAcct(){ if(!STANDALONE) return; const s=SS.get(); $("#acctInfo").textContent=s?`وارد شده با ${s.email||"حساب ابری"}`:"بدون حساب ابری؛ اطلاعات فقط روی همین دستگاه است.";
+  $("#acctLogin").hidden=!!s; $("#acctLogout").hidden=!s; $("#acctSync").hidden=!s; $("#syPwRow").hidden=!!s; }
+$("#acctLogin").addEventListener("click",()=>{ try{ localStorage.removeItem("posv-localonly"); }catch(_){} lockNow(); });
+let acctArm=false; $("#acctLogout").addEventListener("click",e=>{ if(!acctArm){ acctArm=true; e.target.textContent="مطمئنی؟ دوباره بزن"; setTimeout(()=>{ acctArm=false; e.target.textContent="خروج از حساب"; },3500); return; }
+  acctArm=false; e.target.textContent="خروج از حساب"; supaLogout(); try{ localStorage.setItem("posv-localonly","1"); }catch(_){} Sync.sha=null; Sync.set(Sync.on()?"ok":"off"); drawAcct(); drawDataInfo(); syStatus("از حساب ابری خارج شدی. اطلاعات این دستگاه سر جایش است."); });
+$("#acctSync").addEventListener("click",async()=>{ try{ await Sync.pull(); await Sync.push(); }catch(e){ Sync.set("err",e); } });
+async function adoptRemote(pw){ const rem=await Sync.fetchRemote(); if(rem.missing) return false; const key=await deriveKey(pw,rem.blob.salt,rem.blob.iter||600000); const d=await decryptObj(rem.blob,key);
+  const oldKey=V.key; V.key=key; V.salt=rem.blob.salt; V.iter=rem.blob.iter||600000; Sync.sha=rem.sha; V.stamp(); Sync.base=null; Sync.merge(d); await V.saveLocal(); await LibStore.reencrypt(oldKey); Sync.set("ok"); Sync.schedule(300); return true; }
+$("#reKeyForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw=$("#reKeyPw").value; if(!pw) return; syStatus("در حال بررسی…");
+  try{ await adoptRemote(pw); $("#reKeyPw").value=""; syStatus("رمز جدید روی این دستگاه هم اعمال شد."); }catch(_){ syStatus("این رمز با رمز اطلاعات ابری یکی نیست.",true); } });
+function drawSyncForm(){ if(!STANDALONE) return; drawAcct(); const c=S.cache._sync; $("#syRepo").value=c?c.repo:""; $("#syToken").placeholder=c?"ذخیره شده؛ برای تغییر، توکن جدید وارد کن":"github_pat_…"; $("#syOff").hidden=!c; $("#syNow").hidden=!c; $("#secLock").value=String(SET_().lockMin); if(Sync.state) Sync.set(Sync.on()?Sync.state:"off",Sync.err); }
 function dStatus(t,err){ const s=$("#dataStatus"); s.textContent=t; s.classList.toggle("err",!!err); }
 $("#dExport").addEventListener("click",async()=>{ let json;
   if(STANDALONE){ const data={...S.cache}; delete data._sync; json=JSON.stringify(await encryptObj({data,meta:S.meta})); S.set("lastBackup",Date.now()); }
@@ -1681,7 +1766,7 @@ function drawCharts(){
   $("#todayRings").innerHTML=[
     ring(rems.length?rems.filter(r=>r.d).length/rems.length*100:0,"var(--accent)","ریمایندرها",`${fa(rems.filter(r=>r.d).length)} از ${fa(rems.length)}`),
     ring(habits.length?hDone/habits.length*100:0,"var(--good)","عادت‌های امروز",`${fa(hDone)} از ${fa(habits.length)}`),
-    ring(dueN+doneToday?doneToday/(dueN+doneToday)*100:(learn.length?100:0),"var(--teal)","درس امروز",dueN?`${fa(dueN)} درس مانده`:learn.length?"کامل":"منبعی نیست"),
+    ring((S.get("libLog",{})[TODAY]||0)/(+st.lMin||25)*100,"var(--teal)","مطالعه امروز",`${fa(Math.round(S.get("libLog",{})[TODAY]||0))} از ${fa(+st.lMin||25)} دقیقه`),
     ring(budget?out/budget*100:0,budget&&out/budget>.9?"var(--bad)":budget&&out/budget>.7?"var(--amber)":"var(--accent-2)","بودجه ماه",budget?`${mil(out)} از ${mil(budget)}`:"بودجه تعیین نشده"),
     ring(tb?tb.en/5*100:0,"var(--amber)","انرژی جسمی",tb?`${fa(tb.en)} از ۵`:"ثبت نشده")].join("");
   const lb={...BALDEF,...S.get("balance",{})};
@@ -1701,9 +1786,9 @@ function drawCharts(){
   $("#revBars").innerHTML=bars(["۳ هفته قبل","۲ هفته قبل","هفته قبل","این هفته"],[{name:"ژورنال",color:"var(--accent)",values:wk("journal")},{name:"برد",color:"var(--good)",values:wk("wins")},{name:"اصطکاک",color:"var(--amber)",values:wk("friction")}],{stacked:true,label:"ثبت‌های بازنگری"});
   const eh=en14().filter(Boolean);
   $("#energyDist").innerHTML=bars(["۱","۲","۳","۴","۵"],[{name:"روزها",color:"var(--accent)",values:[1,2,3,4,5].map(v=>eh.filter(x=>x===v).length)}],{label:"تعداد روزها در هر سطح انرژی",h:150});
-  $("#learnRings").innerHTML=learn.length?learn.slice(0,8).map((r,i)=>{ const d=r.lessons.filter(l=>l.done).length,t=r.lessons.length; return ring(t?d/t*100:0,PAL[(i+2)%5],r.title.length>22?r.title.slice(0,22)+"…":r.title,`${fa(d)} از ${fa(t)} درس`); }).join(""):'<div class="empty">بعد از افزودن اولین منبع، پیشرفت هر منبع اینجا دیده می‌شود.</div>';
+  const lib=S.get("lib",[]); $("#libDonut").innerHTML=lib.length?donut([{label:"برای خواندن",v:lib.filter(i=>i.status==="todo").length,c:"var(--muted)"},{label:"در حال خواندن",v:lib.filter(i=>i.status==="reading").length,c:"var(--teal)"},{label:"خوانده‌شده",v:lib.filter(i=>i.status==="done").length,c:"var(--good)"}],fa(lib.length),"مورد"):'<div class="empty">بعد از افزودن اولین مورد، وضعیت کتابخانه اینجا دیده می‌شود.</div>';
   const ld=Array.from({length:14},(_,i)=>addDays(TODAY,i-13));
-  $("#learnBars").innerHTML=bars(ld.map(d=>faDate(d,{day:"numeric"})),[{name:"درس",color:"var(--teal)",values:ld.map(d=>learn.reduce((a,r)=>a+r.lessons.filter(l=>l.doneOn===d).length,0))}],{every:2,label:"درس‌های کامل‌شده روزانه",h:150});
+  const llog=S.get("libLog",{}); $("#libBars").innerHTML=bars(ld.map(d=>faDate(d,{day:"numeric"})),[{name:"دقیقه",color:"var(--teal)",values:ld.map(d=>Math.round(llog[d]||0))}],{every:2,label:"دقیقه مطالعه روزانه",h:150});
   const w=lastN(7), SG=+st.sleepGoal||7, EG=+st.exGoal||150, exm=w.reduce((a,x)=>a+(x?x.ex:0),0);
   $("#bodyRings").innerHTML=[ring(avg(w,"sleep")/SG*100,"var(--accent)","خواب",`${fa(avg(w,"sleep").toFixed(1))} از ${fa(SG)} ساعت`),ring(exm/EG*100,"var(--good)","حرکت",`${fa(exm)} از ${fa(EG)} دقیقه`),ring(avg(w,"wa")/8*100,"var(--teal)","آب",`${fa(avg(w,"wa").toFixed(0))} از ۸ لیوان`),ring(avg(w,"nu")/5*100,"var(--amber)","تغذیه",`${fa(avg(w,"nu").toFixed(1))} از ۵`),ring(avg(w,"en")/5*100,"var(--accent-2)","انرژی جسمی",`${fa(avg(w,"en").toFixed(1))} از ۵`)].join("");
 }
@@ -1753,19 +1838,379 @@ $("#wallDim").addEventListener("change",e=>saveSet({wallDim:+e.target.value}));
 $("#wallRemove").addEventListener("click",()=>{ S.del("wallpaper"); saveSet({wall:false}); $("#tWall").checked=false; });
 function applyWall(){ const st=SET_(), w=S.get("wallpaper",null), el=$("#wall"); el.hidden=!(st.wall&&w); if(!el.hidden) el.style.backgroundImage=`url(${w})`; document.documentElement.style.setProperty("--wall-dim",st.wallDim||.65); }
 
+/* ================= BRAND ICONS ================= */
+const ICONS={
+  compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+  mountain:'<path d="M3 20l6-10 4 6 3-4 5 8z"/><path d="M7.5 12.5l1.5 1.5 1.5-1.5"/>',
+  flame:'<path d="M12 3c1 4 5 5.5 5 10a5 5 0 0 1-10 0c0-2.5 1.5-4 2.5-5 .3 2 1.5 3 2.5 3 0-3-1-5 0-8z"/>',
+  leaf:'<path d="M5 19c0-8 5-14 14-14 0 9-6 14-14 14z"/><path d="M5 19l7-7"/>',
+  bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>',
+  rocket:'<path d="M12 2c4 3 5 7 4 12l-4 3-4-3c-1-5 0-9 4-12z"/><circle cx="12" cy="9" r="1.6"/><path d="M8.5 15.5L6 20M15.5 15.5L18 20"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/>',
+  moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+  infinity:'<path d="M7 9a3 3 0 1 0 0 6c3 0 7-6 10-6a3 3 0 1 1 0 6c-3 0-7-6-10-6z"/>',
+  hexagon:'<path d="M12 2.5l8.2 4.75v9.5L12 21.5l-8.2-4.75v-9.5z"/><path d="M12 8v8M8.5 10l7 4M15.5 10l-7 4"/>',
+  crown:'<path d="M3 8l4.5 4 4.5-7 4.5 7L21 8l-2 11H5z"/>',
+  book:'<path d="M2 6c3-1.5 7-1.5 10 0 3-1.5 7-1.5 10 0v13c-3-1.5-7-1.5-10 0-3-1.5-7-1.5-10 0z"/><path d="M12 6v13"/>',
+  feather:'<path d="M20 4c-8 0-14 6-14 14v2"/><path d="M20 4c0 7-4 12-11 12"/><path d="M14 10H9"/>'
+};
+const ICON_NAMES={compass:"قطب‌نما",star:"ستاره",mountain:"کوه",flame:"شعله",leaf:"برگ",bolt:"صاعقه",target:"هدف",rocket:"موشک",sun:"خورشید",moon:"ماه",infinity:"بی‌نهایت",hexagon:"شش‌ضلعی",crown:"تاج",book:"کتاب",feather:"پَر",letter:"حرف اول نام"};
+function iconSVG(k,stroke){ return `<svg viewBox="0 0 24 24" style="width:58%;height:58%;fill:none;stroke:${stroke||"var(--on-accent)"};stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round">${ICONS[k]||ICONS.compass}</svg>`; }
+function drawLogo(){ const st=SET_(), el=$("#logoL"), name=(st.brand||"قطب‌نما").trim();
+  if(st.iconImg){ el.innerHTML=`<img src="${st.iconImg}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit">`; el.style.background="none"; }
+  else { el.style.background=""; el.innerHTML=st.icon==="letter"?esc(name.charAt(0)||"ق"):iconSVG(st.icon); }
+  if(STANDALONE){ document.title=name; let l=document.querySelector('link[rel="icon"]'); if(!l){ l=document.createElement("link"); l.rel="icon"; document.head.appendChild(l); }
+    if(st.iconImg) l.href=st.iconImg; else { const cs=getComputedStyle(document.documentElement), a1=cs.getPropertyValue("--accent").trim()||"#7aa7ff", a2=cs.getPropertyValue("--accent-2").trim()||"#b48cff", on=cs.getPropertyValue("--on-accent").trim()||"#0b0f1a";
+      const inner=st.icon==="letter"?`<text x="12" y="16.5" text-anchor="middle" font-size="13" font-family="Tahoma" font-weight="700" fill="${on}">${esc(name.charAt(0))}</text>`:`<g fill="none" stroke="${on}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.6 3.6) scale(.7)">${ICONS[st.icon]||ICONS.compass}</g>`;
+      l.href="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a1}"/><stop offset="1" stop-color="${a2}"/></linearGradient></defs><rect width="24" height="24" rx="6" fill="url(#g)"/>${inner}</svg>`); } } }
+function drawIconPick(){ const st=SET_(); $("#iconPick").innerHTML=Object.keys(ICON_NAMES).map(k=>`<button type="button" class="ipick ${!st.iconImg&&st.icon===k?"on":""}" data-icon="${k}" title="${ICON_NAMES[k]}" aria-label="${ICON_NAMES[k]}"><span class="logo">${k==="letter"?esc((st.brand||"قطب‌نما").trim().charAt(0)):iconSVG(k)}</span></button>`).join("")+
+  `<label class="ipick ${st.iconImg?"on":""}" for="iconUp" title="تصویر دلخواه"><span class="logo" style="${st.iconImg?`background:url(${st.iconImg}) center/cover`:""}">${st.iconImg?"":iconSVG("plus")}</span></label>`; }
+ICONS.plus='<path d="M12 5v14M5 12h14"/>';
+$("#iconPick").addEventListener("click",e=>{ const b=e.target.closest("[data-icon]"); if(!b) return; saveSet({icon:b.dataset.icon,iconImg:""}); drawIconPick(); });
+$("#iconUp").addEventListener("change",e=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{ const img=new Image(); img.onload=()=>{ const c=document.createElement("canvas"); c.width=c.height=128; const x=c.getContext("2d"), m=Math.min(img.width,img.height); x.drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,128,128); saveSet({iconImg:c.toDataURL("image/png")}); drawIconPick(); }; img.src=rd.result; }; rd.readAsDataURL(f); e.target.value=""; });
+
+/* ================= VISUAL EFFECTS ================= */
+const FX={mode:"off",tiltOn:false,gl:null,raf:0,mx:0,my:0,tx:0,ty:0};
+const reduceMotion=()=>window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+function applyFx(){ const m=reduceMotion()?"off":(SET_().fx||"depth"); FX.mode=m; const r=document.documentElement;
+  r.classList.toggle("fx-depth",m==="depth"); r.classList.toggle("fx-scene",m==="scene"); $("#aurora").hidden=m!=="depth";
+  FX.tiltOn=m!=="off"&&matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if(m==="scene") startScene(); else stopScene(); }
+/* card tilt + sheen, answers the pointer */
+let tiltEl=null;
+document.addEventListener("pointermove",e=>{ if(!FX.tiltOn) return; FX.mx=e.clientX/innerWidth-.5; FX.my=e.clientY/innerHeight-.5;
+  const c=e.target.closest&&e.target.closest(".card"); if(tiltEl&&tiltEl!==c) untilt();
+  if(!c||c.matches(":focus-within")||c.closest(".lock,.reader,.drawer")) return; tiltEl=c;
+  const b=c.getBoundingClientRect(), px=(e.clientX-b.left)/b.width, py=(e.clientY-b.top)/b.height, k=Math.min(1,520/Math.max(b.width,b.height));
+  c.style.transform=`perspective(1100px) rotateX(${((.5-py)*5*k).toFixed(2)}deg) rotateY(${((px-.5)*6*k).toFixed(2)}deg) translateZ(0)`;
+  c.style.setProperty("--sx",(px*100).toFixed(1)+"%"); c.style.setProperty("--sy",(py*100).toFixed(1)+"%"); c.classList.add("tilting"); },{passive:true});
+function untilt(){ if(!tiltEl) return; tiltEl.style.transform=""; tiltEl.classList.remove("tilting"); tiltEl=null; }
+document.addEventListener("pointerleave",untilt); document.addEventListener("focusin",untilt);
+
+/* WebGL compass globe */
+function hexRGB(h){ h=(h||"").trim(); const m=h.match(/^#([0-9a-f]{6})$/i); if(!m) return [.48,.65,1]; const n=parseInt(m[1],16); return [(n>>16&255)/255,(n>>8&255)/255,(n&255)/255]; }
+function startScene(){ if(FX.raf) return; const cv=$("#fxCanvas"); cv.hidden=false; let gl=FX.gl;
+  if(!gl){ gl=cv.getContext("webgl",{alpha:true,antialias:false,premultipliedAlpha:false}); if(!gl){ cv.hidden=true; saveSet({fx:"depth"}); return; } FX.gl=gl;
+    const vs=`attribute vec3 p;attribute float k;uniform float t;uniform vec2 m;uniform float asp;uniform float sz;varying float vk;varying float vz;
+      void main(){ float a=t*.08+m.x*.9; float b=.35+m.y*.6; vec3 q=p;
+        q=vec3(q.x*cos(a)+q.z*sin(a),q.y,-q.x*sin(a)+q.z*cos(a)); q=vec3(q.x,q.y*cos(b)-q.z*sin(b),q.y*sin(b)+q.z*cos(b));
+        float z=q.z+3.2; vec2 s=q.xy/z*2.9; gl_Position=vec4(s.x/asp-.3,s.y-.05,0.,1.); vz=q.z; vk=k; gl_PointSize=sz*(k>1.5?2.6:k>.5?1.8:1.2)*(3.4/z); }`;
+    const fs=`precision mediump float;uniform vec3 c1;uniform vec3 c2;uniform vec3 c3;varying float vk;varying float vz;
+      void main(){ vec2 d=gl_PointCoord-.5; float r=dot(d,d); if(r>.25) discard; float f=smoothstep(.25,0.,r);
+        vec3 col=vk>1.5?c3:mix(c1,c2,vk>.5?1.:.5+.5*vz); float a=f*(.45+.6*(.6-.4*vz)); gl_FragColor=vec4(col,min(1.,a*(vk>.5?1.3:1.))); }`;
+    const sh=(t,s)=>{ const o=gl.createShader(t); gl.shaderSource(o,s); gl.compileShader(o); return o; };
+    const pr=gl.createProgram(); gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs)); gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs)); gl.linkProgram(pr); gl.useProgram(pr); FX.pr=pr;
+    const pts=[], N=1600, ga=Math.PI*(3-Math.sqrt(5));
+    for(let i=0;i<N;i++){ const y=1-2*(i+.5)/N, r=Math.sqrt(1-y*y), th=i*ga; pts.push(Math.cos(th)*r,y,Math.sin(th)*r,0); }
+    for(let i=0;i<220;i++){ const th=i/220*Math.PI*2; pts.push(Math.cos(th)*1.18,0,Math.sin(th)*1.18,1); }
+    for(let i=0;i<4;i++){ const th=i*Math.PI/2; for(let j=0;j<26;j++){ const r=1.2+j*.018, w=(1-j/26)*.06; pts.push(Math.cos(th)*r,0,Math.sin(th)*r,i===0?2:1); pts.push(Math.cos(th)*r-Math.sin(th)*w,0,Math.sin(th)*r+Math.cos(th)*w,i===0?2:1); } }
+    for(let j=0;j<60;j++){ const y=-1.25+j*(2.5/60); pts.push(0,y,0,j>30?2:1); }
+    FX.count=pts.length/4; const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(pts),gl.STATIC_DRAW);
+    const lp=gl.getAttribLocation(pr,"p"), lk=gl.getAttribLocation(pr,"k"); gl.enableVertexAttribArray(lp); gl.vertexAttribPointer(lp,3,gl.FLOAT,false,16,0); gl.enableVertexAttribArray(lk); gl.vertexAttribPointer(lk,1,gl.FLOAT,false,16,12);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA,gl.ONE); FX.u=n=>gl.getUniformLocation(pr,n); }
+  const t0=performance.now();
+  const frame=now=>{ FX.raf=requestAnimationFrame(frame); if(document.hidden) return; const dpr=Math.min(1.5,devicePixelRatio||1), w=innerWidth, h=innerHeight;
+    if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){ cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); }
+    gl.viewport(0,0,cv.width,cv.height); gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
+    FX.tx+=(FX.mx-FX.tx)*.04; FX.ty+=(FX.my-FX.ty)*.04; const cs=getComputedStyle(document.documentElement);
+    gl.uniform1f(FX.u("t"),(now-t0)/1000); gl.uniform2f(FX.u("m"),FX.tx,FX.ty); gl.uniform1f(FX.u("asp"),w/h); gl.uniform1f(FX.u("sz"),Math.max(1.6,2.4*dpr*Math.min(1.3,h/800)));
+    if(!FX.cc||now-FX.cct>1000){ FX.cc=[hexRGB(cs.getPropertyValue("--accent")),hexRGB(cs.getPropertyValue("--accent-2")),hexRGB(cs.getPropertyValue("--amber"))]; FX.cct=now; }
+    gl.uniform3fv(FX.u("c1"),FX.cc[0]); gl.uniform3fv(FX.u("c2"),FX.cc[1]); gl.uniform3fv(FX.u("c3"),FX.cc[2]); gl.drawArrays(gl.POINTS,0,FX.count); };
+  FX.raf=requestAnimationFrame(frame); }
+function stopScene(){ if(FX.raf) cancelAnimationFrame(FX.raf); FX.raf=0; $("#fxCanvas").hidden=true; }
+$("#fxPick").addEventListener("click",e=>{ const b=e.target.closest("[data-fx]"); if(!b) return; saveSet({fx:b.dataset.fx}); drawFxPick(); });
+function drawFxPick(){ const v=SET_().fx||"depth"; $$("#fxPick [data-fx]").forEach(b=>b.classList.toggle("on",b.dataset.fx===v)); $("#fxNote").textContent=reduceMotion()?"سیستم‌عامل دستگاهت «کاهش حرکت» را روشن کرده؛ برای همین جلوه‌ها خاموش می‌مانند.":""; }
+
+/* ================= WEATHER ================= */
+const WX={data:null,at:0,busy:false};
+const WMO=c=>c===0?["آفتابی","sun"]:c<=2?["کمی ابری","partly"]:c===3?["ابری","cloud"]:c<=48?["مه","fog"]:c<=57?["نم‌نم باران","rain"]:c<=67?["بارانی","rain"]:c<=77?["برفی","snow"]:c<=82?["رگبار","rain"]:c<=86?["رگبار برف","snow"]:["رعد و برق","storm"];
+const WXI={sun:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>',
+  partly:'<circle cx="9" cy="9" r="3.4"/><path d="M9 2.5v1.5M2.5 9H4M4.4 4.4l1 1M13.6 4.4l-1 1"/><path d="M8 20h9a3.5 3.5 0 0 0 .4-7A5 5 0 0 0 8 14a3 3 0 0 0 0 6z"/>',
+  cloud:'<path d="M7 19h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 12.5 3.3 3.3 0 0 0 7 19z"/>',
+  fog:'<path d="M4 9h16M3 13h18M5 17h14"/>',
+  rain:'<path d="M7 15h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 8.5 3.3 3.3 0 0 0 7 15z"/><path d="M8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5"/>',
+  snow:'<path d="M7 14h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 7.5 3.3 3.3 0 0 0 7 14z"/><path d="M8 18h.01M12 19h.01M16 18h.01M10 21h.01M14 21h.01" stroke-width="2.6"/>',
+  storm:'<path d="M7 14h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 7.5 3.3 3.3 0 0 0 7 14z"/><path d="M12.5 14l-2 3.5h3l-2 3.5"/>'};
+const wxIcon=(k,cls)=>`<svg viewBox="0 0 24 24" class="${cls||"wxi"}">${WXI[k]}</svg>`;
+const WX_OK=()=>STANDALONE;
+async function loadWeather(force){ const c=SET_().wxCity; if(!WX_OK()||!c||WX.busy) return drawWeather(); if(!force&&WX.data&&WX.key===c.lat+","+c.lon&&Date.now()-WX.at<30*60000) return drawWeather();
+  WX.busy=true; try{ const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=6`);
+    if(!r.ok) throw 0; WX.data=await r.json(); WX.at=Date.now(); WX.key=c.lat+","+c.lon; WX.err=""; }catch(e){ WX.err="دریافت آب‌وهوا انجام نشد؛ اتصال اینترنت را بررسی کن."; }
+  WX.busy=false; drawWeather(); }
+function drawWeather(){ const el=$("#wxBody"), mini=$("#wxMini"), c=SET_().wxCity;
+  if(!WX_OK()){ el.innerHTML='<div class="empty">آب‌وهوا روی نسخه آنلاین سایت (github.io) کار می‌کند.</div>'; mini.innerHTML=""; return; }
+  if(!c){ el.innerHTML='<div class="empty">شهرت را در تنظیمات ← عمومی انتخاب کن تا آب‌وهوا اینجا نمایش داده شود.</div><a class="btn sm" href="#settings" id="wxSet" style="text-decoration:none;width:max-content">انتخاب شهر</a>'; mini.innerHTML=""; return; }
+  const d=WX.data; if(!d||WX.key!==c.lat+","+c.lon){ el.innerHTML=`<div class="empty">${WX.err||"در حال دریافت آب‌وهوای "+esc(c.name)+"…"}</div>`; mini.innerHTML=""; return; }
+  const cu=d.current, [txt,ic]=WMO(cu.weather_code), dl=d.daily;
+  el.innerHTML=`<div class="wxnow">${wxIcon(ic,"wxbig")}<div><div class="big">${fa(Math.round(cu.temperature_2m))}°</div><div class="small muted">${txt} · ${esc(c.name)}</div></div>
+    <div class="wxmeta small muted"><span>حس واقعی ${fa(Math.round(cu.apparent_temperature))}°</span><span>رطوبت ${fa(cu.relative_humidity_2m)}٪</span><span>باد ${fa(Math.round(cu.wind_speed_10m))} km/h</span></div></div>
+    <div class="wxdays">${dl.time.map((t,i)=>{ const [tx,ik]=WMO(dl.weather_code[i]); return `<div class="wxday" title="${tx}"><span class="small muted">${i===0?"امروز":faDate(t,{weekday:"short"})}</span>${wxIcon(ik)}<b class="num">${fa(Math.round(dl.temperature_2m_max[i]))}°</b><span class="num small muted">${fa(Math.round(dl.temperature_2m_min[i]))}°</span>${dl.precipitation_probability_max&&dl.precipitation_probability_max[i]>=30?`<span class="small" style="color:var(--teal)">${fa(dl.precipitation_probability_max[i])}٪</span>`:""}</div>`; }).join("")}</div>`;
+  mini.innerHTML=`${wxIcon(ic,"wxi")}<span class="num">${fa(Math.round(cu.temperature_2m))}°</span><span>${esc(c.name)}</span>`; }
+let wxT; $("#wxQ").addEventListener("input",e=>{ clearTimeout(wxT); const q=e.target.value.trim(); if(q.length<2){ $("#wxRes").innerHTML=""; return; }
+  wxT=setTimeout(async()=>{ if(!WX_OK()){ $("#wxRes").innerHTML='<div class="small muted">جستجوی شهر روی نسخه آنلاین کار می‌کند.</div>'; return; }
+    try{ const r=await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=fa&format=json`); const j=await r.json();
+      $("#wxRes").innerHTML=(j.results||[]).map(x=>`<button type="button" class="btn sm" data-lat="${x.latitude}" data-lon="${x.longitude}" data-name="${esc(x.name)}">${esc(x.name)}${x.admin1?"، "+esc(x.admin1):""}${x.country?"، "+esc(x.country):""}</button>`).join("")||'<div class="small muted">شهری پیدا نشد؛ نام را فارسی یا انگلیسی امتحان کن.</div>'; }
+    catch(_){ $("#wxRes").innerHTML='<div class="small muted">جستجو انجام نشد؛ اتصال اینترنت را بررسی کن.</div>'; } },400); });
+$("#wxRes").addEventListener("click",e=>{ const b=e.target.closest("[data-lat]"); if(!b) return; saveSet({wxCity:{name:b.dataset.name,lat:+(+b.dataset.lat).toFixed(3),lon:+(+b.dataset.lon).toFixed(3)}}); $("#wxRes").innerHTML=""; $("#wxQ").value=""; drawWxSet(); loadWeather(true); });
+$("#wxHere").addEventListener("click",()=>{ if(!navigator.geolocation||!WX_OK()) return $("#wxNow").textContent="موقعیت‌یابی در این نما در دسترس نیست؛ شهر را جستجو کن.";
+  $("#wxNow").textContent="در حال گرفتن موقعیت…"; navigator.geolocation.getCurrentPosition(p=>{ saveSet({wxCity:{name:"موقعیت من",lat:+p.coords.latitude.toFixed(2),lon:+p.coords.longitude.toFixed(2)}}); drawWxSet(); loadWeather(true); },()=>{ $("#wxNow").textContent="اجازه موقعیت داده نشد؛ شهر را جستجو کن."; },{timeout:10000,maximumAge:3600000}); });
+function drawWxSet(){ const c=SET_().wxCity; $("#wxNow").textContent=c?"شهر فعلی: "+c.name:"هنوز شهری انتخاب نشده."; }
+setInterval(()=>{ if(!document.hidden) loadWeather(); },10*60000);
+
+/* ================= READER (articles & news) ================= */
+const BOT_PY="#!/usr/bin/env python3\n\"\"\"Ghotbnama reader bot: reads feeds.json, fetches each site's RSS/Atom feed, writes reader.json.\nRuns on GitHub Actions. Standard library only.\"\"\"\nimport json, os, re, sys, time, html, hashlib, datetime, email.utils, urllib.request, urllib.parse\nimport xml.etree.ElementTree as ET\n\nUA = \"Mozilla/5.0 (compatible; GhotbnamaReader/1.0; personal feed reader)\"\nMAX_PER_FEED, MAX_TOTAL, SUMMARY = 30, 400, 420\n\ndef get(url, timeout=25):\n    req = urllib.request.Request(url, headers={\"User-Agent\": UA, \"Accept\": \"application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.9, text/html;q=0.8, */*;q=0.5\"})\n    with urllib.request.urlopen(req, timeout=timeout) as r:\n        return r.read(), r.headers.get(\"Content-Type\", \"\"), r.geturl()\n\ndef text_of(b):\n    m = re.match(rb'\\s*<\\?xml[^>]*encoding=[\"\\']([\\w.-]+)', b)\n    for enc in ([m.group(1).decode()] if m else []) + [\"utf-8\", \"windows-1256\", \"latin-1\"]:\n        try: return b.decode(enc)\n        except Exception: pass\n    return b.decode(\"utf-8\", \"replace\")\n\ndef clean(s, n=SUMMARY):\n    s = re.sub(r\"(?is)<(script|style)[^>]*>.*?</\\1>\", \" \", s or \"\")\n    s = html.unescape(re.sub(r\"<[^>]+>\", \" \", s))\n    s = re.sub(r\"\\s+\", \" \", s).strip()\n    return (s[:n].rsplit(\" \", 1)[0] + \"…\") if len(s) > n else s\n\ndef iso(s):\n    s = (s or \"\").strip()\n    if not s: return \"\"\n    try:\n        d = email.utils.parsedate_to_datetime(s)\n    except Exception:\n        try: d = datetime.datetime.fromisoformat(s.replace(\"Z\", \"+00:00\"))\n        except Exception: return \"\"\n    if d.tzinfo is None: d = d.replace(tzinfo=datetime.timezone.utc)\n    return d.astimezone(datetime.timezone.utc).isoformat(timespec=\"seconds\")\n\ndef local(tag): return tag.rsplit(\"}\", 1)[-1].lower()\n\ndef child(el, *names):\n    for c in el:\n        if local(c.tag) in names: return c\n    return None\n\ndef ctext(el, *names):\n    c = child(el, *names)\n    return (\"\".join(c.itertext()) if c is not None else \"\").strip()\n\ndef parse_feed(raw):\n    t = text_of(raw).lstrip(\"﻿\").strip()\n    t = re.sub(r\"^<\\?xml[^>]*\\?>\", \"\", t).strip()\n    if not re.match(r\"(?is)^(<!--.*?-->\\s*)*<(rss|feed|rdf:rdf)\\b\", t): return None\n    t = re.sub(r\"&(?!(amp|lt|gt|quot|apos|#\\d+|#x[0-9a-fA-F]+);)\", \"&amp;\", t)\n    root = ET.fromstring(t)\n    out = []\n    entries = [e for e in root.iter() if local(e.tag) in (\"item\", \"entry\")]\n    for e in entries:\n        title = clean(ctext(e, \"title\"), 220)\n        link = \"\"\n        for c in e:\n            if local(c.tag) == \"link\":\n                href = c.get(\"href\")\n                if href and c.get(\"rel\", \"alternate\") == \"alternate\": link = href; break\n                if not href and (c.text or \"\").strip(): link = c.text.strip(); break\n                if href and not link: link = href\n        if not link: link = ctext(e, \"guid\", \"id\")\n        summ = ctext(e, \"description\", \"summary\") or ctext(e, \"encoded\", \"content\")\n        date = iso(ctext(e, \"pubdate\", \"published\", \"updated\", \"date\"))\n        if title and link.startswith(\"http\"):\n            out.append({\"title\": title, \"link\": link, \"summary\": clean(summ), \"date\": date})\n    return out\n\ndef discover(raw, base):\n    t = text_of(raw)\n    for m in re.finditer(r\"<link\\b[^>]*>\", t, re.I):\n        tag = m.group(0)\n        if re.search(r'type=[\"\\']application/(rss|atom)\\+xml', tag, re.I):\n            h = re.search(r'href=[\"\\']([^\"\\']+)', tag, re.I)\n            if h: return urllib.parse.urljoin(base, html.unescape(h.group(1)))\n    return None\n\ndef fetch_feed(url):\n    raw, ct, final = get(url)\n    items = parse_feed(raw)\n    if items is not None: return items, final\n    cands = []\n    d = discover(raw, final)\n    if d: cands.append(d)\n    root = \"{0.scheme}://{0.netloc}\".format(urllib.parse.urlparse(final))\n    cands += [final.rstrip(\"/\") + \"/feed\", root + \"/feed\", root + \"/rss\", root + \"/feed.xml\", root + \"/rss.xml\", root + \"/atom.xml\"]\n    seen = set()\n    for c in cands:\n        if c in seen: continue\n        seen.add(c)\n        try:\n            raw2, _, f2 = get(c)\n            items = parse_feed(raw2)\n            if items is not None: return items, f2\n        except Exception:\n            pass\n    raise ValueError(\"no feed found on this site\")\n\ndef main(path=\".\"):\n    fp = os.path.join(path, \"feeds.json\")\n    feeds = json.load(open(fp, encoding=\"utf-8\")) if os.path.exists(fp) else []\n    out = {\"generated\": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec=\"seconds\"), \"feeds\": [], \"items\": []}\n    for f in feeds:\n        url = (f.get(\"url\") or \"\").strip()\n        if not url: continue\n        st = {\"url\": url, \"name\": f.get(\"name\") or urllib.parse.urlparse(url).netloc, \"cat\": f.get(\"cat\") or \"learn\"}\n        try:\n            items, feed_url = fetch_feed(url)\n            items = sorted(items, key=lambda x: x[\"date\"], reverse=True)[:MAX_PER_FEED]\n            for it in items:\n                it.update({\"id\": hashlib.sha1(it[\"link\"].encode()).hexdigest()[:12], \"source\": st[\"name\"], \"cat\": st[\"cat\"]})\n            out[\"items\"] += items\n            st.update({\"ok\": True, \"count\": len(items), \"feed\": feed_url})\n        except Exception as e:\n            msg = str(e)\n            if \"403\" in msg or \"451\" in msg: msg = \"access blocked (site may block foreign servers)\"\n            st.update({\"ok\": False, \"error\": msg[:160]})\n        out[\"feeds\"].append(st)\n        time.sleep(1)\n    seen, uniq = set(), []\n    for it in sorted(out[\"items\"], key=lambda x: x[\"date\"], reverse=True):\n        if it[\"id\"] in seen: continue\n        seen.add(it[\"id\"]); uniq.append(it)\n    out[\"items\"] = uniq[:MAX_TOTAL]\n    with open(os.path.join(path, \"reader.json\"), \"w\", encoding=\"utf-8\") as fh:\n        json.dump(out, fh, ensure_ascii=False, indent=0)\n    ok = sum(1 for s in out[\"feeds\"] if s.get(\"ok\"))\n    print(f\"feeds ok: {ok}/{len(out['feeds'])}, items: {len(out['items'])}\")\n\nif __name__ == \"__main__\":\n    main(sys.argv[1] if len(sys.argv) > 1 else \".\")\n";
+const BOT_YML="name: reader\non:\n  schedule:\n    - cron: \"15 2,8,14,20 * * *\"\n  workflow_dispatch:\npermissions:\n  contents: write\nconcurrency:\n  group: reader\n  cancel-in-progress: false\njobs:\n  fetch:\n    runs-on: ubuntu-latest\n    timeout-minutes: 10\n    steps:\n      - uses: actions/checkout@v4\n      - name: Fetch feeds\n        run: python3 scripts/reader.py\n      - name: Save reader.json\n        run: |\n          git config user.name \"ghotbnama-reader\"\n          git config user.email \"41898282+github-actions[bot]@users.noreply.github.com\"\n          git add reader.json\n          git diff --cached --quiet && exit 0\n          git commit -m \"reader update\"\n          for i in 1 2 3 4 5; do\n            git pull --rebase && git push && exit 0\n            sleep 6\n          done\n          exit 1\n";
+const RD={data:null,sha:null,busy:false,tab:"all",loadedAt:0};
+const rdOn=()=>ghOn();
+const utf8b64=s=>b64e(te.encode(s));
+async function ghFile(path){ const r=await Sync.api(null,null,"/contents/"+path); if(r.status===404) return null; if(!r.ok) throw httpErr(r); const j=await r.json();
+  let txt; if(j.content&&j.encoding==="base64") txt=td.decode(b64d(j.content.replace(/\s/g,""))); else { const r2=await Sync.api({accept:"application/vnd.github.raw+json"},null,"/contents/"+path); txt=await r2.text(); } return {sha:j.sha,text:txt}; }
+async function ghPut(path,text,msg){ for(let a=0;a<3;a++){ const cur=await ghFile(path).catch(()=>null); const r=await Sync.api({method:"PUT",body:JSON.stringify({message:msg||("update "+path),content:utf8b64(text),...(cur?{sha:cur.sha}:{})})},null,"/contents/"+path);
+  if(r.ok) return true; if(r.status===409||r.status===422) continue; throw httpErr(r); } throw httpErr({status:409}); }
+function rdStatus(t,err){ const el=$("#rdStatus"); el.textContent=t||""; el.classList.toggle("err",!!err); }
+async function loadReader(force){ if(!rdOn()) return drawReader(); if(RD.busy) return; if(!force&&RD.data&&Date.now()-RD.loadedAt<5*60000) return drawReader();
+  RD.busy=true; try{ const f=await ghFile("reader.json"); if(f){ RD.data=JSON.parse(f.text); RD.sha=f.sha; } RD.loadedAt=Date.now(); RD.err=""; }catch(e){ RD.err=syncErrText(e); } RD.busy=false; drawReader(); }
+let feedsT; function pushFeeds(){ clearTimeout(feedsT); if(!rdOn()) return; feedsT=setTimeout(async()=>{ try{ await ghPut("feeds.json",JSON.stringify(S.get("feeds",[]).map(f=>({url:f.url,name:f.name,cat:f.cat})),null,1),"update feeds"); rdStatus("فهرست سایت‌ها ذخیره شد؛ در اجرای بعدی ربات خوانده می‌شود."); }catch(e){ rdStatus(syncErrText(e),true); } },800); }
+const catL={learn:"آموزشی",news:"خبر"};
+ed("feedEd","feeds",[{k:"url",label:"آدرس سایت یا خبرخوان",req:1,wide:1,ph:"https://…"},{k:"name",label:"نام",ph:"مثلاً زومیت"},{k:"cat",label:"دسته",type:"select",opts:[["learn","آموزشی"],["news","خبر"]]}],
+  o=>{ const st=RD.data&&(RD.data.feeds||[]).find(f=>f.url===o.url); const badge=!st?'<span class="pill">در انتظار اجرای ربات</span>':st.ok?`<span class="pill ok">${fa(st.count)} مطلب</span>`:`<span class="pill hi" title="${esc(st.error||"")}">${/blocked|403|451/.test(st.error||"")?"سایت دسترسی ربات را بسته":/no feed/.test(st.error||"")?"خبرخوان پیدا نشد":"خطا در خواندن"}</span>`;
+    return `<span class="t"><b>${esc(o.name||o.url)}</b> <span class="pill">${catL[o.cat]||"آموزشی"}</span><br><span class="small muted" dir="ltr" style="unicode-bidi:plaintext">${esc(o.url)}</span></span>${badge}`; },
+  {empty:"سایت‌هایی را که می‌خواهی مقاله‌ها و خبرهایشان را دنبال کنی اضافه کن. آدرس معمولی سایت کافی است؛ ربات خودش خبرخوان سایت را پیدا می‌کند.",add:"افزودن سایت"});
+const rdRead=()=>new Set(S.get("readArts",[])), rdSaved=()=>S.get("savedArts",[]);
+function markRead(id){ const a=S.get("readArts",[]); if(a.includes(id)) return; S.set("readArts",a.concat(id).slice(-1500)); }
+function artCard(it,read,saved){ const d=it.date?relDayIso(it.date):""; return `<div class="art ${read?"read":""}" data-id="${esc(it.id)}">
+  <div class="art-h"><span class="pill ${it.cat==="news"?"":"ac"}">${esc(it.source)}</span>${d?`<span class="when">${d}</span>`:""}</div>
+  <a class="art-t" href="${esc(it.link)}" target="_blank" rel="noopener noreferrer" data-open="${esc(it.id)}">${esc(it.title)}</a>
+  ${it.summary?`<div class="small muted art-s">${esc(it.summary)}</div>`:""}
+  <div class="row art-a"><button type="button" class="btn sm" data-save="${esc(it.id)}">${saved?"ذخیره شده":"ذخیره برای بعد"}</button><button type="button" class="btn sm" data-learn="${esc(it.id)}">${S.get("lib",[]).some(x=>x.url===it.link)?"در کتابخانه است":"ذخیره در کتابخانه"}</button>${read?"":`<button type="button" class="btn sm ghost" data-markread="${esc(it.id)}">خواندم</button>`}</div></div>`; }
+function relDayIso(s){ const d=iso(new Date(s)); return relDay(d); }
+function rdItems(){ return (RD.data&&RD.data.items)||[]; }
+function drawReader(){ const box=$("#rdList"), tabs=$("#rdTabs"), meta=$("#rdMeta");
+  if(!STANDALONE){ box.innerHTML='<div class="empty">خبرخوان روی نسخه آنلاین سایت (github.io) با همگام‌سازی GitHub کار می‌کند.</div>'; meta.textContent=""; drawReaderMini(); return; }
+  if(!ghOn()){ box.innerHTML='<div class="empty">خبرخوان با ربات GitHub کار می‌کند و اختیاری است. برای روشن کردنش، در تنظیمات ← امنیت و همگام‌سازی، بخش «خبرخوان: اتصال GitHub» را پر کن.</div>'; meta.textContent=""; drawReaderMini(); return; }
+  const read=rdRead(), savedArr=rdSaved(), savedIds=new Set(savedArr.map(x=>x.id)); let items=RD.tab==="saved"?savedArr:rdItems().filter(it=>RD.tab==="all"||it.cat===RD.tab);
+  tabs.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.tab===RD.tab));
+  meta.textContent=RD.data?`آخرین اجرای ربات: ${relDayIso(RD.data.generated)} ${fa(new Date(RD.data.generated).toTimeString().slice(0,5))} · ${fa(rdItems().filter(i=>!read.has(i.id)).length)} نخوانده`:RD.err||"";
+  if(!RD.data&&!RD.busy){ box.innerHTML=`<div class="empty">${RD.err?esc(RD.err):"ربات هنوز اجرا نشده. سایت‌ها را اضافه کن، ربات را نصب کن و «به‌روزرسانی الان» را بزن."}</div>`; drawReaderMini(); return; }
+  box.innerHTML=items.length?items.slice(0,80).map(it=>artCard(it,read.has(it.id),savedIds.has(it.id))).join(""):'<div class="empty">مطلبی در این بخش نیست.</div>'; drawReaderMini(); }
+function drawReaderMini(){ const el=$("#rdMini"); if(!el) return; const read=rdRead(); const items=rdItems().filter(i=>!read.has(i.id)).slice(0,4);
+  $("#rdMiniCard").hidden=!(ghOn()&&S.get("feeds",[]).length);
+  el.innerHTML=items.length?items.map(it=>`<a class="item" href="${esc(it.link)}" target="_blank" rel="noopener noreferrer" data-open="${esc(it.id)}" style="text-decoration:none;color:inherit"><span class="pill ${it.cat==="news"?"":"ac"}">${esc(it.source)}</span><span class="t">${esc(it.title)}</span></a>`).join(""):'<div class="empty">مطلب نخوانده‌ای نیست.</div>'; }
+$("#rdTabs").addEventListener("click",e=>{ const b=e.target.closest("[data-tab]"); if(b){ RD.tab=b.dataset.tab; drawReader(); } });
+function findArt(id){ return rdItems().find(i=>i.id===id)||rdSaved().find(i=>i.id===id); }
+document.addEventListener("click",e=>{ const o=e.target.closest("[data-open]"); if(o){ markRead(o.dataset.open); setTimeout(()=>{ drawReader(); },50); return; }
+  const m=e.target.closest("[data-markread]"); if(m){ markRead(m.dataset.markread); drawReader(); return; }
+  const s=e.target.closest("[data-save]"); if(s){ const it=findArt(s.dataset.save); if(!it) return; const a=rdSaved(); S.set("savedArts",a.some(x=>x.id===it.id)?a.filter(x=>x.id!==it.id):[it].concat(a).slice(0,300)); drawReader(); return; }
+  const l=e.target.closest("[data-learn]"); if(l){ const it=findArt(l.dataset.learn); if(!it||S.get("lib",[]).some(x=>x.url===it.link)) return;
+    addLibItem({title:it.title.slice(0,120),kind:it.cat==="news"?"other":"article",url:it.link,fmt:"md",notes:""},`# ${it.title}\n\n${it.summary||""}\n\nمنبع: ${it.source}\n\n${it.link}\n\n(برای متن کامل، صفحه را باز کن و متنش را در کتابخانه بچسبان.)`).then(()=>drawReader()); } });
+$("#rdRefresh").addEventListener("click",async()=>{ if(!rdOn()) return rdStatus("اول در تنظیمات، بخش «خبرخوان: اتصال GitHub» را پر کن.",true);
+  const b=$("#rdRefresh"); b.disabled=true; rdStatus("در حال اجرای ربات… (حدود یک دقیقه)");
+  try{ await ghPut("feeds.json",JSON.stringify(S.get("feeds",[]).map(f=>({url:f.url,name:f.name,cat:f.cat})),null,1),"update feeds");
+    const r=await Sync.api({method:"POST",body:JSON.stringify({ref:"main"})},null,"/actions/workflows/reader.yml/dispatches");
+    if(r.status===404) throw Object.assign(new Error("nobot"),{code:"nobot"}); if(!r.ok) throw httpErr(r);
+    const before=RD.data&&RD.data.generated; for(let i=0;i<24;i++){ await new Promise(z=>setTimeout(z,8000)); await loadReader(true); if(RD.data&&RD.data.generated!==before) break; }
+    rdStatus(RD.data&&RD.data.generated!==before?"به‌روز شد.":"ربات هنوز تمام نشده؛ چند دقیقه دیگر صفحه را دوباره باز کن.");
+  }catch(e){ rdStatus(e.code==="nobot"?"ربات خبرخوان هنوز نصب نشده؛ دکمه «نصب ربات» را بزن.":e.status===403?"توکن اجازه اجرای ربات را ندارد؛ در تنظیمات توکن، دسترسی Actions را روی Read and write بگذار.":syncErrText(e),true); }
+  b.disabled=false; });
+$("#rdInstall").addEventListener("click",async()=>{ if(!rdOn()) return rdStatus("اول در تنظیمات، بخش «خبرخوان: اتصال GitHub» را پر کن.",true); const b=$("#rdInstall"); b.disabled=true; rdStatus("در حال نصب ربات در مخزن خصوصی…");
+  try{ await ghPut("scripts/reader.py",BOT_PY,"install reader bot"); await ghPut(".github/workflows/reader.yml",BOT_YML,"install reader workflow"); await ghPut("feeds.json",JSON.stringify(S.get("feeds",[]).map(f=>({url:f.url,name:f.name,cat:f.cat})),null,1),"update feeds");
+    S.set("botInstalled",Date.now()); rdStatus("ربات نصب شد. حالا «به‌روزرسانی الان» را بزن؛ از این به بعد هم روزی چهار بار خودکار اجرا می‌شود."); drawBotState(); }
+  catch(e){ rdStatus(e.status===403||e.status===404?"توکن اجازه نصب ربات را ندارد؛ در تنظیمات توکن، دسترسی Workflows را روی Read and write بگذار و دوباره امتحان کن.":syncErrText(e),true); }
+  b.disabled=false; });
+function drawBotState(){ $("#rdInstall").textContent=S.get("botInstalled",0)?"نصب دوباره ربات":"نصب ربات خبرخوان"; }
+let lastFeeds=null; function feedsChanged(){ const j=JSON.stringify(S.get("feeds",[])); if(lastFeeds===null){ lastFeeds=j; return; } if(j!==lastFeeds){ lastFeeds=j; pushFeeds(); } }
+/* ================= PERSONAL LIBRARY ================= */
+const KINDS={book:"کتاب",article:"مقاله",course:"جزوه و دوره",note:"یادداشت",other:"سایر"};
+const LST={todo:"برای خواندن",reading:"در حال خواندن",done:"خوانده‌شده"};
+async function ghDelete(path){ const r=await Sync.api(null,null,"/contents/"+path); if(!r.ok) return; const j=await r.json(); await Sync.api({method:"DELETE",body:JSON.stringify({message:"remove "+path,sha:j.sha})},null,"/contents/"+path); }
+const LibStore={ db:null,
+  async idb(){ if(this.db) return this.db; this.db=await new Promise((ok,no)=>{ const r=indexedDB.open("posv-lib",1); r.onupgradeneeded=()=>r.result.createObjectStore("t"); r.onsuccess=()=>ok(r.result); r.onerror=()=>no(r.error); }); return this.db; },
+  async raw(op,key,val){ const db=await this.idb(); return new Promise((ok,no)=>{ const tx=db.transaction("t",op==="get"?"readonly":"readwrite"), st=tx.objectStore("t"); const rq=op==="get"?st.get(key):op==="put"?st.put(val,key):st.delete(key); rq.onsuccess=()=>ok(rq.result); rq.onerror=()=>no(rq.error); }); },
+  enc(){ return STANDALONE&&V.key&&window.indexedDB; },
+  async put(id,text){ if(!this.enc()){ S.set("libtext-"+id,text.slice(0,240000)); return; }
+    const blob=await encryptObj({t:text}); await this.raw("put",id,blob); this.mark(id);
+    if(Sync.on()) this.upload(id,blob).catch(()=>{}); },
+  async get(id){ if(!this.enc()) return S.get("libtext-"+id,null);
+    let blob=await this.raw("get",id).catch(()=>null);
+    if(blob){ try{ return (await decryptObj(blob,V.key)).t; }catch(_){} }
+    if(Sync.on()){ const b=await this.remoteGet(id); if(b){ const d=await decryptObj(b,V.key); await this.raw("put",id,b); return d.t; } }
+    return null; },
+  async del(id){ if(!this.enc()){ S.del("libtext-"+id); return; } await this.raw("del",id).catch(()=>{}); this.unmark(id); if(Sync.on()) this.remoteDel(id).catch(()=>{}); },
+  async upload(id,blob){ await this.remotePut(id,blob); this.unmark(id); },
+  async remoteGet(id){ if(Sync.supa()){ const r=await supaRest(`lib_items?id=eq.${encodeURIComponent(id)}&select=blob`); const a=await r.json(); return a.length?a[0].blob:null; } const f=await ghFile("lib/"+id+".json"); return f?JSON.parse(f.text):null; },
+  async remotePut(id,blob){ if(Sync.supa()){ await supaRest("lib_items?on_conflict=user_id,id",{method:"POST",body:JSON.stringify({id,blob,updated_at:new Date().toISOString()}),prefer:"resolution=merge-duplicates,return=minimal"}); return; } await ghPut("lib/"+id+".json",JSON.stringify(blob),"library item"); },
+  async remoteDel(id){ if(Sync.supa()){ await supaRest(`lib_items?id=eq.${encodeURIComponent(id)}`,{method:"DELETE"}); return; } await ghDelete("lib/"+id+".json"); },
+  mark(id){ const p=S.get("libPending",[]); if(!p.includes(id)) S.set("libPending",p.concat(id)); },
+  unmark(id){ const p=S.get("libPending",[]); if(p.includes(id)) S.set("libPending",p.filter(x=>x!==id)); },
+  async flush(){ if(!Sync.on()||!this.enc()) return; for(const id of S.get("libPending",[]).slice()){ const b=await this.raw("get",id).catch(()=>null); if(b) await this.upload(id,b).catch(()=>{}); else this.unmark(id); } },
+  async reencrypt(oldKey){ if(!this.enc()) return; for(const it of S.get("lib",[])){ let text=null; const b=await this.raw("get",it.id).catch(()=>null);
+      if(b){ try{ text=(await decryptObj(b,oldKey)).t; }catch(_){} }
+      if(text===null&&Sync.on()){ try{ const b=await this.remoteGet(it.id); if(b) text=(await decryptObj(b,oldKey)).t; }catch(_){} }
+      if(text!==null) await this.put(it.id,text); } }
+};
+V.LOCAL_ONLY.add("libPending");
+function libStatus(t,err){ const el=$("#libStatus"); el.textContent=t||""; el.classList.toggle("err",!!err); }
+function guessKind(name,len){ const n=name.toLowerCase(); if(n.endsWith(".pdf")) return len>150000?"book":"article"; if(n.endsWith(".docx")) return "course"; return len>150000?"book":"article"; }
+function htmlText(h){ const d=new DOMParser().parseFromString(h,"text/html"); d.querySelectorAll("script,style,nav,header,footer").forEach(x=>x.remove()); return (d.body?d.body.innerText||d.body.textContent:"").replace(/\n{3,}/g,"\n\n").trim(); }
+async function fileToText(f){ const n=f.name.toLowerCase();
+  if(n.endsWith(".pdf")) return {text:await pdfText(f),fmt:"txt"};
+  if(n.endsWith(".docx")) return {text:await docxText(f),fmt:"txt"};
+  if(n.endsWith(".doc")) throw new Error("فرمت قدیمی .doc پشتیبانی نمی‌شود؛ در Word با فرمت docx ذخیره کن.");
+  if(n.endsWith(".html")||n.endsWith(".htm")) return {text:htmlText(await f.text()),fmt:"txt"};
+  return {text:await f.text(),fmt:/\.(md|markdown)$/.test(n)?"md":"txt"}; }
+async function addLibItem(meta,text){ const id=uid(); const it={id,title:meta.title||"بدون عنوان",author:meta.author||"",kind:meta.kind||"article",cat:meta.cat||(typeof libCat!=="undefined"?libCat:""),status:"todo",tags:meta.tags||[],goal:"",notes:meta.notes||"",url:meta.url||"",fmt:meta.fmt||"txt",chars:text.length,added:TODAY,updated:Date.now(),pos:0};
+  await LibStore.put(id,text); const lib=S.get("lib",[]).slice(); lib.unshift(it); S.set("lib",lib); drawLib(); return it; }
+async function addFiles(files){ let ok=0; for(const f of files){ if(f.size>20*1048576){ libStatus(`«${f.name}» بزرگ‌تر از ۲۰ مگابایت است.`,true); continue; }
+    try{ libStatus(`در حال خواندن «${f.name}»…`); const {text,fmt}=await fileToText(f);
+      if(text.replace(/\s/g,"").length<20){ libStatus(`در «${f.name}» متن قابل خواندنی پیدا نشد (اگر PDF اسکن‌شده است، نسخه متنی آن را بده).`,true); continue; }
+      await addLibItem({title:f.name.replace(/\.[^.]+$/,"").replace(/[_-]+/g," "),kind:guessKind(f.name,text.length),fmt},text); ok++; }
+    catch(e){ libStatus((e&&e.message&&/[؀-ۿ]/.test(e.message))?e.message:`خواندن «${f.name}» انجام نشد.`,true); } }
+  if(ok) libStatus(`${fa(ok)} مورد به کتابخانه اضافه شد.`); }
+const libDrop=$("#libDrop");
+["dragenter","dragover"].forEach(ev=>libDrop.addEventListener(ev,e=>{ e.preventDefault(); libDrop.classList.add("over"); }));
+["dragleave","drop"].forEach(ev=>libDrop.addEventListener(ev,e=>{ e.preventDefault(); libDrop.classList.remove("over"); }));
+libDrop.addEventListener("drop",e=>{ if(e.dataTransfer.files.length) addFiles([...e.dataTransfer.files]); });
+$("#libFiles").addEventListener("change",e=>{ addFiles([...e.target.files]); e.target.value=""; });
+$("#libPaste").addEventListener("submit",async e=>{ e.preventDefault(); const t=$("#lpText").value.trim(); if(t.length<5){ $("#lpText").focus(); return; }
+  await addLibItem({title:$("#lpTitle").value.trim()||t.split("\n")[0].slice(0,60),kind:$("#lpKind").value,cat:$("#lpCat").value,url:$("#lpUrl").value.trim(),fmt:"md"},t);
+  $("#lpText").value=""; $("#lpTitle").value=""; $("#lpUrl").value=""; libStatus("به کتابخانه اضافه شد."); });
+
+let libTab="all", libKind="";
+function libFiltered(){ const q=$("#libQ").value.trim(); return S.get("lib",[]).filter(it=>(libTab==="all"||it.status===libTab)&&(!libKind||it.kind===libKind)&&(!libCat||it.cat===libCat)&&(!q||[it.title,it.author,it.notes,(it.tags||[]).join(" ")].join(" ").includes(q))); }
+function libCard(it){ const p=Math.round((it.pos||0)*100);
+  return `<button type="button" class="libcard k-${it.kind}" data-libopen="${esc(it.id)}"><span class="libspine"></span><span class="libc">
+    <span class="row" style="gap:6px">${it.cat?`<span class="pill ac">${esc(it.cat)}</span>`:""}<span class="pill">${KINDS[it.kind]||"سایر"}</span><span class="pill ${it.status==="done"?"ok":it.status==="reading"?"ac":""}">${LST[it.status]}</span></span>
+    <b class="libt">${esc(it.title)}</b>${it.author?`<span class="small muted">${esc(it.author)}</span>`:""}
+    ${(it.tags||[]).length?`<span class="kb-tags">${it.tags.slice(0,4).map(t=>`<span class="pill">#${esc(t)}</span>`).join("")}</span>`:""}
+    <span class="bar teal" style="margin-top:auto"><i style="width:${it.status==="done"?100:p}%"></i></span>
+    <span class="small muted">${it.status==="done"?"کامل خوانده شده":p?`${fa(p)}٪ خوانده شده`:"شروع نشده"} · ${fa(Math.max(1,Math.round(it.chars/1500)))} دقیقه مطالعه</span></span></button>`; }
+function drawLib(){ const all=S.get("lib",[]), list=libFiltered();
+  $("#libCount").textContent=all.length?fa(all.length)+" مورد":"";
+  $$("#libTabs [data-lt]").forEach(b=>b.classList.toggle("on",b.dataset.lt===libTab));
+  $("#libKinds").innerHTML=[["","همه انواع"]].concat(Object.entries(KINDS)).map(([k,l])=>`<button type="button" class="pill${libKind===k?" ac":""}" data-lk="${k}" style="border:none;cursor:pointer">${l}</button>`).join("");
+  $("#libGrid").innerHTML=list.length?list.map(libCard).join(""):`<div class="empty">${all.length?"موردی با این فیلتر پیدا نشد.":"کتابخانه‌ات خالی است. فایل متنی، PDF یا Word اضافه کن، یا متنی را بچسبان."}</div>`;
+  const reading=all.filter(it=>it.status==="reading").sort((a,b)=>b.updated-a.updated).slice(0,3);
+  $("#libNow").innerHTML=reading.length?reading.map(it=>`<div class="today-lesson"><div class="row"><span class="pill ac">${KINDS[it.kind]}</span><b style="flex:1">${esc(it.title)}</b><span class="small muted">${fa(Math.round((it.pos||0)*100))}٪</span></div><div class="bar teal"><i style="width:${Math.round((it.pos||0)*100)}%"></i></div><button class="btn pri sm" type="button" data-libopen="${esc(it.id)}" style="width:max-content">ادامه خواندن</button></div>`).join("")
+    : all.length?`<div class="row"><span class="muted" style="flex:1">الان چیزی در حال خواندن نیست. ${fa(all.filter(i=>i.status==="todo").length)} مورد در صف خواندن داری.</span><a class="btn sm" href="#learn" style="text-decoration:none">کتابخانه</a></div>`
+    : `<div class="row"><span class="muted" style="flex:1">کتابخانه شخصی‌ات خالی است. فایل‌های متنی، PDF یا Word را اضافه کن تا اینجا ادامه‌اش را ببینی.</span><a class="btn pri sm" href="#learn" style="text-decoration:none">افزودن به کتابخانه</a></div>`;
+  const pipe={todo:[],reading:[],done:[]}; all.forEach(it=>pipe[it.status]&&pipe[it.status].push(it.title));
+  $("#pipeline").innerHTML=[["ورودی","todo"],["در حال پردازش","reading"],["خروجی","done"]].map(([h,k])=>`<div class="col"><h3>${h} · ${fa(pipe[k].length)}</h3>${pipe[k].slice(0,8).map(t=>`<div class="item"><span class="t">${esc(t)}</span></div>`).join("")||'<div class="empty">خالی</div>'}</div>`).join(""); }
+$("#libTabs").addEventListener("click",e=>{ const b=e.target.closest("[data-lt]"); if(b){ libTab=b.dataset.lt; drawLib(); } });
+$("#libKinds").addEventListener("click",e=>{ const b=e.target.closest("[data-lk]"); if(b){ libKind=b.dataset.lk; drawLib(); } });
+$("#libQ").addEventListener("input",()=>drawLib());
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-libopen]"); if(b){ e.preventDefault(); openLib(b.dataset.libopen); } });
+
+/* reader */
+let LR=null, lrPosT=null, lrTimeT=null;
+function libUpd(id,patch){ S.set("lib",S.get("lib",[]).map(x=>x.id===id?{...x,...patch,updated:Date.now()}:x)); }
+function renderText(t,fmt){ if(fmt==="md") return md(t); const paras=t.replace(/\r/g,"").split(/\n\s*\n/); return paras.map(p=>`<p>${esc(p.trim()).replace(/\n/g,"<br>")}</p>`).join(""); }
+async function openLib(id){ const it=S.get("lib",[]).find(x=>x.id===id); if(!it) return; const ov=$("#libReader");
+  LR={id}; ov.hidden=false; document.body.style.overflow="hidden"; $("#lrTitle").textContent=it.title; $("#lrMeta").textContent=[it.cat,KINDS[it.kind],it.author,it.added?("افزوده‌شده "+relDay(it.added)):""].filter(Boolean).join(" · ");
+  $("#lrStatus").value=it.status; $("#lrNotes").value=it.notes||""; $("#lrForm").hidden=true; $("#lrUrl").hidden=!it.url; if(it.url) $("#lrUrl").href=it.url;
+  $("#lrBody").style.fontSize=(SET_().libFs||17)+"px"; $("#lrBody").innerHTML='<p class="muted">در حال باز کردن…</p>';
+  let text=null; try{ text=await LibStore.get(id); }catch(_){}
+  if(!LR||LR.id!==id) return;
+  if(text===null){ $("#lrBody").innerHTML=`<p class="muted">${Sync.on()?"متن این مورد هنوز روی این دستگاه نیست و دریافتش از GitHub انجام نشد؛ اتصال اینترنت را بررسی کن.":"متن این مورد روی این دستگاه نیست. همگام‌سازی را روشن کن تا از دستگاه‌های دیگر دریافت شود."}</p>`; return; }
+  $("#lrBody").innerHTML=renderText(text,it.fmt);
+  if(it.status==="todo"){ libUpd(id,{status:"reading"}); $("#lrStatus").value="reading"; }
+  requestAnimationFrame(()=>{ const max=ov.scrollHeight-ov.clientHeight; ov.scrollTop=(it.pos||0)*max; $("#lrPct").textContent=fa(Math.round((it.pos||0)*100))+"٪"; setTimeout(()=>{ if(LR&&LR.id===id) LR.ready=true; },300); });
+  clearInterval(lrTimeT); lrTimeT=setInterval(()=>{ if(document.hidden||!LR) return; const log={...S.get("libLog",{})}; log[TODAY]=(log[TODAY]||0)+0.5; S.set("libLog",log); },30000); }
+function closeLib(){ if(!LR) return; savePos(true); LR=null; clearInterval(lrTimeT); $("#libReader").hidden=true; document.body.style.overflow=""; drawLib(); }
+function savePos(now){ if(!LR||!LR.ready) return; const ov=$("#libReader"), max=ov.scrollHeight-ov.clientHeight; const pos=max>0?Math.min(1,ov.scrollTop/max):0; const id=LR.id; $("#lrPct").textContent=fa(Math.round(pos*100))+"٪";
+  clearTimeout(lrPosT); const doIt=()=>{ const it=S.get("lib",[]).find(x=>x.id===id); if(it&&Math.abs((it.pos||0)-pos)>0.004) libUpd(id,{pos}); }; if(now) doIt(); else lrPosT=setTimeout(doIt,1200); }
+$("#libReader").addEventListener("scroll",()=>savePos(),{passive:true});
+$("#lrClose").addEventListener("click",closeLib);
+document.addEventListener("keydown",e=>{ if(e.key==="Escape"&&LR) closeLib(); });
+$("#lrStatus").addEventListener("change",e=>{ if(LR) libUpd(LR.id,{status:e.target.value,...(e.target.value==="done"?{pos:1,doneOn:TODAY}:{})}); if(e.target.value==="done") addEntry("win",`«${(S.get("lib",[]).find(x=>x.id===LR.id)||{}).title}» را کامل خواندم`); });
+let lrNoteT; $("#lrNotes").addEventListener("input",e=>{ clearTimeout(lrNoteT); const v=e.target.value, id=LR&&LR.id; lrNoteT=setTimeout(()=>{ if(id) libUpd(id,{notes:v}); },600); });
+$("#lrSmaller").addEventListener("click",()=>{ const f=Math.max(13,(SET_().libFs||17)-1); saveSet({libFs:f}); $("#lrBody").style.fontSize=f+"px"; });
+$("#lrBigger").addEventListener("click",()=>{ const f=Math.min(26,(SET_().libFs||17)+1); saveSet({libFs:f}); $("#lrBody").style.fontSize=f+"px"; });
+$("#lrClip").addEventListener("click",()=>{ const sel=String(window.getSelection()||"").trim(); const it=LR&&S.get("lib",[]).find(x=>x.id===LR.id);
+  if(!sel){ $("#lrClip").textContent="اول بخشی از متن را انتخاب کن"; setTimeout(()=>$("#lrClip").textContent="افزودن متن انتخاب‌شده به نکته‌ها",2200); return; }
+  addKb(sel.slice(0,600),[it?it.title.slice(0,30):"کتابخانه"]); $("#lrClip").textContent="به پایگاه دانش اضافه شد"; setTimeout(()=>$("#lrClip").textContent="افزودن متن انتخاب‌شده به نکته‌ها",2200); });
+$("#lrCourse").addEventListener("click",()=>{ if(!LR) return; const id=LR.id; closeLib(); courseFromLib(id); });
+$("#lrInfo").addEventListener("click",()=>{ const f=$("#lrForm"), it=LR&&S.get("lib",[]).find(x=>x.id===LR.id); if(!it) return; f.hidden=!f.hidden; if(f.hidden) return;
+  $("#lfTitle").value=it.title; $("#lfAuthor").value=it.author||""; $("#lfKind").value=it.kind; $("#lfCat").innerHTML=catOpts(it.cat||""); $("#lfCat").value=it.cat||""; $("#lfTags").value=(it.tags||[]).join("، "); $("#lfUrl").value=it.url||"";
+  $("#lfGoal").innerHTML=anyGoalOpts().map(o=>`<option value="${esc(o[0])}">${esc(o[1])}</option>`).join(""); $("#lfGoal").value=it.goal||""; });
+$("#lrForm").addEventListener("submit",e=>{ e.preventDefault(); if(!LR) return; const title=$("#lfTitle").value.trim()||"بدون عنوان";
+  libUpd(LR.id,{title,author:$("#lfAuthor").value.trim(),kind:$("#lfKind").value,cat:$("#lfCat").value,tags:$("#lfTags").value.split(/[,،]/).map(s=>s.trim()).filter(Boolean),goal:$("#lfGoal").value,url:$("#lfUrl").value.trim()});
+  $("#lrTitle").textContent=title; $("#lrForm").hidden=true; });
+let lrDelArm=false; $("#lfDel").addEventListener("click",async e=>{ if(!LR) return; if(!lrDelArm){ lrDelArm=true; e.target.textContent="مطمئنی؟ دوباره بزن"; setTimeout(()=>{ lrDelArm=false; e.target.textContent="حذف از کتابخانه"; },3500); return; }
+  lrDelArm=false; e.target.textContent="حذف از کتابخانه"; const id=LR.id; LR=null; clearInterval(lrTimeT); $("#libReader").hidden=true; document.body.style.overflow="";
+  S.set("lib",S.get("lib",[]).filter(x=>x.id!==id)); await LibStore.del(id); drawLib(); libStatus("از کتابخانه حذف شد."); });
+/* ================= AI ADAPTER (Claude in artifact, Puter on the site) ================= */
+const PUTER_MODELS=[["anthropic/claude-sonnet-5-5","Claude Sonnet (کیفیت بالا)"],["google/gemini-3.1-pro-preview","Gemini Pro (متعادل)"],["openai/gpt-5.4-nano","GPT nano (سریع و کم‌مصرف)"]];
+const AIX={puterLoaded:false,loading:null};
+function aiErr(e,partial){ const m=String((e&&(e.message||e.error&&e.error.message||e.error))||e||""); const o=new Error(m);
+  o.code=/abort|cancel/i.test(m)?"cancelled":/insufficient|fund|credit|quota|limit|usage|balance/i.test(m)?"rate_limited":/auth|login|sign|denied|popup|closed/i.test(m)?"not_granted":"failed"; o.text=partial||""; return o; }
+function makePuterSample(){
+  const call=async(input,opts={})=>{ const model=SET_().puterModel||PUTER_MODELS[0][0]; let text="";
+    const msgs=typeof input==="string"?input:input.map(m=>({role:m.role,content:m.content}));
+    try{ const resp=await window.puter.ai.chat(msgs,{model,stream:true});
+      if(resp&&typeof resp[Symbol.asyncIterator]==="function"){ for await (const part of resp){ if(opts.signal&&opts.signal.aborted) throw aiErr("cancelled",text); const t=part&&(part.text||(part.message&&part.message.content)||""); if(typeof t==="string"&&t){ text+=t; opts.onText&&opts.onText({text,delta:t}); } } }
+      else { const c=resp&&resp.message&&resp.message.content; text=Array.isArray(c)?c.map(x=>x.text||"").join(""):(typeof c==="string"?c:String(resp||"")); opts.onText&&opts.onText({text,delta:text}); }
+    }catch(e){ if(e&&e.code) throw e; throw aiErr(e,text); }
+    if(!text.trim()) throw aiErr("empty response",text); return {text,truncated:false}; };
+  call.json=async(input,opts={})=>{ const add="\n\nفقط یک شیء JSON معتبر برگردان؛ بدون توضیح، بدون علامت ```."; const r=await call(typeof input==="string"?input+add:input.map((m,i,a)=>i===a.length-1?{...m,content:m.content+add}:m),opts);
+    const t=r.text.replace(/```(?:json)?/g,""); const a=t.indexOf("{"), b=t.lastIndexOf("}"); if(a<0||b<a) throw aiErr("bad json"); return JSON.parse(t.slice(a,b+1)); };
+  call.limits=async()=>({maxPromptBytes:200000}); return call; }
+async function ensureAI(){ if(sampleApi&&!sampleApi.isPuter) return true; if(!STANDALONE) return !!sampleApi;
+  if(!SET_().puterOn) return false;
+  if(!window.puter){ if(!AIX.loading) AIX.loading=loadScript("https://js.puter.com/v2/").catch(()=>null); await AIX.loading; }
+  if(!window.puter||!window.puter.ai){ AIX.loading=null; return false; }
+  if(!sampleApi){ sampleApi=makePuterSample(); sampleApi.isPuter=true; sampleCaps={maxPromptBytes:200000}; } return true; }
+function aiMissingText(){ return STANDALONE?(SET_().puterOn?"اتصال به هوش مصنوعی (Puter) برقرار نشد؛ اینترنت را بررسی کن و دوباره امتحان کن.":"هوش مصنوعی هنوز روشن نیست. در تنظیمات ← دستیار هوش مصنوعی، «هوش مصنوعی Puter» را روشن کن."):"هوش مصنوعی در این نما در دسترس نیست."; }
+function drawAiSet(){ if(!STANDALONE){ $("#puterBox").hidden=true; return; } $("#puterBox").hidden=false; const st=SET_();
+  $("#tPuter").checked=!!st.puterOn; $("#puterModel").innerHTML=PUTER_MODELS.map(([v,l])=>`<option value="${v}">${l}</option>`).join(""); $("#puterModel").value=st.puterModel||PUTER_MODELS[0][0];
+  $("#aTier").closest("label").hidden=true; }
+$("#tPuter").addEventListener("change",async e=>{ saveSet({puterOn:e.target.checked}); const s=$("#puterStatus");
+  if(e.target.checked){ s.textContent="در حال اتصال به Puter…"; const ok=await ensureAI(); s.textContent=ok?"وصل شد. اولین بار که از هوش مصنوعی استفاده کنی، پنجره ورود یا ثبت‌نام رایگان Puter باز می‌شود.":"اسکریپت Puter بارگذاری نشد؛ ممکن است از اینترنت تو در دسترس نباشد."; }
+  else { s.textContent="خاموش شد. برای قطع کامل، صفحه را یک بار تازه کن."; if(sampleApi&&sampleApi.isPuter){ sampleApi=null; } } });
+$("#puterModel").addEventListener("change",e=>saveSet({puterModel:e.target.value}));
+$("#puterLogin").addEventListener("click",async()=>{ const s=$("#puterStatus"); if(!(await ensureAI())) return s.textContent=aiMissingText();
+  try{ if(window.puter.auth&&window.puter.auth.signIn) await window.puter.auth.signIn(); s.textContent="وارد Puter شدی."; }catch(e){ s.textContent="ورود انجام نشد یا پنجره بسته شد."; } });
+
+/* ================= CATEGORIES ================= */
+const CATDEF_L=["فروش و مذاکره","مدیریت","روانشناسی","شعر","موسیقی"];
+const cats_=()=>S.get("cats",CATDEF_L);
+function catOpts(sel){ return `<option value="">بدون دسته</option>`+cats_().map(c=>`<option ${c===sel?"selected":""}>${esc(c)}</option>`).join(""); }
+let libCat="", courseCat="";
+function drawCats(){ const c=cats_(), lib=S.get("lib",[]), learn=S.get("learn",[]);
+  const chip=(k,l,n,on,attr)=>`<button type="button" class="catchip${on?" on":""}" ${attr}="${esc(k)}">${esc(l)}${n!==null?` <span class="num">${fa(n)}</span>`:""}</button>`;
+  $("#libCats").innerHTML=chip("","همه",lib.length,libCat==="", "data-lc")+c.map(x=>chip(x,x,lib.filter(i=>i.cat===x).length,libCat===x,"data-lc")).join("");
+  $("#courseCats").innerHTML=chip("","همه",learn.length,courseCat==="","data-cc")+c.map(x=>chip(x,x,learn.filter(i=>i.cat===x).length,courseCat===x,"data-cc")).join("");
+  $("#catEdit").innerHTML=c.map((x,i)=>`<span class="pill" style="display:inline-flex;gap:4px;align-items:center">${esc(x)}<button type="button" class="x" data-catdel="${i}" aria-label="حذف دسته ${esc(x)}">✕</button></span>`).join("");
+  ["#srcCat","#lpCat","#lfCat"].forEach(id=>{ const el=$(id); if(el){ const v=el.value; el.innerHTML=catOpts(v); el.value=v; } }); }
+$("#libCats").addEventListener("click",e=>{ const b=e.target.closest("[data-lc]"); if(b){ libCat=b.dataset.lc; drawLib(); drawCats(); } });
+$("#courseCats").addEventListener("click",e=>{ const b=e.target.closest("[data-cc]"); if(b){ courseCat=b.dataset.cc; drawLearn(); drawCats(); } });
+$("#catEdit").addEventListener("click",e=>{ const b=e.target.closest("[data-catdel]"); if(!b) return; const c=cats_().slice(); c.splice(+b.dataset.catdel,1); S.set("cats",c); drawCats(); });
+$("#catForm").addEventListener("submit",e=>{ e.preventDefault(); const v=$("#catIn").value.trim(); if(!v) return; const c=cats_(); if(!c.includes(v)) S.set("cats",c.concat(v)); $("#catIn").value=""; drawCats(); });
+
+/* ================= LEARN TABS ================= */
+let learnTab="courses";
+function drawLearnTabs(){ $$("#learnTabs [data-ltab]").forEach(b=>b.classList.toggle("on",b.dataset.ltab===learnTab)); $$("[data-lsec]").forEach(s=>s.hidden=s.dataset.lsec!==learnTab); }
+$("#learnTabs").addEventListener("click",e=>{ const b=e.target.closest("[data-ltab]"); if(!b) return; learnTab=b.dataset.ltab; drawLearnTabs(); if(learnTab==="articles") loadReader(); });
+
+/* ================= COURSE BUILDER ================= */
+function drawSrcLib(){ const sel=$("#srcLibSel"), v=sel.value, lib=S.get("lib",[]); sel.innerHTML=lib.length?lib.map(i=>`<option value="${esc(i.id)}">${esc(i.title)}${i.cat?" · "+esc(i.cat):""}</option>`).join(""):`<option value="">کتابخانه خالی است</option>`; if(v) sel.value=v; }
+function setSrcMode(m){ srcMode=m; $$("#srcTabs button").forEach(x=>x.classList.toggle("on",x.dataset.s===m)); $("#srcLib").hidden=m!=="lib"; $("#srcFile").hidden=m!=="file"; $("#srcTopic").hidden=m!=="topic"; }
+function courseFromLib(id){ learnTab="courses"; drawLearnTabs(); setSrcMode("lib"); drawSrcLib(); $("#srcLibSel").value=id; const it=S.get("lib",[]).find(x=>x.id===id); if(it){ $("#srcTitle").value=it.title; $("#srcCat").value=it.cat||""; } location.hash="learn"; setTimeout(()=>{ $("#courseBuilder").scrollIntoView({block:"start"}); $("#srcGoal").focus(); },80); }
 /* ================= RENDER & ROUTER ================= */
 function renderAll(keepInputs){
-  drawRems(); drawTimeline(); drawHabits(); drawEnergy(); drawTasks(); drawMoney(); drawRev(); drawEntries(); drawLearn(); drawLearnToday(); drawKb(); drawBody(); drawGoalsMini(); drawLinkOpts(); drawAlign(); drawBalance(); drawWeek(); drawAllEd(); drawSpark(); drawCharts(); if(STANDALONE) drawBanner();
+  drawRems(); drawTimeline(); drawHabits(); drawEnergy(); drawTasks(); drawMoney(); drawRev(); drawEntries(); drawLearn(); drawLearnToday(); drawKb(); drawBody(); drawGoalsMini(); drawLinkOpts(); drawAlign(); drawBalance(); drawWeek(); drawAllEd(); drawSpark(); drawCharts(); if(STANDALONE) drawBanner(); drawWeather(); loadWeather(); drawReader(); loadReader(); drawBotState(); feedsChanged(); drawLib(); drawCats(); drawSrcLib(); drawLearnTabs();
   if(document.activeElement!==$("#visionText")) $("#visionText").value=S.get("vision","");
   if(!keepInputs||document.activeElement!==$("#dayNote")) $("#dayNote").value=S.get("daynote-"+TODAY,"");
 }
 const views=["settings","about","today","vision","plan","money","review","learn","body"];
 function route(){ const v=views.includes(location.hash.slice(1))?location.hash.slice(1):(SET_().start||"today");
-  views.forEach(n=>{ document.getElementById("v-"+n).hidden=n!==v; });
-  $$("aside nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v)); window.scrollTo(0,0); }
+  const go=()=>{ untilt(); views.forEach(n=>{ document.getElementById("v-"+n).hidden=n!==v; }); $$("aside nav a").forEach(a=>a.classList.toggle("on",a.dataset.v===v)); window.scrollTo(0,0); };
+  if(v==="learn") loadReader();
+  if(FX.mode!=="off"&&document.startViewTransition&&!document.getElementById("v-"+v).hidden===false) document.startViewTransition(go); else go(); }
 window.addEventListener("hashchange",route);
 applySettings(); renderAll(); fillSettings(); route();
-if(STANDALONE){ document.body.classList.add("locked"); $("#lock").hidden=false; lkMode(V.stored()?"unlock":"setup");
+if(STANDALONE){ document.body.classList.add("locked"); $("#lock").hidden=false; lkStart();
   if(!(window.crypto&&crypto.subtle)){ $("#lkGo").disabled=true; lkErr("رمزگذاری فقط روی آدرس امن کار می‌کند. سایت را با آدرس https (مثل https://نام‌کاربری.github.io/...) باز کن."); } }
 else bootCaps();
 })();
