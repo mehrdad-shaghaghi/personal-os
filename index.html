@@ -231,6 +231,7 @@ html.fx-scene aside{background:color-mix(in srgb, var(--bg) 55%, transparent)}
 .btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
 body.locked .app,body.locked .fab{visibility:hidden}
 .banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border-radius:14px;border:1px solid color-mix(in srgb, var(--amber) 40%, transparent);background:color-mix(in srgb, var(--amber) 10%, transparent)}
+.side-foot.syncerr{color:var(--bad)}
 .banner span{flex:1;min-width:200px;font-size:13.5px}
 
 /* learning */
@@ -404,7 +405,7 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
       <a href="#" id="lockBtn" hidden><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>قفل</a>
       <a href="#settings" data-v="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>تنظیمات</a>
     </nav>
-    <div class="side-foot" id="syncNote">در حال بارگذاری داده‌ها…</div>
+    <a class="side-foot" id="syncNote" href="#settings" title="وضعیت همگام‌سازی؛ برای جزئیات بزن" style="text-decoration:none">در حال بارگذاری داده‌ها…</a>
   </aside>
 
   <main>
@@ -864,7 +865,8 @@ const S = { cache:{}, meta:{}, col:null, timers:{}, busy:{}, again:{},
     this.busy[k]=false; if(this.again[k]){ this.again[k]=false; this.flush(k); } },
   del(k){ delete this.cache[k]; if(STANDALONE){ V.touch(k); return; } try{ localStorage.removeItem("pos3-"+k); }catch(e){} if(this.col) this.col.doc(k).delete().catch(()=>{}); }
 };
-function setSync(t){ $("#syncNote").textContent=t; }
+function setSync(t){ const el=$("#syncNote"); el.textContent=t; el.classList.toggle("syncerr",/خطا/.test(t)); }
+document.getElementById("syncNote").addEventListener("click",()=>setTimeout(()=>{ const c=document.getElementById("set-security"); if(c&&!c.hidden) c.scrollIntoView({block:"start"}); },80));
 function legacyKeys(){ const o={}; try{ for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(k&&k.startsWith("pos3-")) o[k.slice(5)]=JSON.parse(localStorage.getItem(k)); } }catch(e){} return o; }
 if(!STANDALONE){ S.cache=legacyKeys(); setSync("داده‌ها روی این مرورگر"); }
 
@@ -926,8 +928,8 @@ const Sync={base:null,sha:null,busy:false,dirty:false,t:null,state:"off",last:0,
   merge(d){ let changed=false, localNewer=false; const rm=d.meta||{}, rd=d.data||{}, base=this.base, J=x=>JSON.stringify(x);
     new Set([...Object.keys(rm),...Object.keys(S.meta)]).forEach(k=>{ if(V.LOCAL_ONLY.has(k)) return; const lt=S.meta[k]||0, rt=rm[k]||0;
       const lv=S.cache[k], rv=rd[k], bv=base?base[k]:undefined;
-      if(base&&lt!==rt&&Array.isArray(lv)&&Array.isArray(rv)&&J(lv)!==J(rv)&&J(lv)!==J(bv)&&J(rv)!==J(bv)){
-        S.cache[k]=threeWay(Array.isArray(bv)?bv:[],lv,rv); S.meta[k]=Math.max(lt,rt,Date.now()); changed=true; localNewer=true; return; }
+      if(lt!==rt&&Array.isArray(lv)&&Array.isArray(rv)&&J(lv)!==J(rv)&&(!base||(J(lv)!==J(bv)&&J(rv)!==J(bv)))){
+        S.cache[k]=threeWay(base&&Array.isArray(bv)?bv:[],lv,rv); S.meta[k]=Math.max(lt,rt,Date.now()); changed=true; localNewer=true; return; }
       if(rt>lt){ if(Object.prototype.hasOwnProperty.call(rd,k)) S.cache[k]=rd[k]; else delete S.cache[k]; S.meta[k]=rt; changed=true; } else if(lt>rt) localNewer=true; });
     this.base=JSON.parse(J(rd));
     if(changed){ V.saveLocal(); applySettings(); renderAll(true); }
@@ -951,7 +953,7 @@ const Sync={base:null,sha:null,busy:false,dirty:false,t:null,state:"off",last:0,
   async tick(){ if(!this.on()||this.busy||document.hidden) return; try{ if(this.supa()&&this.sha!=null){ const r=await supaRest("vault?select=version"); const a=await r.json(); if(a.length&&a[0].version===this.sha&&this.state!=="err"){ if(this.dirty) this.schedule(500); return; } }
     await this.pull(); if(this.dirty) this.schedule(500); }catch(e){ this.set("err",e); } }
 };
-setInterval(()=>Sync.tick(),45000);
+setInterval(()=>Sync.tick(),15000);
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden) Sync.tick(); });
 window.addEventListener("online",()=>{ if(Sync.on()){ Sync.tick(); if(Sync.dirty) Sync.schedule(500); } });
 
@@ -984,7 +986,7 @@ $("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw
   try{ btn.disabled=true;
   if(LK.mode==="setup"){ if(pw.length<8) return lkErr("رمز باید حداقل ۸ کاراکتر باشد."); if(pw!==$("#lkPw2").value) return lkErr("تکرار رمز یکسان نیست.");
     lkErr("در حال ساختن کلید رمزگذاری…"); V.salt=newSalt(); V.key=await deriveKey(pw,V.salt,V.iter); S.cache={...legacyKeys(),...S.cache}; S.meta={}; V.stamp(); V.unlocked=true; await V.saveLocal();
-    Object.keys(legacyKeys()).forEach(k=>{ try{ localStorage.removeItem("pos3-"+k); }catch(_){} }); enterApp(); }
+    Object.keys(legacyKeys()).forEach(k=>{ try{ localStorage.removeItem("pos3-"+k); }catch(_){} }); enterApp(false,pw); }
   else if(LK.mode==="login"){ const email=$("#lkEmail").value.trim(), lp=$("#lkLpw").value; if(!email||!lp) return lkErr("ایمیل و رمز حساب ابری را وارد کن.");
     lkErr("در حال ورود…"); try{ await supaAuth({email,password:lp},"password"); }catch(er){ $("#lkLpw").value=""; return lkErr(er.status===400?"ایمیل یا رمز حساب ابری اشتباه است.":er.status?"ورود انجام نشد ("+fa(er.status)+").":"اتصال به سرور ابری برقرار نشد؛ اینترنت را بررسی کن."); }
     $("#lkLpw").value=""; try{ localStorage.removeItem("posv-localonly"); }catch(_){} lkStart(); }
@@ -993,7 +995,7 @@ $("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw
     catch(_){ LK.fails++; await new Promise(r=>setTimeout(r,Math.min(8000,700*LK.fails))); $("#lkPw").value=""; return lkErr("این رمز با رمز قفل اطلاعات ابری یکی نیست."); }
     Sync.sha=rem.sha; V.unlocked=true; await V.saveLocal(); Sync.last=Date.now(); enterApp(true); }
   else if(LK.mode==="unlock"){ const b=V.stored(); if(!b) return lkMode("setup"); lkErr("در حال بررسی…");
-    try{ const key=await deriveKey(pw,b.salt,b.iter||600000); const d=await decryptObj(b,key); V.key=key; V.salt=b.salt; V.iter=b.iter||600000; S.cache=d.data||{}; S.meta=d.meta||{}; Sync.base=d.base||null; V.unlocked=true; LK.fails=0; enterApp(); }
+    try{ const key=await deriveKey(pw,b.salt,b.iter||600000); const d=await decryptObj(b,key); V.key=key; V.salt=b.salt; V.iter=b.iter||600000; S.cache=d.data||{}; S.meta=d.meta||{}; Sync.base=d.base||null; V.unlocked=true; LK.fails=0; enterApp(false,pw); }
     catch(_){ LK.fails++; await new Promise(r=>setTimeout(r,Math.min(8000,700*LK.fails))); $("#lkPw").value=""; lkErr("رمز اشتباه است."); } }
   else if(LK.mode==="connect"){ const repo=$("#lkRepo").value.trim().replace(/^https?:\/\/github\.com\//,"").replace(/\/$/,""), token=$("#lkToken").value.trim();
     if(!/^[\w.-]+\/[\w.-]+$/.test(repo)) return lkErr("نام مخزن را به شکل نام‌کاربری/نام‌مخزن وارد کن."); if(!token) return lkErr("توکن را وارد کن."); if(!pw) return lkErr("رمز را وارد کن.");
@@ -1009,9 +1011,11 @@ $("#lockForm").addEventListener("submit",async e=>{ e.preventDefault(); const pw
     try{ localStorage.removeItem(VKEY); Object.keys(legacyKeys()).forEach(k=>localStorage.removeItem("pos3-"+k)); }catch(_){} S.cache={}; S.meta={}; lkMode("setup"); }
   } finally { btn.disabled=false; }
 });
-function enterApp(justPulled){ setTimeout(()=>{ if(typeof LibStore!=="undefined") LibStore.flush(); },3000); $("#lock").hidden=true; document.body.classList.remove("locked"); $("#lockBtn").hidden=false;
+function enterApp(justPulled,pw){ setTimeout(()=>{ if(typeof LibStore!=="undefined") LibStore.flush(); },3000); $("#lock").hidden=true; document.body.classList.remove("locked"); $("#lockBtn").hidden=false;
   applySettings(); renderAll(); fillSettings(); route(); armIdle();
-  if(Sync.on()){ if(justPulled) Sync.set("ok"); else { Sync.set("busy"); Sync.pull().then(()=>{ if(Sync.dirty) Sync.schedule(300); }).catch(e=>Sync.set("err",e)); } } else Sync.set("off"); }
+  if(Sync.on()){ if(justPulled) Sync.set("ok"); else { Sync.set("busy"); Sync.pull().then(()=>{ if(Sync.dirty) Sync.schedule(300); }).catch(async e=>{
+    if(e&&e.code==="pw"&&pw){ try{ if(await adoptRemote(pw)){ setSync("اطلاعات این دستگاه با ابر یکی شد"); return; } }catch(_){ } }
+    Sync.set("err",e); }); } } else Sync.set("off"); }
 let idleT=null; function armIdle(){ clearTimeout(idleT); const m=+SET_().lockMin; if(!STANDALONE||!V.unlocked||!m) return; idleT=setTimeout(lockNow,m*60000); }
 ["pointerdown","keydown","touchstart","wheel","mousemove"].forEach(ev=>document.addEventListener(ev,()=>{ if(V.unlocked) armIdle(); },{passive:true}));
 async function lockNow(){ clearTimeout(idleT); try{ await V.saveLocal(); if(Sync.on()&&(Sync.dirty||Sync.busy)){ clearTimeout(Sync.t); if(!Sync.busy) await Sync.push(); } }catch(_){} V.unlocked=false; S.cache={}; location.reload(); }
