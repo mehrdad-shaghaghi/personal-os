@@ -7,6 +7,12 @@
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b0f1a">
 <meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="قطب‌نما">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237aa7ff'/%3E%3Cstop offset='1' stop-color='%23b48cff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Crect x='20' y='29' width='24' height='19' rx='4' fill='%230b0f1a'/%3E%3Cpath d='M25 29v-5a7 7 0 0 1 14 0v5' stroke='%230b0f1a' stroke-width='4' fill='none'/%3E%3C/svg%3E">
 <title>سیستم عامل شخصی</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -392,6 +398,8 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
 .swatches span{width:34px;height:34px;border-radius:9px;border:1px solid var(--stroke)}
 @media (max-width:860px){ aside{flex-direction:row;align-items:center} nav{flex:1;min-width:0} .nav-bottom{margin:0;padding:0 6px 0 0;border:none;border-right:1px solid var(--stroke);flex:none} }
 
+.pushbox{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding:14px;border-radius:14px;border:1px solid var(--stroke);background:var(--glass)}
+.pushbox .row{display:flex;gap:8px;flex-wrap:wrap}
 /* ===== mobile app shell ===== */
 .tabbar,.msheet,.mchips{display:none}
 @media (max-width:760px){
@@ -866,6 +874,11 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
           <div class="toggle"><span>ساعات سکوت<small>در این بازه اعلانی نمایش داده نمی‌شود</small></span><span class="switch"><input type="checkbox" id="ntQuiet"><i></i></span></div>
           <div class="form"><label>از ساعت<input type="time" id="ntQFrom"></label><label>تا ساعت<input type="time" id="ntQTo"></label></div>
           <div class="row"><button class="btn" type="button" id="ntTest">ارسال اعلان آزمایشی</button></div>
+          <div class="pushbox" id="pushBox" hidden>
+            <b>اعلان روی صفحه قفل گوشی</b>
+            <span class="small muted" id="pushState"></span>
+            <div class="row"><button class="btn pri" type="button" id="pushOn">روشن کردن روی این دستگاه</button><button class="btn" type="button" id="pushTest" hidden>آزمایش روی صفحه قفل</button><button class="btn ghost" type="button" id="pushOff" hidden>خاموش کردن روی این دستگاه</button></div>
+          </div>
           <div class="small muted">اعلان‌ها تا وقتی سایت در یکی از تب‌های مرورگر باز است کار می‌کنند (حتی اگر تب دیگری را نگاه کنی). روی گوشی، اگر مرورگر بسته یا در پس‌زمینه باشد، اعلان‌های عقب‌افتاده هنگام باز کردن دوباره سایت نمایش داده می‌شوند. هر یادآور می‌تواند زمان اعلان مخصوص خودش را داشته باشد.</div>
         </div>
         <div class="card c6" id="set-learn"><h2>مهارت و یادگیری</h2>
@@ -1707,7 +1720,7 @@ const THEMES={
   sand:{name:"روشن گرم",bg:"#f5f1ea",ink:"#2a241c",accent:"#b4532a",accent2:"#2d6a6a",good:"#3d7a4a",bad:"#c0392b"}
 };
 const FONTS=[["Vazirmatn","وزیرمتن","wght@300;400;500;700;800"],["Noto Sans Arabic","نوتو سنس","wght@400;500;700;800"],["IBM Plex Sans Arabic","آی‌بی‌ام پلکس","wght@300;400;500;700"],["Rubik","روبیک","wght@300;400;500;700;800"],["Readex Pro","ریدکس","wght@300;400;500;700"],["Tajawal","تجوال","wght@300;400;500;700;800"],["Cairo","قاهره","wght@300;400;500;700;800"],["Noto Naskh Arabic","نسخ","wght@400;500;700"],["Markazi Text","مرکزی","wght@400;500;700"],["Harmattan","هارمتان","wght@400;500;700"],["Amiri","امیری","wght@400;700"],["Lalezar","لاله‌زار (فقط تیتر)","wght@400"]];
-const SDEF={ntOn:true,ntBrowser:true,ntLead:"10",ntSound:true,ntBlocks:true,ntBlockLead:"5",ntLesson:true,ntMorning:false,ntMorningAt:"08:00",ntQuiet:false,ntQFrom:"23:00",ntQTo:"07:00",lockMin:10,puterOn:false,puterModel:"anthropic/claude-sonnet-5-5",libFs:17,theme:"nili",custom:[],font:"Vazirmatn",headFont:"Vazirmatn",fs:14.5,compact:false,blur:true,motion:true,showSample:false,aiName:"دستیار",tone:"friendly",aiTier:"complex",aiRules:"",lDays:14,lMin:25,lHour:"۲۲:۰۰",lTier:"default",lLevel:"simple",start:"today",brand:"قطب‌نما",icon:"compass",iconImg:"",fx:"depth",sleepGoal:7,exGoal:150};
+const SDEF={ntPush:false,ntOn:true,ntBrowser:true,ntLead:"10",ntSound:true,ntBlocks:true,ntBlockLead:"5",ntLesson:true,ntMorning:false,ntMorningAt:"08:00",ntQuiet:false,ntQFrom:"23:00",ntQTo:"07:00",lockMin:10,puterOn:false,puterModel:"anthropic/claude-sonnet-5-5",libFs:17,theme:"nili",custom:[],font:"Vazirmatn",headFont:"Vazirmatn",fs:14.5,compact:false,blur:true,motion:true,showSample:false,aiName:"دستیار",tone:"friendly",aiTier:"complex",aiRules:"",lDays:14,lMin:25,lHour:"۲۲:۰۰",lTier:"default",lLevel:"simple",start:"today",brand:"قطب‌نما",icon:"compass",iconImg:"",fx:"depth",sleepGoal:7,exGoal:150};
 const PDEF={name:"",call:"",role:"",company:"",city:"",birth:"",wake:"",sleep:"",interests:[],skills:[],about:""};
 function SET_(){ return {...SDEF,...S.get("settings",{})}; }
 function PROF(){ return {...PDEF,...S.get("profile",{})}; }
@@ -2396,7 +2409,7 @@ let swReg=null; if(STANDALONE&&"serviceWorker" in navigator){ navigator.serviceW
 let actx=null; function beep(){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); const t=actx.currentTime; [0,.22].forEach((dt,i)=>{ const o=actx.createOscillator(), g=actx.createGain(); o.type="sine"; o.frequency.value=i?1046:784; g.gain.setValueAtTime(0.0001,t+dt); g.gain.exponentialRampToValueAtTime(0.18,t+dt+.02); g.gain.exponentialRampToValueAtTime(0.0001,t+dt+.35); o.connect(g).connect(actx.destination); o.start(t+dt); o.stop(t+dt+.4); }); }catch(e){} }
 function inQuiet(st,now){ if(!st.ntQuiet) return false; const a=hm(st.ntQFrom), b=hm(st.ntQTo); if(a===null||b===null) return false; const m=now.getHours()*60+now.getMinutes(); return a<b?(m>=a&&m<b):(m>=a||m<b); }
 function notify(n,force){ const st=SET_(); if(!force&&inQuiet(st,new Date())) return false;
-  if(st.ntBrowser&&STANDALONE&&"Notification" in window&&Notification.permission==="granted"){ const opt={body:n.body,tag:n.id,icon:(document.querySelector('link[rel="icon"]')||{}).href,data:{url:"./#"+(n.hash||"today")},requireInteraction:n.kind==="rem",renotify:true};
+  if(st.ntBrowser&&STANDALONE&&(force||!pushLocal())&&"Notification" in window&&Notification.permission==="granted"){ const opt={body:n.body,tag:n.id,icon:(document.querySelector('link[rel="icon"]')||{}).href,data:{url:"./#"+(n.hash||"today")},requireInteraction:n.kind==="rem",renotify:true};
     if(swReg&&swReg.showNotification) swReg.showNotification(n.title,opt).catch(()=>{}); else { try{ const no=new Notification(n.title,opt); no.onclick=()=>{ window.focus(); location.hash=n.hash||"today"; no.close(); }; }catch(e){} } }
   toast(n); if(st.ntSound) beep(); return true; }
 function toast(n){ const box=$("#toasts"); const el=document.createElement("div"); el.className="toast-c "+(n.kind||""); el.setAttribute("role","alert");
@@ -2422,13 +2435,57 @@ function writeSched(c){ if(!STANDALONE) return; const now=Date.now(); const st=S
   const j=JSON.stringify({p:{ntOn:st.ntOn,ntSound:st.ntSound,ntBrowser:st.ntBrowser,ntQuiet:st.ntQuiet,ntQFrom:st.ntQFrom,ntQTo:st.ntQTo},l:list}); if(j!==lastSched){ lastSched=j; try{ localStorage.setItem("posv-sched",j); }catch(e){} } }
 function checkNotif(){ const now=Date.now(), fired=firedGet(); let ch=false;
   let cands; if(STANDALONE&&!V.unlocked){ let o={}; try{ o=JSON.parse(localStorage.getItem("posv-sched")||"{}"); }catch(e){} cands=o.l||[]; if(o.p&&!S.cache.settings) S.cache.settings=o.p; if(o.p&&!o.p.ntOn) return; }
-  else { if(!SET_().ntOn){ writeSched([]); return; } cands=notifCandidates(); writeSched(cands); }
+  else { if(!SET_().ntOn){ writeSched([]); pushSync([]); return; } cands=notifCandidates(); writeSched(cands); pushSync(cands); }
   const st=SET_(), quiet=inQuiet(st,new Date());
   cands.forEach(c=>{ if(fired[c.key]||now<c.at||now-c.at>3*3600e3||quiet) return; fired[c.key]=now; ch=true; notify(V.unlocked||!STANDALONE?c.n:{...c.n,ri:undefined}); });
   const sz=snzGet(), keep=[]; sz.forEach(x=>{ if(now>=x.at){ if((!STANDALONE||V.unlocked)&&x.rid){ const r=S.get("rems",[]).find(y=>y.id===x.rid); if(r) x={...x,body:r.t}; } if(!STANDALONE||V.unlocked||!x.rid) notify(x,true); else notify({...x,ri:undefined,rid:undefined},true); } else keep.push(x); }); if(keep.length!==sz.length) snzSet(keep);
   if(ch) firedSet(fired); }
 setInterval(checkNotif,20000); document.addEventListener("visibilitychange",()=>{ if(!document.hidden) setTimeout(checkNotif,800); });
-function drawNotifSet(){ const st=SET_(); const perm=!STANDALONE?"unsupported":!("Notification" in window)?"unsupported":Notification.permission;
+/* ---- lock-screen push (Supabase Edge Function + Web Push) ---- */
+const PUSHFN=SUPA.url+"/functions/v1/push";
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isHomeApp=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+function pushLocal(){ try{ return localStorage.getItem("posv-push")==="1"; }catch(e){ return false; } }
+function b64u(x){ const b=atob((x+"=".repeat((4-x.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/")); return Uint8Array.from(b,c=>c.charCodeAt(0)); }
+let pushMsg="";
+function drawPush(){ const box=$("#pushBox"); if(!box) return; box.hidden=!STANDALONE; if(!STANDALONE) return;
+  let msg, can=true, on=pushLocal();
+  if(!SS.get()){ msg="برای اعلان روی صفحه قفل باید با حساب ابری (سوپابیس) وارد شده باشی."; can=false; }
+  else if(isIOS&&!isHomeApp()){ msg="روی آیفون اول سایت را به صفحه اصلی اضافه کن: در Safari دکمه اشتراک‌گذاری (مربع با فلش رو به بالا) ← «Add to Home Screen». بعد سایت را از آیکون قطب‌نما روی صفحه اصلی باز کن و دوباره همین‌جا بیا."; can=false; }
+  else if(!("serviceWorker" in navigator)||!("PushManager" in window)){ msg="این مرورگر اعلان صفحه قفل را پشتیبانی نمی‌کند."+(isIOS?" (آی‌اواس ۱۶.۴ یا جدیدتر لازم است.)":""); can=false; }
+  else if(on) msg="روشن است؛ یادآورها، بلوک‌ها و درس‌ها حتی وقتی سایت بسته است، روی صفحه قفل همین دستگاه می‌آیند (با متن کلی، بدون نوشته یادآور).";
+  else msg="خاموش است. با روشن کردن، یادآورها حتی وقتی سایت بسته است روی صفحه قفل این دستگاه می‌آیند.";
+  $("#pushState").textContent=pushMsg||msg; $("#pushOn").hidden=on||!can; $("#pushOff").hidden=!on; $("#pushTest").hidden=!on||!can; }
+async function pushEnable(){ pushMsg="در حال روشن کردن…"; drawPush();
+  try{ const perm=await Notification.requestPermission(); if(perm!=="granted") throw new Error("اجازه اعلان داده نشد. در تنظیمات گوشی ← اعلان‌ها ← قطب‌نما اجازه بده.");
+    const reg=swReg||await navigator.serviceWorker.ready;
+    let r; try{ r=await fetch(PUSHFN,{headers:{apikey:SUPA.key}}); }catch(e){ throw new Error("به سرور اعلان وصل نشد؛ اینترنت را بررسی کن."); }
+    if(!r.ok) throw new Error("تابع push در سوپابیس هنوز ساخته یا منتشر نشده (مرحله‌های راهنما را ببین).");
+    const {pub}=await r.json(); if(!pub) throw new Error("سرور اعلان کلید نداد؛ جدول‌های SQL را اجرا کرده‌ای؟");
+    let sub=await reg.pushManager.getSubscription();
+    if(sub&&sub.options&&sub.options.applicationServerKey){ const cur=btoa(String.fromCharCode(...new Uint8Array(sub.options.applicationServerKey))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); if(cur!==pub){ await sub.unsubscribe(); sub=null; } }
+    if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64u(pub)});
+    const j=sub.toJSON();
+    await supaRest("push_subs?on_conflict=endpoint",{method:"POST",prefer:"resolution=merge-duplicates,return=minimal",body:JSON.stringify({endpoint:j.endpoint,p256dh:j.keys.p256dh,auth:j.keys.auth,origin:location.origin,device:(isIOS?"iPhone · ":"")+navigator.userAgent.slice(0,110)})});
+    try{ localStorage.setItem("posv-push","1"); }catch(e){}
+    if(!SET_().ntPush) saveSet({ntPush:true}); lastPushQ=""; pushMsg=""; await pushSync();
+    pushMsg="روشن شد. حالا سایت را ببند و منتظر یادآور بعدی بمان؛ اعلان روی صفحه قفل می‌آید.";
+  }catch(e){ pushMsg=(e&&e.supa)?"ذخیره در سوپابیس نشد؛ جدول‌های SQL اعلان را اجرا کرده‌ای؟ ("+(e.status||"")+")":(e&&e.message)||String(e); }
+  drawPush(); setTimeout(()=>{ pushMsg=""; drawPush(); },15000); }
+async function pushDisable(){ try{ const reg=swReg||await navigator.serviceWorker.ready; const sub=await reg.pushManager.getSubscription(); if(sub){ const ep=sub.endpoint; await sub.unsubscribe(); await supaRest("push_subs?endpoint=eq."+encodeURIComponent(ep),{method:"DELETE"}).catch(()=>{}); } }catch(e){}
+  try{ localStorage.removeItem("posv-push"); }catch(e){} pushMsg=""; drawPush(); }
+let lastPushQ="", pushBusy=false;
+async function pushSync(cands){ if(!STANDALONE||!V.unlocked||!SS.get()||pushBusy) return; const st=SET_(); if(!st.ntPush&&!pushLocal()) return;
+  const now=Date.now(); cands=cands||notifCandidates();
+  const rows=st.ntOn?cands.filter(x=>x.at>now+30000&&x.at<now+36*3600e3&&!inQuiet(st,new Date(x.at))).map(x=>({id:x.key,at:new Date(x.at).toISOString(),title:x.n.title.split(" · ")[0]+(x.n.title.includes(" · ")?" · "+x.n.title.split(" · ").pop():""),body:genericBody[x.n.kind]||"اعلان قطب‌نما",hash:x.n.hash||"today"})):[];
+  rows.sort((a,b)=>a.at<b.at?-1:1); const j=JSON.stringify(rows); if(j===lastPushQ) return;
+  pushBusy=true; try{ await supaRest("push_queue?sent=eq.false&id=not.like.x-*&at=gt."+encodeURIComponent(new Date(now).toISOString()),{method:"DELETE",prefer:"return=minimal"});
+    if(rows.length) await supaRest("push_queue?on_conflict=user_id,id",{method:"POST",prefer:"resolution=merge-duplicates,return=minimal",body:j});
+    lastPushQ=j; }catch(e){ lastPushQ=""; } finally{ pushBusy=false; } }
+$("#pushOn").addEventListener("click",pushEnable);
+$("#pushTest").addEventListener("click",async()=>{ try{ await supaRest("push_queue",{method:"POST",prefer:"return=minimal",body:JSON.stringify([{id:"x-"+Date.now(),at:new Date(Date.now()+60000).toISOString(),title:"آزمایش قطب‌نما",body:"اگر این را روی صفحه قفل می‌بینی، اعلان‌ها درست کار می‌کنند.",hash:"settings"}])});
+  pushMsg="ثبت شد. همین حالا سایت را ببند و گوشی را قفل کن؛ تا یکی دو دقیقه دیگر اعلان آزمایشی می‌آید."; }catch(e){ pushMsg="ثبت نشد؛ جدول‌های SQL اعلان را اجرا کرده‌ای؟"; } drawPush(); setTimeout(()=>{ pushMsg=""; drawPush(); },20000); }); $("#pushOff").addEventListener("click",pushDisable);
+function drawNotifSet(){ drawPush(); const st=SET_(); const perm=!STANDALONE?"unsupported":!("Notification" in window)?"unsupported":Notification.permission;
   $("#ntPerm").textContent={granted:"اعلان مرورگر مجاز است.",denied:"اعلان مرورگر مسدود شده؛ از تنظیمات مرورگر (آیکون قفل کنار آدرس) اجازه بده.",default:"هنوز اجازه اعلان مرورگر داده نشده.",unsupported:STANDALONE?"این مرورگر اعلان سیستمی را پشتیبانی نمی‌کند؛ اعلان داخل سایت نمایش داده می‌شود.":"داخل Claude فقط اعلان داخل صفحه نمایش داده می‌شود."}[perm];
   $("#ntAsk").hidden=perm!=="default";
   [["#ntOn","ntOn"],["#ntBrowser","ntBrowser"],["#ntSound","ntSound"],["#ntBlocks","ntBlocks"],["#ntLesson","ntLesson"],["#ntMorning","ntMorning"],["#ntQuiet","ntQuiet"]].forEach(([s,k])=>$(s).checked=!!st[k]);
