@@ -400,6 +400,24 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
 
 .pushbox{display:flex;flex-direction:column;gap:8px;margin-top:6px;padding:14px;border-radius:14px;border:1px solid var(--stroke);background:var(--glass)}
 .pushbox .row{display:flex;gap:8px;flex-wrap:wrap}
+.rtlist{display:flex;flex-direction:column;gap:8px}
+.rtitem{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--glass);border:1px solid var(--stroke)}
+.rtitem.off{opacity:.5}
+.rtitem .rtt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.rtitem .rtt b{font-weight:600;overflow-wrap:anywhere}
+.rtitem .rtt small{color:var(--muted);font-size:12px}
+.rtitem .rtb{display:flex;gap:6px;align-items:center}
+.rtform{display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:14px;border:1px dashed var(--stroke)}
+.rtform #rtText{width:100%;flex:none;padding:10px 12px}
+.rtl .field{flex:none;width:100%;padding:9px 12px}
+.rtrow{display:flex;gap:10px;flex-wrap:wrap}
+.rtl{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted);flex:1;min-width:130px}
+.rtdays{display:flex;gap:6px}
+.rtdays button{flex:1 1 0;min-width:0;padding:9px 0;border-radius:12px;border:1px solid var(--stroke);background:var(--glass);color:var(--muted);cursor:pointer;font:inherit;font-size:13px}
+.rtdays button.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
+.rtchk{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.rtpresets{display:flex;gap:6px;flex-wrap:wrap}
+.rtquick{display:flex;gap:6px;flex-wrap:wrap}
 /* ===== mobile app shell ===== */
 .tabbar,.msheet,.mchips{display:none}
 @media (max-width:760px){
@@ -602,6 +620,22 @@ textarea.quote{width:100%;resize:vertical;min-height:84px}
           <div class="wkgrid" id="wkGrid"></div>
           <details class="edadd"><summary>دسته‌بندی‌ها و رنگ‌ها</summary><div id="wcatList" class="wcats"></div><form class="add" id="wcatForm" style="margin-top:8px"><input type="color" id="wcatC" value="#5b8def" aria-label="رنگ دسته جدید" style="width:44px;padding:0;border:none;background:none;flex:0 0 auto"><input id="wcatIn" placeholder="دسته جدید، مثلاً سفر کاری" aria-label="دسته جدید"><button class="btn pri">افزودن دسته</button></form></details>
           <table id="week" hidden></table>
+        </div>
+        <div class="card c12" id="routinesCard"><h2>یادآورهای ثابت <span class="count" id="rtCount"></span></h2>
+          <p class="small muted" style="margin:0">یادآورهایی که همیشه سر ساعت و روزهای مشخص تکرار می‌شوند و اعلان می‌دهند؛ مثل «هر شب ساعت ۱۰ تراکنش‌ها را ثبت کن».</p>
+          <ul class="clean rtlist" id="rtList"></ul>
+          <div class="row rtpresets" id="rtPresets"></div>
+          <form class="rtform" id="rtForm">
+            <input class="field" id="rtText" placeholder="متن یادآور، مثلاً: تراکنش‌های امروز را ثبت کن" aria-label="متن یادآور ثابت" maxlength="140">
+            <div class="rtrow">
+              <label class="rtl">ساعت<input class="field" id="rtTime" type="time" value="22:00" required></label>
+              <label class="rtl">با زدن اعلان برو به<select class="field" id="rtHash"><option value="today">امروز</option><option value="money">مالی</option><option value="plan">برنامه</option><option value="body">بدن</option><option value="review">خودآگاهی</option><option value="learn">یادگیری</option><option value="vision">هدف‌ها</option></select></label>
+            </div>
+            <div class="rtdays" id="rtDays" role="group" aria-label="روزهای هفته"></div>
+            <div class="row rtquick"><button type="button" class="btn sm" data-rq="all">هر روز</button><button type="button" class="btn sm" data-rq="work">شنبه تا چهارشنبه</button><button type="button" class="btn sm" data-rq="wk">پنجشنبه و جمعه</button></div>
+            <label class="rtchk"><input type="checkbox" id="rtShow" checked> متن روی صفحه قفل هم دیده شود</label>
+            <div class="row"><button class="btn pri" type="submit" id="rtSave">افزودن یادآور ثابت</button><button class="btn ghost" type="button" id="rtCancel" hidden>انصراف</button><span class="small" id="rtErr" style="color:var(--neg)"></span></div>
+          </form>
         </div>
         <div class="card c12"><h2>زمان برنامه‌ریزی‌شده این هفته به تفکیک دسته</h2><div id="wkSum" style="display:flex;flex-direction:column;gap:10px"></div></div>
         <div class="card c4"><h2>وضعیت تسک‌ها</h2><div id="taskDonut"></div></div>
@@ -1217,11 +1251,15 @@ function drawRems(){
   const rems=S.get("rems",[]);
   const list=rems.map((r,i)=>({r,i})).filter(o=>!o.r.date||o.r.date<=TODAY);
   $("#remList").innerHTML = list.length? list.map(({r,i})=>`<li class="item ${r.d?"done":""}"><button class="tick" data-i="${i}" aria-label="انجام شد"></button><span class="t">${esc(r.t)}${r.date&&r.date<TODAY&&!r.d?' <span class="pill hi">عقب‌افتاده</span>':""}</span>${r.rep?`<span class="pill ac">${repL[r.rep]}</span>`:""}${r.p?`<span class="pill ${r.p}">${r.p==="hi"?"فوری":"مهم"}</span>`:""}<span class="when">${esc(r.w||"")}${r.w&&r.n==="off"?" · بی‌صدا":""}</span><button class="x" data-del="${i}" aria-label="حذف">✕</button></li>`).join("") : '<li class="empty">ریمایندری برای امروز نیست.</li>';
-  $("#remCount").textContent = list.length? fa(list.filter(o=>o.r.d).length)+" از "+fa(list.length) : "";
+  const rts=typeof routinesFor==="function"?routinesFor(TODAY).sort((a,b)=>a.time<b.time?-1:1):[];
+  if(rts.length){ const html=rts.map(r=>{ const dn=(r.done||[]).includes(TODAY); return `<li class="item ${dn?"done":""}"><button class="tick" data-rt="${esc(r.id)}" aria-label="انجام شد"></button><span class="t">${esc(r.t)}</span><span class="pill ac">ثابت</span><span class="when">${esc(r.time)}</span></li>`; }).join("");
+    const el=$("#remList"); if(!list.length) el.innerHTML=html; else el.insertAdjacentHTML("beforeend",html); }
+  const tot=list.length+rts.length, dn=list.filter(o=>o.r.d).length+rts.filter(r=>(r.done||[]).includes(TODAY)).length;
+  $("#remCount").textContent = tot? fa(dn)+" از "+fa(tot) : "";
   const up=rems.filter(r=>r.date&&r.date>TODAY).sort((a,b)=>a.date.localeCompare(b.date));
   $("#longRem").innerHTML = up.length? up.map(r=>`<li class="item"><span class="t">${esc(r.t)}</span>${r.rep?`<span class="pill ac">${repL[r.rep]}</span>`:""}<span class="when">${relDay(r.date)} ${esc(r.w||"")}</span></li>`).join("") : '<li class="empty">ریمایندری برای روزهای آینده نیست. موقع افزودن ریمایندر، زمان آینده یا تکرار انتخاب کن.</li>';
 }
-$("#remList").addEventListener("click", e=>{ const rems=S.get("rems",[]).slice();
+$("#remList").addEventListener("click", e=>{ const rt=e.target.closest("[data-rt]"); if(rt){ rtToggleDone(rt.dataset.rt,TODAY); return; } const rems=S.get("rems",[]).slice();
   const b=e.target.closest(".tick"); if(b){ const r=rems[b.dataset.i]; const nd=!r.d; rems[b.dataset.i]={...r,d:nd};
     if(nd&&r.rep&&!r.spawned){ const base=r.date||TODAY; const next=r.rep==="d"?addDays(base,1):r.rep==="w"?addDays(base,7):addMonth(base); rems[b.dataset.i].spawned=true; rems.push({id:uid(),t:r.t,w:r.w,p:r.p,rep:r.rep,n:r.n||"",d:false,date:next<=TODAY?addDays(TODAY,1):next}); }
     S.set("rems",rems); drawRems(); drawTimeline(); return; }
@@ -1625,7 +1663,7 @@ function snapshot(section){
   const rems=S.get("rems",[]), tasks=S.get("tasks",[]), tx=thisMonth();
   const inc=tx.filter(x=>x.k==="in").reduce((a,x)=>a+x.a,0), out=tx.filter(x=>x.k==="out").reduce((a,x)=>a+x.a,0);
   const parts={
-    today:{date:TODAY,date_fa:faDate(TODAY,{weekday:"long",day:"numeric",month:"long",year:"numeric"}),reminders:rems.map((r,i)=>({index:i,text:r.t,time:r.w,priority:r.p,repeat:r.rep||"",done:r.d,date:r.date})),mental_energy:S.get("energy-"+TODAY,null),day_note:S.get("daynote-"+TODAY,""),lessons_due:dueLessons().map(o=>({source:o.r.title,lesson:o.l.title,objective:o.l.objective,minutes:o.r.minutes}))},
+    today:{date:TODAY,date_fa:faDate(TODAY,{weekday:"long",day:"numeric",month:"long",year:"numeric"}),reminders:rems.map((r,i)=>({index:i,text:r.t,time:r.w,priority:r.p,repeat:r.rep||"",done:r.d,date:r.date})),routine_reminders:routines().map(r=>({text:r.t,time:r.time,days:(r.days||[]).map(i=>DAYN[i]),on:r.on!==false,done_today:(r.done||[]).includes(TODAY)})),mental_energy:S.get("energy-"+TODAY,null),day_note:S.get("daynote-"+TODAY,""),lessons_due:dueLessons().map(o=>({source:o.r.title,lesson:o.l.title,objective:o.l.objective,minutes:o.r.minutes}))},
     goals:{vision:S.get("vision",""),values:S.get("values",[]),life_areas:S.get("areas",[]),long_term:S.get("longGoals",[]),mid_term:S.get("midGoals",[]).map(g=>({...g,progress_pct:goalPct(g)})),anti_goals:S.get("anti",[]).map(x=>x.t),banned:S.get("banned",[]).map(x=>x.t),opportunity_rules:S.get("rules",[]).map(x=>x.t),life_balance:{...BALDEF,...S.get("balance",{})}},
     plan:{tasks:tasks.map((t,i)=>({index:i,text:t.t,column:t.c,priority:t.p,done:!!t.d})),habits:S.get("habits",[]).map(h=>({habit:h.n,done_last7:last7().map(d=>(h.done||[]).includes(d)?1:0).join("")})),week_blocks:S.get("wblocks",[]).map(b=>({title:b.t,category:b.cat,start:b.s,end:b.e,repeat:b.rep,day:b.day,date:b.date})),today_blocks:blocksFor(TODAY).map(b=>b.t+" "+b.s+"-"+b.e),projects:S.get("projects",[]),deep_work_log:S.get("deep",[]).slice(0,15),week_template:S.get("week",{})},
     money:{currency:"تومان",income_month:inc,expense_month:out,budget_by_category:cats,spent_by_category:Object.fromEntries(Object.keys(cats).map(c=>[c,tx.filter(x=>x.k==="out"&&x.c===c).reduce((a,x)=>a+x.a,0)])),assets_debts:S.get("assets",[]),financial_goals:S.get("finGoals",[]),recent:S.get("tx",[]).slice(-12).map(x=>({type:x.k,title:x.t,amount:x.a,category:x.c}))},
@@ -1642,6 +1680,7 @@ const TOOLS=[
   {name:"add_goal",description:"افزودن هدف. level: long (۱ تا ۵ ساله) یا mid (۳ تا ۱۲ ماهه). برای mid: key_result، current و target عددی و linked_to (عنوان هدف بلندمدت) و priority (hi/mid/low). برای long: horizon و success_criteria",inputSchema:{type:"object",properties:{level:{type:"string",enum:["long","mid"]},title:{type:"string"},horizon:{type:"string"},success_criteria:{type:"string"},key_result:{type:"string"},current:{type:"number"},target:{type:"number"},linked_to:{type:"string"},priority:{type:"string"}},required:["level","title"]},execute:a=>{ if(a.level==="long"){ const l=S.get("longGoals",[]).slice(); l.push({t:String(a.title),h:a.horizon||"",v:"",m:a.success_criteria||""}); S.set("longGoals",l); } else { const m=S.get("midGoals",[]).slice(); m.push({t:String(a.title),l:a.linked_to||"",p:["hi","mid","low"].includes(a.priority)?a.priority:"mid",kr:a.key_result||"",cur:+a.current||0,target:+a.target||0}); S.set("midGoals",m); } drawAllEd(); afterEd(); return {ok:true}; }},
   {name:"update_goal_progress",description:"به‌روزرسانی مقدار فعلی یک هدف میان‌مدت با index از get_state(goals).mid_term",inputSchema:{type:"object",properties:{index:{type:"number"},current:{type:"number"}},required:["index","current"]},execute:({index,current})=>{ const m=S.get("midGoals",[]).map(x=>({...x})); if(!m[index]) throw new Error("not found"); m[index].cur=+current; S.set("midGoals",m); drawAllEd(); afterEd(); return {ok:true,progress_pct:goalPct(m[index])}; }},
   {name:"add_habit",description:"افزودن عادت روزانه برای پیگیری",inputSchema:{type:"object",properties:{name:{type:"string"}},required:["name"]},execute:({name})=>{ const h=S.get("habits",[]).slice(); h.push({n:String(name),done:[]}); S.set("habits",h); drawAllEd(); drawHabits(); return {ok:true}; }},
+  {name:"add_routine",description:"افزودن یادآور ثابت (دائمی) که هر هفته در روزها و ساعت مشخص اعلان می‌دهد، مثل «هر شب ساعت ۲۲ تراکنش‌ها را ثبت کن». time مثل 22:00. days آرایه‌ای از روزهای هفته: 0=شنبه، 1=یکشنبه، 2=دوشنبه، 3=سه‌شنبه، 4=چهارشنبه، 5=پنجشنبه، 6=جمعه (هر روز = [0,1,2,3,4,5,6]). section بخشی که با زدن اعلان باز شود: today, money, plan, body, review, learn, vision",inputSchema:{type:"object",properties:{text:{type:"string"},time:{type:"string"},days:{type:"array",items:{type:"number"}},section:{type:"string"}},required:["text","time","days"]},execute:({text,time,days,section})=>{ const err=addRoutine({t:text,time:String(time||"").replace(/[۰-۹]/g,d=>"۰۱۲۳۴۵۶۷۸۹".indexOf(d)),days:days||[],hash:section}); return err?{ok:false,error:err}:{ok:true}; }},
   {name:"add_day_block",description:"افزودن بلوک به برنامه هفتگی. start و end مثل 08:30، repeat یکی از daily (هر روز)، weekly (هر هفته همین روز)، once (فقط یک روز). day برای weekly: 0=شنبه تا 6=جمعه. date برای once: YYYY-MM-DD. category یکی از دسته‌های برنامه هفتگی (مثل کار عمیق، جلسه و کار اداری، فروش و پخش‌کننده‌ها، کارخانه و تولید، یادگیری و مطالعه، ورزش و سلامت، خانواده، مالی و حساب‌ها، مرور و برنامه‌ریزی، استراحت و شخصی)",inputSchema:{type:"object",properties:{title:{type:"string"},start:{type:"string"},end:{type:"string"},repeat:{type:"string",enum:["daily","weekly","once"]},day:{type:"number"},date:{type:"string"},category:{type:"string"}},required:["title","start","end"]},execute:a=>{ const s_=hm(a.start), e_=hm(a.end); if(s_===null||e_===null||e_<=s_) throw new Error("bad time"); const rep=["daily","weekly","once"].includes(a.repeat)?a.repeat:"daily"; const o={id:uid(),t:String(a.title),cat:wcats().some(c=>c.n===a.category)?a.category:wcats()[0].n,s:hhmm(s_),e:hhmm(e_),rep}; if(rep==="weekly") o.day=Number.isInteger(a.day)?a.day:dowOf(TODAY); if(rep==="once") o.date=/^\d{4}-\d\d-\d\d$/.test(a.date||"")?a.date:TODAY; S.set("wblocks",S.get("wblocks",[]).concat(o)); drawPlanner(); drawTimeline(); return {ok:true}; }},
   {name:"log_deep_work",description:"ثبت یک جلسه کار عمیق انجام‌شده امروز با موضوع و مدت به دقیقه",inputSchema:{type:"object",properties:{topic:{type:"string"},minutes:{type:"number"}},required:["topic","minutes"]},execute:({topic,minutes})=>{ const d=S.get("deep",[]).slice(); d.unshift({t:String(topic),m:+minutes||0,date:TODAY}); S.set("deep",d); drawAllEd(); return {ok:true}; }},
   {name:"toggle_reminder",description:"علامت زدن ریمایندر به‌عنوان انجام‌شده/نشده با index از get_state",inputSchema:{type:"object",properties:{index:{type:"number"}},required:["index"]},execute:({index})=>{ const r=S.get("rems",DEF.rems).slice(); if(!r[index]) throw new Error("index not found"); r[index]={...r[index],d:!r[index].d}; S.set("rems",r); drawRems(); return {ok:true,done:r[index].d}; }},
@@ -1673,7 +1712,7 @@ function drawChat(streamText){
     (streamText!==undefined?`<div class="msg a"><div class="md">${streamText?md(streamText):'<span class="muted">در حال فکر کردن…</span>'}</div></div>`:"");
   $("#msgs").scrollTop=$("#msgs").scrollHeight;
 }
-const toolLabel={add_reminder:"ریمایندر اضافه شد",add_goal:"هدف اضافه شد",update_goal_progress:"پیشرفت هدف به‌روز شد",add_habit:"عادت اضافه شد",add_day_block:"بلوک به برنامه هفتگی اضافه شد",log_deep_work:"جلسه کار عمیق ثبت شد",toggle_reminder:"ریمایندر به‌روز شد",add_task:"تسک اضافه شد",add_transaction:"تراکنش ثبت شد",add_entry:"در بازنگری ثبت شد",log_body:"وضعیت بدن ثبت شد",add_knowledge:"به پایگاه دانش اضافه شد",create_learning_topic:"برنامه یادگیری جدید در حال ساخت",reschedule_learning:"درس‌ها دوباره چیده شد"};
+const toolLabel={add_reminder:"ریمایندر اضافه شد",add_goal:"هدف اضافه شد",update_goal_progress:"پیشرفت هدف به‌روز شد",add_habit:"عادت اضافه شد",add_day_block:"بلوک به برنامه هفتگی اضافه شد",add_routine:"یادآور ثابت اضافه شد",log_deep_work:"جلسه کار عمیق ثبت شد",toggle_reminder:"ریمایندر به‌روز شد",add_task:"تسک اضافه شد",add_transaction:"تراکنش ثبت شد",add_entry:"در بازنگری ثبت شد",log_body:"وضعیت بدن ثبت شد",add_knowledge:"به پایگاه دانش اضافه شد",create_learning_topic:"برنامه یادگیری جدید در حال ساخت",reschedule_learning:"درس‌ها دوباره چیده شد"};
 async function sendChat(text){
   if(!text||chatCtl) return;
   if(!(await ensureAI())){ const h=chatHist().slice(); h.push({role:"user",content:text},{role:"assistant",content:aiMissingText()}); S.set("chat",h.slice(-30)); drawChat(); return; }
@@ -2413,25 +2452,27 @@ function notify(n,force){ const st=SET_(); if(!force&&inQuiet(st,new Date())) re
     if(swReg&&swReg.showNotification) swReg.showNotification(n.title,opt).catch(()=>{}); else { try{ const no=new Notification(n.title,opt); no.onclick=()=>{ window.focus(); location.hash=n.hash||"today"; no.close(); }; }catch(e){} } }
   toast(n); if(st.ntSound) beep(); return true; }
 function toast(n){ const box=$("#toasts"); const el=document.createElement("div"); el.className="toast-c "+(n.kind||""); el.setAttribute("role","alert");
-  el.innerHTML=`<b>${esc(n.title)}</b><span>${esc(n.body)}</span><div class="row">${n.kind==="rem"&&n.ri!==undefined?`<button type="button" class="btn sm pri" data-tdone>انجام شد</button>`:""}${n.kind!=="sum"?`<button type="button" class="btn sm" data-tsnz>۱۰ دقیقه دیگر</button>`:""}<button type="button" class="btn sm ghost" data-tx>بستن</button></div>`;
+  el.innerHTML=`<b>${esc(n.title)}</b><span>${esc(n.body)}</span><div class="row">${(n.kind==="rem"&&n.ri!==undefined)||(n.kind==="rt"&&n.rtid)?`<button type="button" class="btn sm pri" data-tdone>انجام شد</button>`:""}${n.kind!=="sum"?`<button type="button" class="btn sm" data-tsnz>۱۰ دقیقه دیگر</button>`:""}<button type="button" class="btn sm ghost" data-tx>بستن</button></div>`;
   el.addEventListener("click",ev=>{ if(ev.target.closest("[data-tx]")) el.remove();
     if(ev.target.closest("[data-tsnz]")){ const a=snzGet(); a.push({id:n.id+"|s"+Date.now(),at:Date.now()+10*60000,title:n.title,body:STANDALONE?(genericBody[n.kind]||"اعلان قطب‌نما"):n.body,orig:n.id,rid:n.rid,ri:n.ri,kind:n.kind,hash:n.hash}); snzSet(a); el.remove(); }
+    if(ev.target.closest("[data-tdone]")&&n.rtid){ if(!(routines().find(x=>x.id===n.rtid)?.done||[]).includes(n.rtdate)) rtToggleDone(n.rtid,n.rtdate); el.remove(); return; }
     if(ev.target.closest("[data-tdone]")){ const r=S.get("rems",[]).findIndex(x=>x.id===n.rid); if(r>=0){ const b=document.querySelector(`#remList .tick[data-i="${r}"]`); if(b&&!b.closest(".done")) b.click(); else { const rs=S.get("rems",[]).slice(); rs[r]={...rs[r],d:true}; S.set("rems",rs); drawRems(); } } el.remove(); } });
-  box.prepend(el); while(box.children.length>4) box.lastChild.remove(); if(n.kind!=="rem") setTimeout(()=>el.remove(),20000); }
+  box.prepend(el); while(box.children.length>4) box.lastChild.remove(); if(n.kind!=="rem"&&n.kind!=="rt") setTimeout(()=>el.remove(),20000); }
 function notifCandidates(){ const st=SET_(), out=[], days=[TODAY,addDays(TODAY,1)];
   const add=(id,at,n)=>out.push({key:id,at,n});
   S.get("rems",[]).forEach((r,i)=>{ if(r.d||!r.w) return; const m=hm(r.w); if(m===null) return; const lead=(r.n===undefined||r.n==="")?st.ntLead:r.n; if(lead==="off") return;
     const date=r.date||TODAY, at=new Date(date+"T"+hhmm(m)+":00").getTime()-(+lead||0)*60000;
     add("r|"+(r.id||i)+"|"+date+"|"+r.w,at,{id:"r"+(r.id||i),rid:r.id,ri:i,kind:"rem",title:(r.p==="hi"?"یادآور فوری":"یادآور")+` · ${fa(hhmm(m))}`,body:r.t+((+lead)?` — ${fa(lead)} دقیقه دیگر`:""),hash:"today"}); });
   if(st.ntBlocks) days.forEach(d=>blocksFor(d).forEach(b=>{ const m=hm(b.s); if(m===null) return; add("b|"+b.id+"|"+d,new Date(d+"T"+hhmm(m)+":00").getTime()-(+st.ntBlockLead||0)*60000,{id:"b"+b.id,kind:"blk",title:`شروع ${b.cat} · ${fa(b.s)}`,body:b.t+((+st.ntBlockLead)?` — ${fa(st.ntBlockLead)} دقیقه دیگر`:""),hash:"plan"}); }));
+  for(let k=0;k<14;k++){ const d=addDays(TODAY,k); routinesFor(d).forEach(r=>{ if((r.done||[]).includes(d)) return; const m=hm(r.time); if(m===null) return; add("t|"+r.id+"|"+d+"|"+r.time,new Date(d+"T"+hhmm(m)+":00").getTime(),{id:"t"+r.id+d,kind:"rt",rtid:r.id,rtdate:d,show:r.show!==false,title:`یادآور ثابت · ${fa(hhmm(m))}`,body:r.t,hash:r.hash||"today"}); }); }
   if(st.ntLesson) dueLessons().forEach(({r,l})=>{ const m=hm(r.hour); if(m===null) return; add("l|"+r.id+"|"+TODAY,new Date(TODAY+"T"+hhmm(m)+":00").getTime(),{id:"l"+r.id,kind:"lesson",title:"وقت درس امروز",body:`${l.title} · ${r.title}`,hash:"today"}); });
   if(st.ntMorning){ const m=hm(st.ntMorningAt); if(m!==null){ const rs=S.get("rems",[]).filter(r=>!r.d&&(r.date||TODAY)<=TODAY), bl=blocksFor(TODAY), ls=dueLessons();
     add("m|"+TODAY,new Date(TODAY+"T"+hhmm(m)+":00").getTime(),{id:"m"+TODAY,kind:"sum",title:"خلاصه امروز",body:`${fa(rs.length)} یادآور، ${fa(bl.length)} بلوک برنامه${ls.length?`، درس: ${ls[0].l.title}`:""}${bl[0]?` · اولین کار: ${bl[0].t} ساعت ${fa(bl[0].s)}`:""}`,hash:"today"}); } }
   return out; }
-const genericBody={rem:"یک یادآور داری؛ برای دیدن متن، قفل را باز کن.",blk:"یک بلوک برنامه شروع می‌شود؛ برای جزئیات قفل را باز کن.",lesson:"وقت درس امروز است.",sum:"خلاصه امروز آماده است؛ قفل را باز کن."};
+const genericBody={rt:"یک یادآور ثابت داری؛ برای دیدن متن، قفل را باز کن.",rem:"یک یادآور داری؛ برای دیدن متن، قفل را باز کن.",blk:"یک بلوک برنامه شروع می‌شود؛ برای جزئیات قفل را باز کن.",lesson:"وقت درس امروز است.",sum:"خلاصه امروز آماده است؛ قفل را باز کن."};
 let lastSched="";
 function writeSched(c){ if(!STANDALONE) return; const now=Date.now(); const st=SET_();
-  const list=st.ntOn?c.filter(x=>x.at>now-3*3600e3&&x.at<now+36*3600e3).map(x=>({key:x.key,at:x.at,n:{id:x.n.id,kind:x.n.kind,title:x.n.title.split(" · ")[0]+(x.n.title.includes(" · ")?" · "+x.n.title.split(" · ").pop():""),body:genericBody[x.n.kind]||"اعلان قطب‌نما",hash:x.n.hash}})):[];
+  const list=st.ntOn?c.filter(x=>x.at>now-3*3600e3&&x.at<now+(x.n.kind==="rt"?8*86400e3:36*3600e3)).map(x=>({key:x.key,at:x.at,n:{id:x.n.id,kind:x.n.kind,title:x.n.title.split(" · ")[0]+(x.n.title.includes(" · ")?" · "+x.n.title.split(" · ").pop():""),body:genericBody[x.n.kind]||"اعلان قطب‌نما",hash:x.n.hash}})):[];
   const j=JSON.stringify({p:{ntOn:st.ntOn,ntSound:st.ntSound,ntBrowser:st.ntBrowser,ntQuiet:st.ntQuiet,ntQFrom:st.ntQFrom,ntQTo:st.ntQTo},l:list}); if(j!==lastSched){ lastSched=j; try{ localStorage.setItem("posv-sched",j); }catch(e){} } }
 function checkNotif(){ const now=Date.now(), fired=firedGet(); let ch=false;
   let cands; if(STANDALONE&&!V.unlocked){ let o={}; try{ o=JSON.parse(localStorage.getItem("posv-sched")||"{}"); }catch(e){} cands=o.l||[]; if(o.p&&!S.cache.settings) S.cache.settings=o.p; if(o.p&&!o.p.ntOn) return; }
@@ -2477,7 +2518,7 @@ async function pushDisable(){ try{ const reg=swReg||await navigator.serviceWorke
 let lastPushQ="", pushBusy=false;
 async function pushSync(cands){ if(!STANDALONE||!V.unlocked||!SS.get()||pushBusy) return; const st=SET_(); if(!st.ntPush&&!pushLocal()) return;
   const now=Date.now(); cands=cands||notifCandidates();
-  const rows=st.ntOn?cands.filter(x=>x.at>now+30000&&x.at<now+36*3600e3&&!inQuiet(st,new Date(x.at))).map(x=>({id:x.key,at:new Date(x.at).toISOString(),title:x.n.title.split(" · ")[0]+(x.n.title.includes(" · ")?" · "+x.n.title.split(" · ").pop():""),body:genericBody[x.n.kind]||"اعلان قطب‌نما",hash:x.n.hash||"today"})):[];
+  const rows=st.ntOn?cands.filter(x=>x.at>now+30000&&x.at<now+(x.n.kind==="rt"?14*86400e3:36*3600e3)&&!inQuiet(st,new Date(x.at))).map(x=>({id:x.key,at:new Date(x.at).toISOString(),title:x.n.title.split(" · ")[0]+(x.n.title.includes(" · ")?" · "+x.n.title.split(" · ").pop():""),body:x.n.kind==="rt"&&x.n.show?x.n.body:(genericBody[x.n.kind]||"اعلان قطب‌نما"),hash:x.n.hash||"today"})):[];
   rows.sort((a,b)=>a.at<b.at?-1:1); const j=JSON.stringify(rows); if(j===lastPushQ) return;
   pushBusy=true; try{ await supaRest("push_queue?sent=eq.false&id=not.like.x-*&at=gt."+encodeURIComponent(new Date(now).toISOString()),{method:"DELETE",prefer:"return=minimal"});
     if(rows.length) await supaRest("push_queue?on_conflict=user_id,id",{method:"POST",prefer:"resolution=merge-duplicates,return=minimal",body:j});
@@ -2520,9 +2561,40 @@ function mchips(v){ const sec=document.getElementById("v-"+v); if(!sec) return; 
   cards.forEach((c,i)=>c.classList.toggle("mhide",sel!=="all"&&titles[i]!==sel));
   [...grid.children].forEach(c=>{ if(!cards.includes(c)&&c.classList.contains("card")&&!c.querySelector(":scope > h2")) c.classList.toggle("mhide",sel!=="all"); }); }
 function mobileShell(v){ $$("#tabbar a").forEach(a=>a.classList.toggle("on",a.dataset.v===v)); $("#moreBtn").classList.toggle("on",!SHORT[v]); mchips(v); }
+/* ================= ROUTINE (PERMANENT) REMINDERS ================= */
+const DAYS1=["ش","ی","د","س","چ","پ","ج"];
+const RT_PRESETS=[{t:"تراکنش‌های مالی امروز را ثبت کن",time:"22:00",days:[0,1,2,3,4,5,6],hash:"money"},{t:"برنامه فردا را بچین",time:"21:30",days:[0,1,2,3,4,5,6],hash:"plan"},{t:"مرور هفتگی",time:"20:00",days:[6],hash:"review"},{t:"وضعیت بدن و انرژی را ثبت کن",time:"09:00",days:[0,1,2,3,4,5,6],hash:"body"}];
+const HASHL={today:"امروز",money:"مالی",plan:"برنامه",body:"بدن",review:"خودآگاهی",learn:"یادگیری",vision:"هدف‌ها"};
+let RTE={days:[0,1,2,3,4,5,6],edit:null};
+function routines(){ return S.get("routines",[]); }
+function daysLabel(d){ d=[...d].sort(); if(d.length===7) return "هر روز"; if(d.join()==="0,1,2,3,4") return "شنبه تا چهارشنبه"; if(d.join()==="5,6") return "پنجشنبه و جمعه"; return d.map(i=>DAYN[i]).join("، "); }
+function routinesFor(date){ const dw=dowOf(date); return routines().filter(r=>r.on!==false&&(r.days||[]).includes(dw)); }
+function addRoutine(o){ const t=String(o.t||"").trim().slice(0,140), m=hm(o.time); const days=[...new Set((o.days||[]).map(Number).filter(x=>x>=0&&x<7))].sort();
+  if(!t) return "متن یادآور را بنویس."; if(m===null) return "ساعت معتبر نیست."; if(!days.length) return "دست‌کم یک روز هفته را انتخاب کن.";
+  const list=routines().slice(); list.push({id:uid(),t,time:hhmm(m),days,hash:HASHL[o.hash]?o.hash:"today",show:o.show!==false,on:true,done:[]}); S.set("routines",list); drawRoutines(); drawRems(); setTimeout(checkNotif,300); return ""; }
+function drawRtDays(){ $("#rtDays").innerHTML=DAYN.map((n,i)=>`<button type="button" data-d="${i}" class="${RTE.days.includes(i)?"on":""}" aria-pressed="${RTE.days.includes(i)}" title="${n}">${DAYS1[i]}</button>`).join(""); }
+function drawRoutines(){ const list=routines(); if(!$("#rtList")) return;
+  $("#rtCount").textContent=list.length?fa(list.filter(r=>r.on!==false).length)+" فعال":"";
+  $("#rtList").innerHTML=list.length?list.map(r=>`<li class="rtitem ${r.on===false?"off":""}"><div class="rtt"><b>${esc(r.t)}</b><small>${fa(r.time)} · ${esc(daysLabel(r.days||[]))}${r.hash&&r.hash!=="today"?" · "+HASHL[r.hash]:""}${r.show===false?" · متن پنهان روی صفحه قفل":""}</small></div><div class="rtb"><span class="switch" title="روشن/خاموش"><input type="checkbox" data-rton="${r.id}" ${r.on!==false?"checked":""} aria-label="روشن یا خاموش"><i></i></span><button class="btn sm" type="button" data-rted="${r.id}">ویرایش</button><button class="btn sm ghost" type="button" data-rtdel="${r.id}" aria-label="حذف">حذف</button></div></li>`).join(""):'<li class="empty">هنوز یادآور ثابتی نساخته‌ای. از پیشنهادهای زیر یکی را بزن یا خودت بساز.</li>';
+  const have=new Set(list.map(r=>r.t)); $("#rtPresets").innerHTML=RT_PRESETS.filter(p=>!have.has(p.t)).map((p,i)=>`<button type="button" class="btn sm" data-rtp="${RT_PRESETS.indexOf(p)}">+ ${esc(p.t)} · ${fa(p.time)}${p.days.length===7?"":" · "+daysLabel(p.days)}</button>`).join("");
+  drawRtDays(); }
+function rtResetForm(){ RTE={days:[0,1,2,3,4,5,6],edit:null}; $("#rtText").value=""; $("#rtTime").value="22:00"; $("#rtHash").value="today"; $("#rtShow").checked=true; $("#rtSave").textContent="افزودن یادآور ثابت"; $("#rtCancel").hidden=true; $("#rtErr").textContent=""; drawRtDays(); }
+$("#rtDays").addEventListener("click",e=>{ const b=e.target.closest("[data-d]"); if(!b) return; const d=+b.dataset.d; RTE.days=RTE.days.includes(d)?RTE.days.filter(x=>x!==d):[...RTE.days,d]; drawRtDays(); });
+$("#rtForm").addEventListener("click",e=>{ const q=e.target.closest("[data-rq]"); if(!q) return; RTE.days=q.dataset.rq==="all"?[0,1,2,3,4,5,6]:q.dataset.rq==="work"?[0,1,2,3,4]:[5,6]; drawRtDays(); });
+$("#rtCancel").addEventListener("click",rtResetForm);
+$("#rtForm").addEventListener("submit",e=>{ e.preventDefault(); const o={t:$("#rtText").value,time:$("#rtTime").value,days:RTE.days,hash:$("#rtHash").value,show:$("#rtShow").checked};
+  if(RTE.edit){ const m=hm(o.time), t=o.t.trim(); if(!t||m===null||!o.days.length){ $("#rtErr").textContent=!t?"متن یادآور را بنویس.":m===null?"ساعت معتبر نیست.":"دست‌کم یک روز هفته را انتخاب کن."; return; }
+    S.set("routines",routines().map(r=>r.id===RTE.edit?{...r,t:t.slice(0,140),time:hhmm(m),days:[...o.days].sort(),hash:o.hash,show:o.show}:r)); drawRoutines(); drawRems(); setTimeout(checkNotif,300); rtResetForm(); return; }
+  const err=addRoutine(o); $("#rtErr").textContent=err; if(!err) rtResetForm(); });
+$("#routinesCard").addEventListener("click",e=>{ const p=e.target.closest("[data-rtp]"); if(p){ addRoutine(RT_PRESETS[+p.dataset.rtp]); return; }
+  const d=e.target.closest("[data-rtdel]"); if(d){ const r=routines().find(x=>x.id===d.dataset.rtdel); if(r&&confirmDel(r)){ S.set("routines",routines().filter(x=>x.id!==r.id)); drawRoutines(); drawRems(); setTimeout(checkNotif,300); } return; }
+  const ed=e.target.closest("[data-rted]"); if(ed){ const r=routines().find(x=>x.id===ed.dataset.rted); if(!r) return; RTE={days:[...(r.days||[])],edit:r.id}; $("#rtText").value=r.t; $("#rtTime").value=r.time; $("#rtHash").value=r.hash||"today"; $("#rtShow").checked=r.show!==false; $("#rtSave").textContent="ذخیره تغییرات"; $("#rtCancel").hidden=false; drawRtDays(); $("#rtText").focus(); $("#rtForm").scrollIntoView({block:"center"}); } });
+$("#routinesCard").addEventListener("change",e=>{ const t=e.target.closest("[data-rton]"); if(!t) return; S.set("routines",routines().map(r=>r.id===t.dataset.rton?{...r,on:t.checked}:r)); drawRoutines(); drawRems(); setTimeout(checkNotif,300); });
+function confirmDel(r){ return true; }
+function rtToggleDone(id,date){ S.set("routines",routines().map(r=>{ if(r.id!==id) return r; const d=new Set(r.done||[]); d.has(date)?d.delete(date):d.add(date); return {...r,done:[...d].filter(x=>x>=addDays(TODAY,-30))}; })); drawRems(); setTimeout(checkNotif,300); }
 /* ================= RENDER & ROUTER ================= */
 function renderAll(keepInputs){
-  drawRems(); drawTimeline(); drawHabits(); drawEnergy(); drawTasks(); drawMoney(); drawRev(); drawEntries(); drawLearn(); drawLearnToday(); drawKb(); drawBody(); drawGoalsMini(); drawLinkOpts(); drawAlign(); drawBalance(); drawWeek(); drawAllEd(); drawSpark(); drawCharts(); if(STANDALONE) drawBanner(); drawWeather(); loadWeather(); drawReader(); loadReader(); drawBotState(); feedsChanged(); drawLib(); drawCats(); drawSrcLib(); drawLearnTabs(); migrateDayplan(); ensureRemIds(); drawPlanner(); drawTimeline();
+  drawRoutines(); drawRems(); drawTimeline(); drawHabits(); drawEnergy(); drawTasks(); drawMoney(); drawRev(); drawEntries(); drawLearn(); drawLearnToday(); drawKb(); drawBody(); drawGoalsMini(); drawLinkOpts(); drawAlign(); drawBalance(); drawWeek(); drawAllEd(); drawSpark(); drawCharts(); if(STANDALONE) drawBanner(); drawWeather(); loadWeather(); drawReader(); loadReader(); drawBotState(); feedsChanged(); drawLib(); drawCats(); drawSrcLib(); drawLearnTabs(); migrateDayplan(); ensureRemIds(); drawPlanner(); drawTimeline();
   if(document.activeElement!==$("#visionText")) $("#visionText").value=S.get("vision","");
   if(!keepInputs||document.activeElement!==$("#dayNote")) $("#dayNote").value=S.get("daynote-"+TODAY,"");
 }
